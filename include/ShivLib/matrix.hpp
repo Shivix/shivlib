@@ -1,11 +1,11 @@
-#ifndef MATLIB_MATRIX_HPP
-#define MATLIB_MATRIX_HPP
+#ifndef SHIVLIB_MATRIX_HPP
+#define SHIVLIB_MATRIX_HPP
 
 #include <array>
 #include <tuple>
 #include <cmath>
 
-namespace MatLib{
+namespace ShivLib{
     template<typename T, std::size_t rows, std::size_t cols>
     class matrix{
     public:
@@ -366,4 +366,4 @@ namespace MatLib{
     };
 }
 
-#endif //MATLIB_MATRIX_HPP
+#endif //SHIVLIB_MATRIX_HPP

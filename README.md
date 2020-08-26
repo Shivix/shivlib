@@ -7,4 +7,4 @@ Please refer to the [Wiki](https://github.com/Shivix/Shivix-Standard-Library/wik
 
 ## License 
 
-MatLib is licenced under [Boost Software License - Version 1.0](https://github.com/Shivix/MatLib/blob/master/LICENSE).
+Shivix Standard Library is licenced under [Boost Software License - Version 1.0](https://github.com/Shivix/Shivix-Standard-Library/blob/master/LICENSE).
