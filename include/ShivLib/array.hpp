@@ -2,18 +2,21 @@
 #define SHIVLIB_ARRAY_HPP
 
 
-class array{
+namespace ShivLib{
+    class array{
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-};
+
+
+
+
+
+
+
+
+
+    };
+}
+
 
 
 #endif //SHIVLIB_ARRAY_HPP
