@@ -33,58 +33,58 @@ namespace ShivLib{
         }
         
         void 
-        swap(array other) noexcept{
+        swap(array& other) noexcept{
             std::swap_ranges(begin(), end(), other.begin());
         }
         
         // Iterators
         constexpr auto
         begin() noexcept{
-            return iterator(data());
+            return iterator(elems);
         }
         constexpr auto 
         begin() const noexcept{
-            return const_iterator(data());
+            return const_iterator(elems);
         }
         constexpr auto 
         cbegin() const noexcept{
-            return const_iterator(data());
+            return const_iterator(elems);
         }
         constexpr auto
         rbegin() noexcept{
-            return reverse_iterator(data());
+            return reverse_iterator(end());
         }
         constexpr auto
         rbegin() const noexcept{
-            return const_reverse_iterator(data());
+            return const_reverse_iterator(end());
         }
         constexpr auto
         crbegin() const noexcept{
-            return const_reverse_iterator(data());
+            return const_reverse_iterator(end());
         }
         constexpr auto
         end() noexcept{
-            return iterator(data() + numOfElems);
+            return iterator(elems + numOfElems);
         }
         constexpr auto
         end() const noexcept{
-            return const_iterator(data() + numOfElems);
+            return const_iterator(elems + numOfElems);
         }
         constexpr auto
         cend() const noexcept{
-            return const_iterator(data() + numOfElems);
+            return const_iterator(elems + numOfElems);
         }
         constexpr auto
         rend() noexcept{
-            return reverse_iterator(data() + numOfElems);
+            return reverse_iterator(begin());
         }
         constexpr auto
         rend() const noexcept{
-            return const_reverse_iterator(data() + numOfElems);
+            return const_reverse_iterator(begin());
         }
         constexpr auto
         crend() const noexcept{
-            return const_reverse_iterator(data() + numOfElems);
+            return const_reverse_iterator(begin());
         }
         
         // Element Access
@@ -157,7 +157,7 @@ namespace ShivLib{
         }
         constexpr bool
         operator != (const array& other) const{
-            return !(this == other);
+            return !(*this == other);
         }
         
         // Assignment
