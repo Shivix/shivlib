@@ -9,6 +9,7 @@ namespace ShivLib{
     template<typename T, std::size_t rows, std::size_t cols>
     class matrix{
     public:
+        using value_type = T;
         using iterator = T*;
         using const_iterator = const T*;
         using reverse_iterator = std::reverse_iterator<T*>;
