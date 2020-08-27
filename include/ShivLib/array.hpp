@@ -123,6 +123,10 @@ namespace ShivLib{
         size() const noexcept{
             return numOfElems;
         }
+        [[nodiscard]] constexpr std::size_t
+        max_size() const noexcept{
+            return numOfElems;
+        }
         [[nodiscard]] constexpr bool 
         empty() const noexcept{
             return size() == 0;
