@@ -1,6 +1,8 @@
 #include "../include/ShivLib/array.hpp"
 #include <boost/test/unit_test.hpp>
 
+// Using auto test suite for now since it builds alot faster as we get more tests,
+// suite will be create manually for better output
 BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(array_iterator_test) // NOLINT(cert-err58-cpp)
     {
