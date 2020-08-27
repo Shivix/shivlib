@@ -1,5 +1,5 @@
 #include "../include/ShivLib/matrix.hpp"
-#define BOOST_TEST_MODULE ShivLib MatrixTest
+#define BOOST_TEST_MODULE ShivLib matrixTest
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(multiply_test) // NOLINT
