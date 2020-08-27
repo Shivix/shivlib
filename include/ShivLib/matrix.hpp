@@ -2,6 +2,7 @@
 #define SHIVLIB_MATRIX_HPP
 
 #include <array>
+#include "array.hpp"
 #include <tuple>
 #include <cmath>
 
@@ -19,7 +20,7 @@ namespace ShivLib{
         
         // No explicit constructor/ destructor etc. for aggregate all members must also be public
         
-        std::array<std::array<T, cols>, rows> m_data{}; // stores the matrix data
+        ShivLib::array<ShivLib::array<T, cols>, rows> m_data{}; // stores the matrix data
         
         [[nodiscard]] constexpr bool empty() const noexcept {
             return size() == 0;
@@ -274,10 +275,10 @@ namespace ShivLib{
             *this = *this / scalar;
         }
         // element access
-        constexpr std::array<T, cols>& operator [] (const std::size_t& index) noexcept {
+        constexpr ShivLib::array<T, cols>& operator [] (const std::size_t& index) noexcept {
             return m_data[index];
         }
-        constexpr const std::array<T, cols>& operator [] (const std::size_t& index) const noexcept {
+        constexpr const ShivLib::array<T, cols>& operator [] (const std::size_t& index) const noexcept {
             return m_data[index];
         }
         [[nodiscard]] constexpr reference at(std::size_t rowIndex, std::size_t colIndex){
@@ -334,8 +335,8 @@ namespace ShivLib{
             return true;
         }
         // Iterators
-        constexpr iterator begin() noexcept {
-            return &m_data[0][0];
+        constexpr auto begin() noexcept {
+            return iterator(&m_data[0][0]);
         }
         constexpr auto begin() const noexcept { // allows .begin to be used with a const matrix without ambiguity
             return const_iterator(&m_data[0][0]);
@@ -350,13 +351,13 @@ namespace ShivLib{
             return const_reverse_iterator(end());
         }
         constexpr iterator end() noexcept {
-            return &m_data[rows - 1][cols];
+            return &m_data[rows - 1][cols - 1] + 1;
         }
         constexpr auto end() const noexcept {
-            return const_iterator(&m_data[rows - 1][cols]);
+            return const_iterator(&m_data[rows - 1][cols - 1] + 1);
         }
         constexpr auto cend() const noexcept {
-            return const_iterator(&m_data[rows - 1][cols]);
+            return const_iterator(&m_data[rows - 1][cols - 1] + 1);
         }
         constexpr auto rend() noexcept {
             return reverse_iterator(begin());
