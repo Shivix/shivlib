@@ -1,8 +1,8 @@
 #ifndef SHIVLIB_ARRAY_HPP
 #define SHIVLIB_ARRAY_HPP
 
-
 #include <iterator>
+#include <cassert>
 
 namespace ShivLib{
     template<typename T, std::size_t numOfElems>
@@ -85,6 +85,37 @@ namespace ShivLib{
         constexpr auto
         crend() const noexcept{
             return const_reverse_iterator(data() + numOfElems);
+        }
+        
+        // Element Access
+        constexpr reference 
+        operator [] (std::size_t index) noexcept{
+            assert((index < numOfElems)&&("Index out of range"));
+            return elems[index];
+        }
+        constexpr const_reference
+        operator [] (std::size_t index) const noexcept{
+            assert((index < numOfElems)&&("Index out of range"));
+            return elems[index];
+        }
+        
+        constexpr reference 
+        at(std::size_t index){
+            if(index >= numOfElems){
+                throw std::out_of_range("Element out of range");
+            }
+            else{
+                return elems[index];
+            }
+        }
+        constexpr const_reference
+        at(std::size_t index) const{
+            if(index >= numOfElems){
+                throw std::out_of_range("Element out of range");
+            }
+            else{
+                return elems[index];
+            }
         }
 
         // Capacity
