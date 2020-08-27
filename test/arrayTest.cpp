@@ -6,7 +6,21 @@
 BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(array_iterator_test) // NOLINT(cert-err58-cpp)
     {
+        ShivLib::array<int, 5> array1{1, 0, 2, 3, 4};
+        ShivLib::array<int, 5> arrayOrdered{0, 1, 2, 3, 4};
+        ShivLib::array<int, 5> arrayReversed{4, 3, 2, 1, 0};
 
+
+        BOOST_TEST((*std::find(array1.cbegin(), array1.cend(), 1)) == 1);
+        BOOST_TEST((*std::find(array1.crbegin(), array1.crend(), 0)) == 0);
+        std::sort(array1.begin(), array1.end());
+        BOOST_TEST(array1 == arrayOrdered);
+        std::sort(array1.rbegin(), array1.rend());
+        BOOST_TEST(array1 == arrayReversed);
+        for(auto&& i: array1){
+            i = 0;
+        }
+        BOOST_TEST(array1[3] == 0);
     }
 
     BOOST_AUTO_TEST_CASE(fillswap_test) // NOLINT(cert-err58-cpp)
@@ -32,10 +46,15 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(access_test) // NOLINT(cert-err58-cpp)
     {
         ShivLib::array<int, 5> array1{0, 1, 2, 3, 4};
+        const ShivLib::array<int, 5> array1Const{0, 1, 2, 3, 4};
         
         BOOST_TEST(array1.at(2) == 2);
+        BOOST_TEST(array1Const.at(2) == 2);
         BOOST_TEST(array1[3] == 3);
+        BOOST_TEST(array1Const[3] == 3);
         BOOST_TEST(array1.front() == 0);
+        BOOST_TEST(array1Const.front() == 0);
         BOOST_TEST(array1.back() == 4);
+        BOOST_TEST(array1Const.back() == 4);
     }
 BOOST_AUTO_TEST_SUITE_END() // NOLINT(cert-err58-cpp)
