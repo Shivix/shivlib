@@ -15,16 +15,16 @@ namespace ShivLib{
         using const_reverse_iterator = const std::reverse_iterator<const T*>;
         using reference = T&;
         using const_reference = const T&;
-
-        T m_data[numOfElems];
+        
+        T elems[numOfElems];
         
         constexpr T* 
         data() noexcept{
-            return m_data;
+            return elems;
         }
         constexpr const T*
         data() const noexcept{
-            return m_data;
+            return elems;
         }
         
         void 
@@ -106,6 +106,11 @@ namespace ShivLib{
         operator != (const array& other) const{
             return !(this == other);
         }
+    };
+    
+    template<typename T>
+    class array<T, 0>{ // allows the creation of size 0 arrays
+        
     };
 }
 
