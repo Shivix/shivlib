@@ -6,7 +6,7 @@
 
 namespace ShivLib{
     template<typename T, std::size_t numOfElems>
-    class array{
+    class array{ // no constuctor for aggregate initialization
     public:
         using value_type = T;
         using iterator = T*;
@@ -117,6 +117,24 @@ namespace ShivLib{
                 return elems[index];
             }
         }
+        
+        constexpr reference
+        front() noexcept{
+            return *begin();
+        }
+        constexpr const_reference
+        front() const noexcept{
+            return *begin();
+        }
+
+        constexpr reference
+        back() noexcept{
+            return *(end() - 1);
+        }
+        constexpr const_reference
+        back() const noexcept{
+            return *(end() - 1);
+        }
 
         // Capacity
         [[nodiscard]] constexpr std::size_t
@@ -140,6 +158,13 @@ namespace ShivLib{
         constexpr bool
         operator != (const array& other) const{
             return !(this == other);
+        }
+        
+        // Assignment
+        template<typename T2, std::size_t numOfElems2>
+        array& operator = (const array<T2, numOfElems2>& other){
+            std::copy(other.begin(), other.end(), begin());
+            return *this;
         }
     };
     
