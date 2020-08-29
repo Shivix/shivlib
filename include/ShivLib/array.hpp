@@ -27,13 +27,13 @@ namespace ShivLib{
             return elems;
         }
         
-        void 
-        fill(const value_type& input){
+        void
+        constexpr fill(const value_type& input){
             std::fill(begin(), end(), input);
         }
         
-        void 
-        swap(array& other) noexcept{
+        void
+        constexpr swap(array& other) noexcept{
             std::swap_ranges(begin(), end(), other.begin());
         }
         
@@ -162,7 +162,8 @@ namespace ShivLib{
         
         // Assignment
         template<typename T2, std::size_t numOfElems2>
-        array& operator = (const array<T2, numOfElems2>& other){
+        constexpr array& 
+        operator = (const array<T2, numOfElems2>& other){
             std::copy(other.begin(), other.end(), begin());
             return *this;
         }
@@ -170,7 +171,150 @@ namespace ShivLib{
     
     template<typename T>
     class array<T, 0>{ // allows the creation of size 0 arrays
-        
+    public:
+        using value_type = T;
+        using iterator = T*;
+        using const_iterator = const T*;
+        using reverse_iterator = std::reverse_iterator<T*>;
+        using const_reverse_iterator = const std::reverse_iterator<const T*>;
+        using reference = T&;
+        using const_reference = const T&;
+
+        constexpr T*
+        data() noexcept{
+            return 0;
+        }
+        constexpr const T*
+        data() const noexcept{
+            return 0;
+        }
+
+        constexpr void
+        fill(const value_type&){
+        }
+
+        constexpr void
+        swap(array&) noexcept{
+        }
+
+        // Iterators
+        constexpr auto
+        begin() noexcept{
+            return iterator(this);
+        }
+        constexpr auto
+        begin() const noexcept{
+            return const_iterator(this);
+        }
+        constexpr auto
+        cbegin() const noexcept{
+            return const_iterator(this);
+        }
+        constexpr auto
+        rbegin() noexcept{
+            return reverse_iterator(end());
+        }
+        constexpr auto
+        rbegin() const noexcept{
+            return const_reverse_iterator(end());
+        }
+        constexpr auto
+        crbegin() const noexcept{
+            return const_reverse_iterator(end());
+        }
+        constexpr auto
+        end() noexcept{
+            return iterator(this);
+        }
+        constexpr auto
+        end() const noexcept{
+            return const_iterator(this);
+        }
+        constexpr auto
+        cend() const noexcept{
+            return const_iterator(this);
+        }
+        constexpr auto
+        rend() noexcept{
+            return reverse_iterator(begin());
+        }
+        constexpr auto
+        rend() const noexcept{
+            return const_reverse_iterator(begin());
+        }
+        constexpr auto
+        crend() const noexcept{
+            return const_reverse_iterator(begin());
+        }
+
+        // Element Access
+        constexpr reference
+        operator [] (const std::size_t& i) noexcept{
+            assert(!"Zero sized array");
+            return reference(i);
+        }
+        constexpr const_reference
+        operator [] (std::size_t) const noexcept{
+            assert(!"Zero sized array");
+        }
+
+        constexpr reference
+        at(std::size_t){
+            throw std::out_of_range("Accessed a zero sized array");
+        }
+        constexpr const_reference
+        at(std::size_t) const{
+            throw std::out_of_range("Accessed a zero sized array");
+        }
+
+        constexpr reference
+        front() noexcept{
+            throw std::out_of_range("Accessed a zero sized array");
+        }
+        constexpr const_reference
+        front() const noexcept{
+            throw std::out_of_range("Accessed a zero sized array");
+        }
+
+        constexpr reference
+        back() noexcept{
+            throw std::out_of_range("Accessed a zero sized array");
+        }
+        constexpr const_reference
+        back() const noexcept{
+            throw std::out_of_range("Accessed a zero sized array");
+        }
+
+        // Capacity
+        [[nodiscard]] constexpr std::size_t
+        size() const noexcept{
+            return 0;
+        }
+        [[nodiscard]] constexpr std::size_t
+        max_size() const noexcept{
+            return 0;
+        }
+        [[nodiscard]] constexpr bool
+        empty() const noexcept{
+            return true;
+        }
+
+        // Comparison
+        constexpr bool
+        operator == (const array& other) const{
+            return std::equal(begin(), end(), other.begin());
+        }
+        constexpr bool
+        operator != (const array& other) const{
+            return !(*this == other);
+        }
+
+        // Assignment
+        template<typename T2, std::size_t numOfElems2>
+        constexpr array<T, 0>&
+        operator = (const array<T2, numOfElems2>&){
+            return *this;
+        }
     };
 }
 
