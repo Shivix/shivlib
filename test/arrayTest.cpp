@@ -42,8 +42,9 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         ShivLib::array<int, 5> array1{0, 1, 2, 3, 4};
         BOOST_TEST(array1.size() == std::size_t(5));
         BOOST_TEST(array1.max_size() == std::size_t(5));
-        //ShivLib::array<int, 0> array1{};
-        //BOOST_TEST(array1.empty() == true);
+        ShivLib::array<int, 0> array2{};
+        BOOST_TEST(array2.empty() == true);
+        BOOST_TEST(array1.empty() == false);
     }
 
     BOOST_AUTO_TEST_CASE(access_test){ // NOLINT(cert-err58-cpp)
@@ -59,5 +60,14 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         BOOST_TEST(array1Const.front() == 0);
         BOOST_TEST(array1.back() == 4);
         BOOST_TEST(array1Const.back() == 4);
+    }
+
+    BOOST_AUTO_TEST_CASE(zero_sized_test){ // NOLINT(cert-err58-cpp)
+
+        [[maybe_unused]] ShivLib::array<int, 0> array1{};
+        
+        //BOOST_TEST(array1.at(2) == 2);
+        //BOOST_TEST(array1[3] == 3);
+        
     }
 BOOST_AUTO_TEST_SUITE_END() // NOLINT(cert-err58-cpp)
