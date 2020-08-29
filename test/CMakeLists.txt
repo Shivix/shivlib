@@ -5,9 +5,12 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(INCLUDES
         ../include/ShivLib/matrix.hpp
-        ../include/ShivLib/array.hpp ../include/ShivLib/vector.hpp)
+        ../include/ShivLib/array.hpp
+        ../include/ShivLib/vector.hpp)
 set(TESTSRC
-        matrixTest.cpp arrayTest.cpp vectorTest.cpp)
+        matrixTest.cpp
+        arrayTest.cpp
+        vectorTest.cpp)
 
 find_package(Boost REQUIRED COMPONENTS system)
 
