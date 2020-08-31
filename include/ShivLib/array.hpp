@@ -26,14 +26,14 @@ namespace ShivLib{
         data() const noexcept{
             return elems;
         }
-        
-        void
-        constexpr fill(const value_type& input){
+
+        constexpr void
+        fill(const value_type& input){
             std::fill(begin(), end(), input);
         }
-        
-        void
-        constexpr swap(array& other) noexcept{
+
+        constexpr void
+        swap(array& other) noexcept{
             std::swap_ranges(begin(), end(), other.begin());
         }
         
