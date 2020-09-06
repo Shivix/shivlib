@@ -1,12 +1,225 @@
 #ifndef SHIVLIB_VECTOR_HPP
 #define SHIVLIB_VECTOR_HPP
 
+#include <iterator>
+#include <cassert>
 
+template<typename T>
 class vector{
+public:
+    using value_type = T;
+    using pointer = T*;
+    using iterator = T*;
+    using const_iterator = const T*;
+    using reverse_iterator = std::reverse_iterator<T*>;
+    using const_reverse_iterator = const std::reverse_iterator<const T*>;
+    using reference = T&;
+    using const_reference = const T&;
+    using rvalue_reference = T&&;
+    
+    vector(std::size_t size){
+        reallocate(size);
+    }
+    
+    vector(std::initializer_list<value_type> input):
+    m_size(input.size()),
+    m_capacity(input.size()) // ?
+    {
+        reallocate(input.size());
+        int i;
+        for(auto&& elem: input){
+            m_data[i++] = elem;
+        }
+    }
+    
+    ~vector(){
+        ::operator delete(m_data, m_capacity * sizeof(value_type));
+    }
+private:
+    
+    pointer m_data{nullptr};
+    
+    std::size_t m_size;
+    std::size_t m_capacity;
+    
+    void reallocate(std::size_t newCapacity){
+        auto newData = (pointer)::operator new(newCapacity * sizeof(value_type));
+        
+        if(newCapacity < m_size){ // own function? if shrink so original size
+            m_size = newCapacity;
+        }
+        for(std::size_t i = 0; i < m_size; ++i){ // def own func maybe if put in
+            newData[i] = std::move(m_data[i]);   // copy/move constr it can be raii?
+        }                                        // technically is almost raii atm
+        for(std::size_t i = 0; i < m_size; ++i){
+            m_data[i].~value_type();
+        }
+        
+        ::operator delete(m_data, m_capacity * sizeof(value_type));// make nullptr??
+        m_data = newData;
+        m_capacity = newCapacity;
+    }
 
+public:
+    // adding elements
+    void push_back(reference value){
+        if(m_size >= m_capacity){
+            reallocate(m_capacity * 2);
+        }
+        m_data[m_size] = value;
+        ++m_size;
+    }
+
+    template<typename... args>
+    reference emplace_back(args&&... values){ // can avoid a copy/ move by creating the object in place
+        if(m_size >= m_capacity){
+            reallocate(m_capacity * 2);
+        }
+        new(&m_data[m_size]) value_type(std::forward<args>(values)...);
+        
+        return m_data[m_size++];
+    }
     
+    void reserve(std::size_t elemsToReserve){
+        reallocate(elemsToReserve);
+    }
     
+    void resize(std::size_t elemsToResize){
+        
+        reallocate(elemsToResize);
+    }
     
+    // removing elements
+    void pop_back(){ // TODO: doesnt resize
+        if(m_size > 0){
+            --m_size;
+            m_data[m_size].~value_type();
+        }
+    }
+    
+    void clear(){
+        for(std::size_t i = 0; i < m_size; ++i){
+            m_data[i].~value_type();
+        }
+        m_size = 0;
+    }
+    // swap & fill
+    constexpr void
+    fill(const value_type& input){
+        std::fill(begin(), end(), input);
+    }
+    constexpr void
+    swap(vector& other) noexcept{
+        std::swap_ranges(begin(), end(), other.begin());
+    }
+    
+    // Element Access
+    constexpr reference
+    operator [] (std::size_t index) noexcept{
+        assert((index < m_size)&&("Index out of range"));
+        return m_data[index];
+    }
+    constexpr const_reference
+    operator [] (std::size_t index) const noexcept{
+        assert((index < m_size)&&("Index out of range"));
+        return m_data[index];
+    }
+
+    constexpr reference
+    at(std::size_t index){
+        if(index >= m_size){
+            throw std::out_of_range("Element out of range");
+        }
+        else{
+            return m_data[index];
+        }
+    }
+    constexpr const_reference
+    at(std::size_t index) const{
+        if(index >= m_size){
+            throw std::out_of_range("Element out of range");
+        }
+        else{
+            return m_data[index];
+        }
+    }
+    // Iterators
+    constexpr auto
+    begin() noexcept{
+        return iterator(m_data);
+    }
+    constexpr auto
+    begin() const noexcept{
+        return const_iterator(m_data);
+    }
+    constexpr auto
+    cbegin() const noexcept{
+        return const_iterator(m_data);
+    }
+    constexpr auto
+    rbegin() noexcept{
+        return reverse_iterator(end());
+    }
+    constexpr auto
+    rbegin() const noexcept{
+        return const_reverse_iterator(end());
+    }
+    constexpr auto
+    crbegin() const noexcept{
+        return const_reverse_iterator(end());
+    }
+    constexpr auto
+    end() noexcept{
+        return iterator(m_data + m_size);
+    }
+    constexpr auto
+    end() const noexcept{
+        return const_iterator(m_data + m_size);
+    }
+    constexpr auto
+    cend() const noexcept{
+        return const_iterator(m_data + m_size);
+    }
+    constexpr auto
+    rend() noexcept{
+        return reverse_iterator(begin());
+    }
+    constexpr auto
+    rend() const noexcept{
+        return const_reverse_iterator(begin());
+    }
+    constexpr auto
+    crend() const noexcept{
+        return const_reverse_iterator(begin());
+    }
+    
+    // Capacity
+    [[nodiscard]] constexpr std::size_t
+    size() const noexcept{
+        return m_size;
+    }
+    [[nodiscard]] constexpr std::size_t
+    max_size() const noexcept{
+        return m_capacity;
+    }
+    [[nodiscard]] constexpr std::size_t
+    capacity() const noexcept{
+        return m_capacity;
+    }
+    [[nodiscard]] constexpr bool
+    empty() const noexcept{
+        return size() == 0;
+    }
+    
+    // comparison
+    constexpr bool
+    operator == (const vector& other) const{
+        return std::equal(begin(), end(), other.begin());
+    }
+    constexpr bool
+    operator != (const vector& other) const{
+        return !(*this == other);
+    }
 };
 
 
