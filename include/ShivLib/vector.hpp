@@ -26,7 +26,7 @@ public:
     m_capacity(input.size()) // ?
     {
         reallocate(input.size());
-        int i;
+        int i = 0;
         for(auto&& elem: input){
             m_data[i++] = elem;
         }
@@ -219,6 +219,18 @@ public:
     constexpr bool
     operator != (const vector& other) const{
         return !(*this == other);
+    }
+
+    constexpr const_iterator& // pre-increment
+    operator ++ () const{
+        ++m_data;
+        return *this;
+    }
+    constexpr const_iterator // post-increment
+    operator ++ (int) const{
+        const_iterator temp = *this;
+        ++m_data;
+        return temp;
     }
 };
 
