@@ -52,7 +52,7 @@ namespace ShivLib{
                 m_size = newCapacity;
             }
             for(std::size_t i = 0; i < m_size; ++i){ // def own func maybe if put in
-                newData[i] = std::move(m_data[i]);   // copy/move constr it can be raii?
+                new (&newData[i]) T(std::move(m_data[i]));   // copy/move constr it can be raii?
             }                                        // technically is almost raii atm
             for(std::size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
@@ -257,35 +257,62 @@ namespace ShivLib{
     class vector_iterator{
         using pointer = typename myVector::pointer;
         using const_iterator = typename myVector::const_iterator;
+        using reference = typename myVector::reference;
+        using const_reference = typename myVector::const_reference;
 
-        pointer ptr;
+        pointer m_ptr;
 
-        constexpr const_iterator&
-        // pre-increment
-        operator++() const{
-            ++ptr;
+    public:
+        constexpr vector_iterator& // pre-increment
+        operator++(){
+            ++m_ptr;
             return *this;
         }
-
-        constexpr const_iterator // post-increment
-        operator++(int) const{
+        constexpr vector_iterator // post-increment
+        operator++(int){
             const_iterator temp = *this;
-            ++ptr;
+            ++m_ptr;
+            return temp;
+        }
+        constexpr vector_iterator& // pre-decrement
+        operator--(){
+            --m_ptr;
+            return *this;
+        }
+        constexpr vector_iterator // post-decrement
+        operator--(int){
+            const_iterator temp = *this;
+            --m_ptr;
             return temp;
         }
 
-        constexpr const_iterator&
-        // pre-decrement
-        operator--() const{
-            --ptr;
-            return *this;
+        // Element Access
+        [[nodiscard]] constexpr reference
+        operator[](std::size_t index) noexcept{
+            return m_ptr + index;
         }
 
-        constexpr const_iterator // post-decrement
-        operator--(int) const{
-            const_iterator temp = *this;
-            --ptr;
-            return temp;
+        [[nodiscard]] constexpr const_reference
+        operator[](std::size_t index) const noexcept{
+            return m_ptr + index;
+        }
+        
+        constexpr pointer operator -> (){
+            return m_ptr;
+        }
+        constexpr reference operator * (){
+            return *m_ptr;
+        }
+
+        // comparison
+        constexpr bool
+        operator==(const vector_iterator& other) const{
+            return m_ptr == other.m_ptr;
+        }
+
+        constexpr bool
+        operator!=(const vector_iterator& other) const{
+            return !(*this == other);
         }
     };
 }
