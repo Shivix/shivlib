@@ -114,12 +114,12 @@ public:
     }
     
     // Element Access
-    constexpr reference
+    [[nodiscard]] constexpr reference
     operator [] (std::size_t index) noexcept{
         assert((index < m_size)&&("Index out of range"));
         return m_data[index];
     }
-    constexpr const_reference
+    [[nodiscard]] constexpr const_reference
     operator [] (std::size_t index) const noexcept{
         assert((index < m_size)&&("Index out of range"));
         return m_data[index];
@@ -220,19 +220,38 @@ public:
     operator != (const vector& other) const{
         return !(*this == other);
     }
+    
 
-    constexpr const_iterator& // pre-increment
-    operator ++ () const{
-        ++m_data;
-        return *this;
-    }
-    constexpr const_iterator // post-increment
-    operator ++ (int) const{
-        const_iterator temp = *this;
-        ++m_data;
-        return temp;
-    }
+    // Iterator class
+    template <class myVector>
+    class vector_const_iterator{
+        using pointer = typename myVector::pointer;
+
+        pointer ptr;
+
+        constexpr const_iterator& // pre-increment
+        operator ++ () const{
+            ++ptr;
+            return *this;
+        }
+        constexpr const_iterator // post-increment
+        operator ++ (int) const{
+            const_iterator temp = *this;
+            ++ptr;
+            return temp;
+        }
+        constexpr const_iterator& // pre-decrement
+        operator -- () const{
+            --ptr;
+            return *this;
+        }
+        constexpr const_iterator // post-decrement
+        operator -- (int) const{
+            const_iterator temp = *this;
+            --ptr;
+            return temp;
+        }
+    };
+
 };
-
-
 #endif //SHIVLIB_VECTOR_HPP
