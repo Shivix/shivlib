@@ -22,6 +22,8 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
         
         vector1.resize(20);
         BOOST_TEST(vector1.size() == 20U);
+        BOOST_TEST(vector1.max_size() == 20U);
+        BOOST_TEST(vector1.capacity() == 20U);
     }
 
     BOOST_AUTO_TEST_CASE(removing_elements_test){ // NOLINT(cert-err58-cpp)
@@ -33,8 +35,23 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
         
         vector1.clear();
         BOOST_TEST(vector1.empty() == true);
+    }
+
+    BOOST_AUTO_TEST_CASE(iterator_test){ // NOLINT(cert-err58-cpp)
+
+        ShivLib::vector<int> vector1{1, 0, 2, 3, 4};
+        ShivLib::vector<int> vectorOrdered{0, 1, 2, 3, 4};
+        ShivLib::vector<int> vectorReversed{4, 3, 2, 1, 0};
         
-        vector1.resize(20);
-        BOOST_TEST(vector1.size() == 20U);
+        BOOST_TEST((*std::find(vector1.cbegin(), vector1.cend(), 1)) == 1);
+        BOOST_TEST((*std::find(vector1.crbegin(), vector1.crend(), 0)) == 0);
+        std::sort(vector1.begin(), vector1.end());
+        BOOST_TEST(vector1 == vectorOrdered);
+        std::sort(vector1.rbegin(), vector1.rend());
+        BOOST_TEST(vector1 == vectorReversed);
+        for(auto&& i: vector1){
+            i = 7;
+        }
+        BOOST_TEST(vector1[4] == 7);
     }
 BOOST_AUTO_TEST_SUITE_END() // NOLINT(cert-err58-cpp)
