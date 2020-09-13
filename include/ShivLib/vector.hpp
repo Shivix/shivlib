@@ -18,14 +18,13 @@ namespace ShivLib{
         using const_reference = const T&;
         using rvalue_reference = T&&;
 
-        vector(std::size_t size){
+        vector(std::size_t size):
+        m_size(size){
             reallocate(size);
         }
 
         vector(std::initializer_list<value_type> input):
-                m_size(input.size()),
-                m_capacity(input.size()) // ?
-        {
+                m_size(input.size()){
             reallocate(input.size());
             int i = 0;
             for(auto&& elem: input){
@@ -41,19 +40,19 @@ namespace ShivLib{
 
         pointer m_data{nullptr};
 
-        std::size_t m_size;
-        std::size_t m_capacity;
+        std::size_t m_size{0};
+        std::size_t m_capacity{0};
 
         void
         reallocate(std::size_t newCapacity){
             auto newData = (pointer)::operator new(newCapacity * sizeof(value_type));
 
-            if(newCapacity < m_size){ // own function? if shrink so original size
+            if(newCapacity < m_size){
                 m_size = newCapacity;
             }
             for(std::size_t i = 0; i < m_size; ++i){ // def own func maybe if put in
                 new (&newData[i]) T(std::move(m_data[i]));   // copy/move constr it can be raii?
-            }                                        // technically is almost raii atm
+            }
             for(std::size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
             }
@@ -92,7 +91,6 @@ namespace ShivLib{
 
         void
         resize(std::size_t elemsToResize){
-
             reallocate(elemsToResize);
         }
 
