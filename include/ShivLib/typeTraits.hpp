@@ -20,7 +20,7 @@ namespace ShivLib{
         bool check = false;
     };
     template<typename T>
-    struct is_lvalue_reference<T&>{ // this overloaded struct will be used if it is an lvalue
+    struct is_lvalue_reference<T&>{ // this explicitly instantiated template will be used when the argument it is an lvalue
         bool check = true;
     };
     
@@ -29,7 +29,7 @@ namespace ShivLib{
         bool check = false;
     };
     template<typename T>
-    struct is_rvalue_reference<T&&>{ // this overloaded struct will be used if it is an rvalue
+    struct is_rvalue_reference<T&&>{ // this explicitly instantiated template will be used when the argument it is an rvalue
         bool check = true;
     };
 };
