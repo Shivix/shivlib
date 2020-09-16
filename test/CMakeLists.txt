@@ -6,7 +6,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(INCLUDES
         ../include/ShivLib/matrix.hpp
         ../include/ShivLib/array.hpp
-        ../include/ShivLib/vector.hpp ../include/ShivLib/utility.hpp ../include/ShivLib/typeTraits.hpp)
+        ../include/ShivLib/vector.hpp
+        ../include/ShivLib/utility.hpp
+        ../include/ShivLib/typeTraits.hpp
+        ../include/ShivLib/exception.hpp
+        ../include/ShivLib/thread.hpp
+        ../include/ShivLib/memory.hpp
+        ../include/ShivLib/string.hpp
+        ../include/ShivLib/mutex.hpp
+        ../include/ShivLib/map.hpp
+        ../include/ShivLib/algorithm.hpp)
+
 set(TESTSRC
         matrixTest.cpp
         arrayTest.cpp
