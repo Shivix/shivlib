@@ -128,7 +128,6 @@ namespace ShivLib{
             assert((index < m_size) && ("Index out of range"));
             return m_data[index];
         }
-
         [[nodiscard]] constexpr const_reference
         operator[](std::size_t index) const noexcept{
             assert((index < m_size) && ("Index out of range"));
@@ -144,7 +143,6 @@ namespace ShivLib{
                 return m_data[index];
             }
         }
-
         constexpr const_reference
         at(std::size_t index) const{
             if(index >= m_size){
@@ -153,6 +151,24 @@ namespace ShivLib{
             else{
                 return m_data[index];
             }
+        }
+
+        constexpr reference
+        front() noexcept{
+            return *begin();
+        }
+        constexpr const_reference
+        front() const noexcept{
+            return *begin();
+        }
+
+        constexpr reference
+        back() noexcept{
+            return *(end() - 1);
+        }
+        constexpr const_reference
+        back() const noexcept{
+            return *(end() - 1);
         }
 
         // Iterators
