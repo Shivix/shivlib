@@ -18,7 +18,7 @@ namespace ShivLib{
         using const_reference = const T&;
         using rvalue_reference = T&&;
 
-        vector(std::size_t size):
+        explicit vector(std::size_t size):
         m_size(size){
             reallocate(size);
         }
