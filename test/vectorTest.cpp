@@ -1,4 +1,4 @@
-#include "../include/ShivLib/vector.hpp"
+#include "../include/ShivLib/dataStructures/vector.hpp"
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
