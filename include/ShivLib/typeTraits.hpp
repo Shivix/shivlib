@@ -17,20 +17,20 @@ namespace ShivLib{
     
     template<typename>
     struct is_lvalue_reference{
-        bool check = false;
+        static const bool check = false;
     };
     template<typename T>
     struct is_lvalue_reference<T&>{ // this explicitly instantiated template will be used when the argument it is an lvalue
-        bool check = true;
+        static const bool check = true;
     };
     
     template<typename>
     struct is_rvalue_reference{
-        bool check = false;
+        static const bool check = false;
     };
     template<typename T>
     struct is_rvalue_reference<T&&>{ // this explicitly instantiated template will be used when the argument it is an rvalue
-        bool check = true;
+        static const bool check = true;
     };
 };
 
