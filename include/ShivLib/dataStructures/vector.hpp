@@ -46,7 +46,7 @@ namespace ShivLib{
 
         void
         reallocate(const std::size_t& newCapacity){
-            std::unique_ptr<T> newData = (pointer)::operator new(newCapacity * sizeof(value_type));
+            auto newData = (pointer)::operator new(newCapacity * sizeof(value_type));
 
             if(newCapacity < m_size){
                 m_size = newCapacity;
