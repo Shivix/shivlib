@@ -51,14 +51,14 @@ namespace ShivLib{
             if(newCapacity < m_size){
                 m_size = newCapacity;
             }
-            for(std::size_t i = 0; i < m_size; ++i){ // def own func maybe if put in
-                new(&newData[i]) value_type(std::move(m_data[i]));   // copy/move constr it can be raii?
+            for(std::size_t i = 0; i < m_size; ++i){
+                new(&newData[i]) value_type(std::move(m_data[i]));
             }
             for(std::size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
             }
 
-            ::operator delete(m_data, m_capacity * sizeof(value_type));// make nullptr??
+            ::operator delete(m_data, m_capacity * sizeof(value_type));
             m_data = newData;
             m_capacity = newCapacity;
         }
