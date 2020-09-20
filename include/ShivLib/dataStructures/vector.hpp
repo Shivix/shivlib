@@ -3,6 +3,7 @@
 
 #include <iterator>
 #include <cassert>
+#include <memory>
 
 namespace ShivLib{
     template<typename T>
@@ -44,14 +45,14 @@ namespace ShivLib{
         std::size_t m_capacity{0};
 
         void
-        reallocate(std::size_t newCapacity){
-            auto newData = (pointer)::operator new(newCapacity * sizeof(value_type));
+        reallocate(const std::size_t& newCapacity){
+            std::unique_ptr<T> newData = (pointer)::operator new(newCapacity * sizeof(value_type));
 
             if(newCapacity < m_size){
                 m_size = newCapacity;
             }
             for(std::size_t i = 0; i < m_size; ++i){ // def own func maybe if put in
-                new (&newData[i]) T(std::move(m_data[i]));   // copy/move constr it can be raii?
+                new(&newData[i]) value_type(std::move(m_data[i]));   // copy/move constr it can be raii?
             }
             for(std::size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
@@ -85,12 +86,12 @@ namespace ShivLib{
         }
 
         void
-        reserve(std::size_t elemsToReserve){
+        reserve(const std::size_t& elemsToReserve){
             reallocate(elemsToReserve);
         }
 
         void
-        resize(std::size_t elemsToResize){
+        resize(const std::size_t& elemsToResize){
             reallocate(elemsToResize);
         }
 
