@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     
     BOOST_AUTO_TEST_CASE(adding_elements_test){ // NOLINT(cert-err58-cpp)
 
-        ShivLib::vector<int> vector1{2};
+        ShivLib::vector<int> vector1(2);
         int a = 1;
         ShivLib::vector<int> vector1Expected{1, 2};
         vector1.push_back(a);
