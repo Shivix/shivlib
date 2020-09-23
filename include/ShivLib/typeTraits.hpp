@@ -165,6 +165,10 @@ namespace ShivLib{
     inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
     template<typename T>
     inline constexpr bool is_reference_v = is_reference<T>::value;
+    template<typename T>
+    inline constexpr bool is_integral_v = is_integral<T>::value;
+    template<typename T>
+    inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
 #endif
 }
 
