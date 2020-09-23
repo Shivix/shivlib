@@ -1,6 +1,6 @@
 #ifndef SHIVLIB_TYPETRAITS_HPP
 #define SHIVLIB_TYPETRAITS_HPP
-
+#include <boost/type_traits.hpp>
 namespace ShivLib{
     // remove refness of a type
     template<typename T>
@@ -16,7 +16,7 @@ namespace ShivLib{
         using type = T;
     };
     template<typename T>
-    using remove_reference_t = typename remove_reference<T>::type;
+    using remove_reference_t = typename remove_reference<T>::type; // add partially specialised aliases pls
     
     // remove qualifier of a type
     template<typename T>
@@ -80,12 +80,8 @@ namespace ShivLib{
         using type = isFalse;
     };
     
-    template<bool, typename T = void>
-    struct enable_if{};
-    template<typename T>
-    struct enable_if<true, T>{
-        using type = T;
-    };
+    template<bool condition, typename isTrue, typename isFalse>
+    using conditional_t = typename conditional<condition, isTrue, isFalse>::type;
     
     template<typename...>
     struct or_conditional;
@@ -96,7 +92,7 @@ namespace ShivLib{
     template<typename T1, typename T2>
     struct or_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
     template<typename... args>
-    using or_conditional_t = typename or_conditional<args...>::value;
+    inline constexpr bool or_conditional_v = or_conditional<args...>::value;
     
     template<typename...>
     struct and_conditional;
@@ -107,7 +103,23 @@ namespace ShivLib{
     template<typename T1, typename T2>
     struct and_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
     template<typename... args>
-    using and_conditional_t = typename and_conditional<args...>::value;
+    inline constexpr bool and_conditional_v = and_conditional<args...>::value;
+    
+    // enable_if
+    template<bool, typename T = void>
+    struct enable_if{};
+    template<typename T>
+    struct enable_if<true, T>{
+        using type = T;
+    };
+
+    // is_same
+    template<typename T1, typename T2>
+    struct is_same: false_type {};
+    template<typename T>
+    struct is_same<T, T>: true_type {};
+    template<typename T1, typename T2>
+    inline constexpr bool is_same_v = is_same<T1, T2>::value;
     
     // check reference type
     template<typename>
@@ -115,19 +127,19 @@ namespace ShivLib{
     template<typename T>
     struct is_lvalue_reference<T&>: public true_type{}; // this partially specialised template will be used when the argument it is an lvalue
     template<typename T>
-    using is_lvalue_reference_t = typename is_lvalue_reference<T>::value;
+    inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
     
     template<typename>
     struct is_rvalue_reference: public false_type{};
     template<typename T>
     struct is_rvalue_reference<T&&>: public true_type{}; // this partially specialised template will be used when the argument it is an rvalue
     template<typename T>
-    using is_rvalue_reference_t = typename is_rvalue_reference<T>::value;
+    inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
     
     template<typename T>
     struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
     template<typename T>
-    using is_reference_t = typename is_reference<T>::value;
+    inline constexpr bool is_reference_v = is_reference<T>::value;
     
     // integral check
     template<typename>
@@ -167,7 +179,7 @@ namespace ShivLib{
     struct is_integral: public is_integral_helper<remove_cv_t<T>>::type {};
     
     template<typename T>
-    using is_integral_t = typename is_integral<T>::value;
+    inline constexpr bool is_integral_v = is_integral<T>::value;
     
     // floating point check
     template<typename>
@@ -183,7 +195,14 @@ namespace ShivLib{
     struct is_floating_point: public is_floating_point_helper<remove_cv_t<T>>::type {};
     
     template<typename T>
-    using is_floating_point_t = typename is_floating_point<T>::value;
+    inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
+    
+    // arithmetic type check
+    template<typename T>
+    struct is_arithmetic : public integral_constant<is_integral_v<T> || is_floating_point_v<T>> {};
+
+    template<typename T>
+    inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
     
     // void check -- const/ volatile qualifiers do not change outcome
     template<typename>
