@@ -16,7 +16,8 @@ set(INCLUDES
         ../include/ShivLib/utility.hpp
         ../include/ShivLib/typeTraits.hpp
         ../include/ShivLib/memory.hpp
-        ../include/ShivLib/cstddef.hpp)
+        ../include/ShivLib/cstddef.hpp
+        ../include/ShivLib/iterators.hpp)
 
 set(TESTSRC
         matrixTest.cpp
