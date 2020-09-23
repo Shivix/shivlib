@@ -15,6 +15,7 @@ namespace ShivLib{
     struct remove_reference<T&&>{
         using type = T;
     };
+    
     // integral constants
     template<typename T, T v>
     struct integral_constant{
@@ -33,6 +34,41 @@ namespace ShivLib{
     using true_type = integral_constant<bool, true>;
     using false_type = integral_constant<bool, false>;
     
+    // conditionals
+    template<bool condition, typename ifTrue, typename ifFalse>
+    struct conditional{
+        using type = ifTrue;
+    };
+    template<typename ifTrue, typename ifFalse>
+    struct conditional<false, ifTrue, ifFalse>{
+        using type = ifFalse;
+    };
+    
+    template<bool, typename T = void>
+    struct enable_if{};
+    template<typename T>
+    struct enable_if<true, T>{
+        using type = T;
+    };
+    
+    template<typename...>
+    struct or_conditional;
+    template<>
+    struct or_conditional<>: public false_type{};
+    template<typename T1>
+    struct or_conditional<T1>: public T1{};
+    template<typename T1, typename T2>
+    struct or_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
+
+    template<typename...>
+    struct and_conditional;
+    template<>
+    struct and_conditional<>: public true_type{};
+    template<typename T1>
+    struct and_conditional<T1>: public T1{};
+    template<typename T1, typename T2>
+    struct and_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
+    
     // check reference type
     template<typename>
     struct is_lvalue_reference: public false_type{};
@@ -42,6 +78,20 @@ namespace ShivLib{
     struct is_rvalue_reference: public false_type{};
     template<typename T>
     struct is_rvalue_reference<T&&>: public true_type{}; // this explicitly instantiated template will be used when the argument it is an rvalue
+    template<typename T>
+    struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
+    
+    // integral check
+    
+    // variable templates C++17 needed
+#if __cplusplus >= 201703L
+    template<typename T>
+    inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
+    template<typename T>
+    inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
+    template<typename T>
+    inline constexpr bool is_reference_v = is_reference<T>::value;
+#endif
 }
 
 
