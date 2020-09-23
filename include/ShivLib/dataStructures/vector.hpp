@@ -19,7 +19,7 @@ namespace ShivLib{
         using const_reference = const T&;
         using rvalue_reference = T&&;
 
-        explicit vector(std::size_t size):
+        explicit vector(size_t size):
         m_size(size){
             reallocate(size);
         }
@@ -41,20 +41,20 @@ namespace ShivLib{
 
         pointer m_data{nullptr};
 
-        std::size_t m_size{0};
-        std::size_t m_capacity{0};
+        size_t m_size{0};
+        size_t m_capacity{0};
 
         void
-        reallocate(const std::size_t& newCapacity){
+        reallocate(const size_t& newCapacity){
             auto newData = (pointer)::operator new(newCapacity * sizeof(value_type));
 
             if(newCapacity < m_size){
                 m_size = newCapacity;
             }
-            for(std::size_t i = 0; i < m_size; ++i){
+            for(size_t i = 0; i < m_size; ++i){
                 new(&newData[i]) value_type(std::move(m_data[i]));
             }
-            for(std::size_t i = 0; i < m_size; ++i){
+            for(size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
             }
 
@@ -86,12 +86,12 @@ namespace ShivLib{
         }
 
         void
-        reserve(const std::size_t& elemsToReserve){
+        reserve(const size_t& elemsToReserve){
             reallocate(elemsToReserve);
         }
 
         void
-        resize(const std::size_t& elemsToResize){
+        resize(const size_t& elemsToResize){
             reallocate(elemsToResize);
         }
 
@@ -106,7 +106,7 @@ namespace ShivLib{
 
         void
         clear(){
-            for(std::size_t i = 0; i < m_size; ++i){
+            for(size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
             }
             m_size = 0;
@@ -125,18 +125,18 @@ namespace ShivLib{
 
         // Element Access
         [[nodiscard]] constexpr reference
-        operator[](std::size_t index) noexcept{
+        operator[](size_t index) noexcept{
             assert((index < m_size) && ("Index out of range"));
             return m_data[index];
         }
         [[nodiscard]] constexpr const_reference
-        operator[](std::size_t index) const noexcept{
+        operator[](size_t index) const noexcept{
             assert((index < m_size) && ("Index out of range"));
             return m_data[index];
         }
 
         constexpr reference
-        at(std::size_t index){
+        at(size_t index){
             if(index >= m_size){
                 throw std::out_of_range("Element out of range");
             }
@@ -145,7 +145,7 @@ namespace ShivLib{
             }
         }
         constexpr const_reference
-        at(std::size_t index) const{
+        at(size_t index) const{
             if(index >= m_size){
                 throw std::out_of_range("Element out of range");
             }
@@ -234,17 +234,17 @@ namespace ShivLib{
         }
 
         // Capacity
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         size() const noexcept{
             return m_size;
         }
 
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         max_size() const noexcept{
             return m_capacity;
         }
 
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         capacity() const noexcept{
             return m_capacity;
         }
@@ -303,12 +303,12 @@ namespace ShivLib{
 
         // Element Access
         [[nodiscard]] constexpr reference
-        operator[](std::size_t index) noexcept{
+        operator[](size_t index) noexcept{
             return m_ptr + index;
         }
 
         [[nodiscard]] constexpr const_reference
-        operator[](std::size_t index) const noexcept{
+        operator[](size_t index) const noexcept{
             return m_ptr + index;
         }
         

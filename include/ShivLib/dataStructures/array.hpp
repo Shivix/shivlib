@@ -3,9 +3,10 @@
 
 #include <iterator>
 #include <cassert>
+#include "../cstddef.hpp"
 
 namespace ShivLib{
-    template<typename T, std::size_t numOfElems>
+    template<typename T, size_t numOfElems>
     class array{ // no constuctor for aggregate initialization
     public:
         using value_type = T;
@@ -89,18 +90,18 @@ namespace ShivLib{
         
         // Element Access
         constexpr reference 
-        operator [] (std::size_t index) noexcept{
+        operator [] (size_t index) noexcept{
             assert((index < numOfElems)&&("Index out of range"));
             return elems[index];
         }
         constexpr const_reference
-        operator [] (std::size_t index) const noexcept{
+        operator [] (size_t index) const noexcept{
             assert((index < numOfElems)&&("Index out of range"));
             return elems[index];
         }
         
         constexpr reference 
-        at(std::size_t index){
+        at(size_t index){
             if(index >= numOfElems){
                 throw std::out_of_range("Element out of range");
             }
@@ -109,7 +110,7 @@ namespace ShivLib{
             }
         }
         constexpr const_reference
-        at(std::size_t index) const{
+        at(size_t index) const{
             if(index >= numOfElems){
                 throw std::out_of_range("Element out of range");
             }
@@ -137,11 +138,11 @@ namespace ShivLib{
         }
 
         // Capacity
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         size() const noexcept{
             return numOfElems;
         }
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         max_size() const noexcept{
             return numOfElems;
         }
@@ -249,21 +250,21 @@ namespace ShivLib{
 
         // Element Access
         constexpr reference
-        operator [] (const std::size_t& i) noexcept{
+        operator [] (const size_t& i) noexcept{
             assert(!"Zero sized array");
             return reference(i);
         }
         constexpr const_reference
-        operator [] (std::size_t) const noexcept{
+        operator [] (size_t) const noexcept{
             assert(!"Zero sized array");
         }
 
         constexpr reference
-        at(std::size_t){
+        at(size_t){
             throw std::out_of_range("Accessed a zero sized array");
         }
         constexpr const_reference
-        at(std::size_t) const{
+        at(size_t) const{
             throw std::out_of_range("Accessed a zero sized array");
         }
 
@@ -286,11 +287,11 @@ namespace ShivLib{
         }
 
         // Capacity
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         size() const noexcept{
             return 0;
         }
-        [[nodiscard]] constexpr std::size_t
+        [[nodiscard]] constexpr size_t
         max_size() const noexcept{
             return 0;
         }
@@ -310,7 +311,7 @@ namespace ShivLib{
         }
 
         // Assignment
-        template<typename T2, std::size_t numOfElems2>
+        template<typename T2, size_t numOfElems2>
         constexpr array<T, 0>&
         operator = (const array<T2, numOfElems2>&){
             return *this;

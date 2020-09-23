@@ -6,7 +6,7 @@
 #include <cmath>
 
 namespace ShivLib{
-    template<typename T, std::size_t rows, std::size_t cols>
+    template<typename T, size_t rows, size_t cols>
     class matrix{
     public:
         using value_type = T;
@@ -30,8 +30,8 @@ namespace ShivLib{
         constexpr matrix<T, rows, cols * 2> getAugment(const matrix& other) const { // returns a matrix where the other matrix is "attached" to the original
             matrix<T, rows, cols * 2> resultMatrix = {};
             
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < resultMatrix[0].size(); ++j){
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < resultMatrix[0].size(); ++j){
                     if(j >= cols){
                         resultMatrix[i][j] = other[i][j - cols];
                     }
@@ -53,7 +53,7 @@ namespace ShivLib{
             }
             else{
                 const auto [rowEchelonFormMatrix, isNegative] = getRowEchelon(); // row echelon is calculated first to reduce the complexity down closer to O(N^2)
-                for(std::size_t i = 0; i < rows; ++i){ // determinate is the product of the main diagonal elements in a row echelon matrix
+                for(size_t i = 0; i < rows; ++i){ // determinate is the product of the main diagonal elements in a row echelon matrix
                     determinant *= rowEchelonFormMatrix[i][i];
                 }
                 if(isNegative){
@@ -65,8 +65,8 @@ namespace ShivLib{
         constexpr matrix getIdentity() const {
             matrix identityMatrix = {};
 
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){
                     if(i == j){
                         identityMatrix[i][j] = 1;
                     }
@@ -81,30 +81,30 @@ namespace ShivLib{
             
             matrix<T, rows, cols * 2> augIdentMatrix = getAugment(getIdentity()); // gets the identity matrix and then augments it onto the original matrix
             
-            const std::size_t AUG_ID_COLS = augIdentMatrix[0].size(); // all arrays within the first have the same size
+            const size_t AUG_ID_COLS = augIdentMatrix[0].size(); // all arrays within the first have the same size
             
             // replace elements based on a constant scalar from ANOTHER row
-            for(std::size_t i = 0; i < cols; ++i){
-                for(std::size_t j = 0; j < rows; ++j){
+            for(size_t i = 0; i < cols; ++i){
+                for(size_t j = 0; j < rows; ++j){
                     if(i != j){
                         T scalar = augIdentMatrix[j][i] / augIdentMatrix[i][i];
-                        for(std::size_t k = 0; k < AUG_ID_COLS; ++k){
+                        for(size_t k = 0; k < AUG_ID_COLS; ++k){
                             augIdentMatrix[j][k] -= augIdentMatrix[i][k] * scalar;
                         } 
                     }
                 }
             }
             // divide each row element by the diagonal elements that were skipped previously
-            for (std::size_t i = 0; i < rows; i++) {
+            for (size_t i = 0; i < rows; i++) {
                 T scalar = augIdentMatrix[i][i];
-                for (std::size_t j = 0; j < AUG_ID_COLS; j++) {
+                for (size_t j = 0; j < AUG_ID_COLS; j++) {
                     augIdentMatrix[i][j] = augIdentMatrix[i][j] / scalar;
                 }
             }
             // add the inverted half of the augmented matrix to it's own matrix
             matrix invertedMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){
                     invertedMatrix[i][j] = augIdentMatrix[i][j + cols];
                 }
             }
@@ -115,12 +115,12 @@ namespace ShivLib{
             
             bool isInverted = false; // keeps track of the sign of the determinant (before multiplication)
 
-            for(std::size_t pivotRow = 0; (rows < cols ? pivotRow < rows - 1 : pivotRow < cols - 1); ++pivotRow){
+            for(size_t pivotRow = 0; (rows < cols ? pivotRow < rows - 1 : pivotRow < cols - 1); ++pivotRow){
                 if(resultMatrix[pivotRow][pivotRow] == 0){ 
 
                 // swap pivot element with another non 0 element
-                    std::size_t swapRow = pivotRow;
-                    for(std::size_t i = pivotRow + 1; i < rows; i++){
+                    size_t swapRow = pivotRow;
+                    for(size_t i = pivotRow + 1; i < rows; i++){
                         if(resultMatrix[i][pivotRow] != 0){
                             swapRow = i;
                             break;
@@ -134,10 +134,10 @@ namespace ShivLib{
                     resultMatrix[swapRow].swap(resultMatrix[pivotRow]);
                 }
                 // eliminate elements in x col under x col
-                for(std::size_t targetRow = pivotRow + 1; targetRow < rows; ++targetRow){
+                for(size_t targetRow = pivotRow + 1; targetRow < rows; ++targetRow){
                     T scale = resultMatrix[targetRow][pivotRow] / resultMatrix[pivotRow][pivotRow];
                     
-                    for(std::size_t targetCol = 0; targetCol < cols; ++targetCol){
+                    for(size_t targetCol = 0; targetCol < cols; ++targetCol){
                         resultMatrix[targetRow][targetCol] -= scale * resultMatrix[pivotRow][targetCol];
                     }
                 }
@@ -150,8 +150,8 @@ namespace ShivLib{
         constexpr matrix getTranspose() const {
             matrix<T, rows, cols> transposedMatrix = {}; // rows and cols are in opposite order for transposed matrix
             
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){
                     transposedMatrix[i][j] = m_data[j][i];
                 }
             }
@@ -160,19 +160,19 @@ namespace ShivLib{
         [[nodiscard]] constexpr bool isOrthogonal() const {
             return getTranspose() == getInverse();
         }
-        [[nodiscard]] constexpr std::size_t size() const noexcept{
+        [[nodiscard]] constexpr size_t size() const noexcept{
             return rows * cols;
         }
         constexpr void swap(matrix& other) noexcept {
-            for(std::size_t i = 0; i < rows; ++i){
+            for(size_t i = 0; i < rows; ++i){
                 m_data[i].swap(other[i]);
             }
         }
         // Arithmetic operators
         constexpr matrix operator + (const matrix& other) const noexcept { 
             matrix<T, cols, rows> resultMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
                     resultMatrix[i][j] = m_data[i][j] + other[i][j];
                 }
             }
@@ -180,8 +180,8 @@ namespace ShivLib{
         }
         constexpr matrix operator + (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){ 
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){ 
                     resultMatrix[i][j] = m_data[i][j] + scalar;
                 }
             }
@@ -189,8 +189,8 @@ namespace ShivLib{
         }
         constexpr matrix operator - (const matrix& other) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
                     resultMatrix[i][j] = m_data[i][j] - other[i][j];
                 }
             }
@@ -198,8 +198,8 @@ namespace ShivLib{
         }
         constexpr matrix operator - (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){ 
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){ 
                     resultMatrix[i][j] = m_data[i][j] - scalar;
                 }
             }
@@ -208,9 +208,9 @@ namespace ShivLib{
         template<std::size_t otherRows, std::size_t otherCols>
         constexpr matrix operator * (const matrix<T, otherCols, otherRows>& other) const noexcept { 
             matrix<T, cols, otherRows> resultMatrix = {};
-            for(std::size_t i = 0; i < otherRows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){
-                    for(std::size_t k = 0; k < rows; ++k){
+            for(size_t i = 0; i < otherRows; ++i){
+                for(size_t j = 0; j < cols; ++j){
+                    for(size_t k = 0; k < rows; ++k){
                         resultMatrix[i][j] += m_data[i][k] * other[k][j];
                     }
                 }
@@ -219,22 +219,22 @@ namespace ShivLib{
         }
         constexpr matrix operator * (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){
                     resultMatrix[i][j] = m_data[i][j] * scalar;
                 }
             }
             return resultMatrix;
         }
-        template<std::size_t otherRows, std::size_t otherCols>
+        template<size_t otherRows, size_t otherCols>
         constexpr matrix operator / (matrix<T, otherCols, otherRows>& other) const noexcept {
             matrix invertedMatrix = other.getInverse();
             return (*this * invertedMatrix);
         }
         constexpr matrix operator / (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
-            for(std::size_t i = 0; i < rows; ++i){
-                for(std::size_t j = 0; j < cols; ++j){
+            for(size_t i = 0; i < rows; ++i){
+                for(size_t j = 0; j < cols; ++j){
                     resultMatrix[i][j] = m_data[i][j] / scalar;
                 }
             }
@@ -274,19 +274,19 @@ namespace ShivLib{
             *this = *this / scalar;
         }
         // element access
-        constexpr ShivLib::array<T, cols>& operator [] (const std::size_t& index) noexcept {
+        constexpr ShivLib::array<T, cols>& operator [] (const size_t& index) noexcept {
             return m_data[index];
         }
-        constexpr const ShivLib::array<T, cols>& operator [] (const std::size_t& index) const noexcept {
+        constexpr const ShivLib::array<T, cols>& operator [] (const size_t& index) const noexcept {
             return m_data[index];
         }
-        [[nodiscard]] constexpr reference at(std::size_t rowIndex, std::size_t colIndex){
+        [[nodiscard]] constexpr reference at(size_t rowIndex, size_t colIndex){
             if(rowIndex >= rows || colIndex >= cols){
                 throw std::out_of_range("Element out of range");
             }
             return m_data[rowIndex][colIndex];
         }
-        [[nodiscard]] constexpr const_reference at(std::size_t rowIndex, std::size_t colIndex) const {
+        [[nodiscard]] constexpr const_reference at(size_t rowIndex, size_t colIndex) const {
             if(rowIndex >= rows || colIndex >= cols){
                 throw std::out_of_range("Element out of range");
             }
@@ -312,7 +312,7 @@ namespace ShivLib{
         }
         // comparison operators
         constexpr friend bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
-            for(std::size_t i = 0; i < rows; ++i){
+            for(size_t i = 0; i < rows; ++i){
                 if(matrix1[i] != matrix2[i]){ // uses the ShivLib::array operator != overload and runs it for each column
                     return false;
                 }
@@ -323,7 +323,7 @@ namespace ShivLib{
             return true;
         }
         constexpr friend bool operator != (const matrix& matrix1, const matrix& matrix2) noexcept {
-            for(std::size_t i = 0; i < rows; ++i){
+            for(size_t i = 0; i < rows; ++i){
                 if(matrix1[i] == matrix2[i]){
                     return false;
                 }
