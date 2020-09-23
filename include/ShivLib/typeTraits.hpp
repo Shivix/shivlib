@@ -96,7 +96,7 @@ namespace ShivLib{
     template<typename T1, typename T2>
     struct or_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
     template<typename... args>
-    using or_conditional_v = typename or_conditional<args...>::value;
+    using or_conditional_t = typename or_conditional<args...>::value;
     
     template<typename...>
     struct and_conditional;
@@ -107,7 +107,7 @@ namespace ShivLib{
     template<typename T1, typename T2>
     struct and_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
     template<typename... args>
-    using and_conditional_v = typename and_conditional<args...>::value;
+    using and_conditional_t = typename and_conditional<args...>::value;
     
     // check reference type
     template<typename>
@@ -115,19 +115,19 @@ namespace ShivLib{
     template<typename T>
     struct is_lvalue_reference<T&>: public true_type{}; // this partially specialised template will be used when the argument it is an lvalue
     template<typename T>
-    using is_lvalue_reference_v = typename is_lvalue_reference<T>::value;
+    using is_lvalue_reference_t = typename is_lvalue_reference<T>::value;
     
     template<typename>
     struct is_rvalue_reference: public false_type{};
     template<typename T>
     struct is_rvalue_reference<T&&>: public true_type{}; // this partially specialised template will be used when the argument it is an rvalue
     template<typename T>
-    using is_rvalue_reference_v = typename is_rvalue_reference<T>::value;
+    using is_rvalue_reference_t = typename is_rvalue_reference<T>::value;
     
     template<typename T>
     struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
     template<typename T>
-    using is_reference_v = typename is_reference<T>::value;
+    using is_reference_t = typename is_reference<T>::value;
     
     // integral check
     template<typename>
@@ -167,7 +167,7 @@ namespace ShivLib{
     struct is_integral: public is_integral_helper<remove_cv_t<T>>::type {};
     
     template<typename T>
-    using is_integral_v = typename is_integral<T>::value;
+    using is_integral_t = typename is_integral<T>::value;
     
     // floating point check
     template<typename>
@@ -183,15 +183,19 @@ namespace ShivLib{
     struct is_floating_point: public is_floating_point_helper<remove_cv_t<T>>::type {};
     
     template<typename T>
-    using is_floating_point_v = typename is_floating_point<T>::value;
+    using is_floating_point_t = typename is_floating_point<T>::value;
     
     // void check -- const/ volatile qualifiers do not change outcome
     template<typename>
     struct is_void_helper: public false_type {};
     template<>
     struct is_void_helper<void>: public true_type {};
+    
     template<typename T>
     struct is_void: public is_void_helper<remove_cv_t<T>>::type {};
+
+    template<typename T>
+    using is_void_t = typename is_void<T>::type;
 }
 
 
