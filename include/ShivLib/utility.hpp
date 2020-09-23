@@ -18,7 +18,7 @@ namespace ShivLib{
     template<typename T>
     constexpr T&& // lvalues will cannot be perfectly forwarded, so to make the behaviour explicit this function will be used and will assert at compile time
     forward(typename ShivLib::remove_reference<T>::type&& input) noexcept {
-        static_assert(!ShivLib::is_lvalue_reference<T>::check, "Must forward an rvalue");
+        static_assert(!ShivLib::is_lvalue_reference<T>(), "Must forward an rvalue");
         return static_cast<T&&>(input);
     }
 }
