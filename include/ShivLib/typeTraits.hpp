@@ -158,6 +158,14 @@ namespace ShivLib{
     template<typename T>
     struct is_floating_point: public is_floating_point_helper<typename remove_cv<T>::type>::type {};
     
+    // void check -- const/ volatile qualifiers do not change outcome
+    template<typename>
+    struct is_void_helper: public false_type {};
+    template<>
+    struct is_void_helper<void>: public true_type {};
+    template<typename T>
+    struct is_void: public is_void_helper<typename remove_cv<T>::type>::type {};
+    
     // variable templates C++17 needed
     template<typename T>
     inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
