@@ -15,6 +15,8 @@ namespace ShivLib{
     struct remove_reference<T&&>{
         using type = T;
     };
+    template<typename T>
+    using remove_reference_t = typename remove_reference<T>::type;
     
     // remove qualifier of a type
     template<typename T>
@@ -25,6 +27,8 @@ namespace ShivLib{
     struct remove_const<const T>{ // only used if value is already const
         using type = T; // will return the non const type
     };
+    template<typename T>
+    using remove_const_t = typename remove_const<T>::type;
     
     // remove volatile qualifier type
     template<typename T>
@@ -35,10 +39,16 @@ namespace ShivLib{
     struct remove_volatile<volatile T>{
         using type = T;
     };
+    template<typename T>
+    using remove_volatile_t = typename remove_volatile<T>::type;
     
     // remove both volatile and const qualifiers
     template<typename T>
-    using remove_cv = typename remove_const<typename remove_volatile<T>::type>::type;
+    struct remove_cv{
+        using type = typename remove_const<typename remove_volatile<T>::type>::type;
+    };
+    template<typename T> // could be alias from start but kept like this for consistency
+    using remove_cv_t = typename remove_cv<T>::type;
     
     
     // integral constants -- A C++17 only variant of integral constant using auto template parameter
@@ -154,7 +164,7 @@ namespace ShivLib{
     struct is_integral_helper<unsigned long long>: public true_type {};
 
     template<typename T>
-    struct is_integral: public is_integral_helper<remove_cv<T>>::type {};
+    struct is_integral: public is_integral_helper<remove_cv_t<T>>::type {};
     
     template<typename T>
     using is_integral_v = typename is_integral<T>::value;
@@ -170,7 +180,7 @@ namespace ShivLib{
     struct is_floating_point_helper<long double>: public true_type {};
 
     template<typename T>
-    struct is_floating_point: public is_floating_point_helper<remove_cv<T>>::type {};
+    struct is_floating_point: public is_floating_point_helper<remove_cv_t<T>>::type {};
     
     template<typename T>
     using is_floating_point_v = typename is_floating_point<T>::value;
@@ -181,7 +191,7 @@ namespace ShivLib{
     template<>
     struct is_void_helper<void>: public true_type {};
     template<typename T>
-    struct is_void: public is_void_helper<remove_cv<T>>::type {};
+    struct is_void: public is_void_helper<remove_cv_t<T>>::type {};
 }
 
 
