@@ -99,11 +99,11 @@ namespace ShivLib{
     template<typename>
     struct is_lvalue_reference: public false_type{};
     template<typename T>
-    struct is_lvalue_reference<T&>: public true_type{}; // this explicitly instantiated template will be used when the argument it is an lvalue
+    struct is_lvalue_reference<T&>: public true_type{}; // this specialised template will be used when the argument it is an lvalue
     template<typename>
     struct is_rvalue_reference: public false_type{};
     template<typename T>
-    struct is_rvalue_reference<T&&>: public true_type{}; // this explicitly instantiated template will be used when the argument it is an rvalue
+    struct is_rvalue_reference<T&&>: public true_type{}; // this specialised template will be used when the argument it is an rvalue
     template<typename T>
     struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
     
