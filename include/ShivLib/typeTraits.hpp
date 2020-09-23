@@ -16,6 +16,32 @@ namespace ShivLib{
         using type = T;
     };
     
+    // remove qualifier of a type
+    template<typename T>
+    struct remove_const{
+        using type = T; // returns the type as it is
+    };
+    template<typename T>
+    struct remove_const<const T>{ // only used if value is already const
+        using type = T; // will return the non const type
+    };
+    
+    // remove volatile qualifier type
+    template<typename T>
+    struct remove_volatile{
+        using type = T;
+    };
+    template<typename T>
+    struct remove_volatile<volatile T>{
+        using type = T;
+    };
+    
+    // remove both volatile and const qualifiers
+    template<typename T>
+    struct remove_cv{
+        using type = typename remove_const<typename remove_volatile<T>::type>::type;
+    };
+    
     // integral constants
     template<typename T, T v>
     struct integral_constant{
@@ -82,6 +108,54 @@ namespace ShivLib{
     struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
     
     // integral check
+    template<typename>
+    struct is_integral_helper: public false_type {};
+    template<>
+    struct is_integral_helper<bool>: public true_type {};
+    template<>
+    struct is_integral_helper<char>: public true_type {};
+    template<>
+    struct is_integral_helper<signed char>: public true_type {};
+    template<>
+    struct is_integral_helper<unsigned char>: public true_type {};
+    template<>
+    struct is_integral_helper<wchar_t>: public true_type {};
+    template<>
+    struct is_integral_helper<char16_t>: public true_type {};
+    template<>
+    struct is_integral_helper<char32_t>: public true_type {};
+    template<>
+    struct is_integral_helper<short>: public true_type {};
+    template<>
+    struct is_integral_helper<unsigned short>: public true_type {};
+    template<>
+    struct is_integral_helper<int>: public true_type {};
+    template<>
+    struct is_integral_helper<unsigned int>: public true_type {};
+    template<>
+    struct is_integral_helper<long>: public true_type {};
+    template<>
+    struct is_integral_helper<unsigned long>: public true_type {};
+    template<>
+    struct is_integral_helper<long long>: public true_type {};
+    template<>
+    struct is_integral_helper<unsigned long long>: public true_type {};
+
+    template<typename T>
+    struct is_integral: public is_integral_helper<typename remove_cv<T>::type>::type {};
+
+    // floating point check
+    template<typename>
+    struct is_floating_point_helper: public false_type {};
+    template<>
+    struct is_floating_point_helper<float>: public true_type {};
+    template<>
+    struct is_floating_point_helper<double>: public true_type {};
+    template<>
+    struct is_floating_point_helper<long double>: public true_type {};
+
+    template<typename T>
+    struct is_floating_point: public is_floating_point_helper<typename remove_cv<T>::type>::type {};
     
     // variable templates C++17 needed
 #if __cplusplus >= 201703L
