@@ -1,6 +1,8 @@
 #ifndef SHIVLIB_TYPETRAITS_HPP
 #define SHIVLIB_TYPETRAITS_HPP
 
+#include "cstddef.hpp"
+
 namespace ShivLib{
     // remove refness of a type
     template<typename T>
@@ -119,6 +121,15 @@ namespace ShivLib{
     template<typename T>
     inline constexpr bool is_reference_v = is_reference<T>::value;
     
+    // pointer check
+    template<typename T>
+    struct is_pointer_helper: false_type {};
+    template<typename T>
+    struct is_pointer_helper<T*>: true_type {};
+
+    template<typename T>
+    struct is_pointer: is_pointer_helper<remove_cv_t<T>> {};
+    
     // integral check
     template<typename>
     struct is_integral_helper: public false_type {};
@@ -154,7 +165,7 @@ namespace ShivLib{
     struct is_integral_helper<unsigned long long>: public true_type {};
 
     template<typename T>
-    struct is_integral: public is_integral_helper<remove_cv_t<T>>::type {};
+    struct is_integral: public is_integral_helper<remove_cv_t<T>>{};
     
     template<typename T>
     inline constexpr bool is_integral_v = is_integral<T>::value;
@@ -170,7 +181,7 @@ namespace ShivLib{
     struct is_floating_point_helper<long double>: public true_type {};
 
     template<typename T>
-    struct is_floating_point: public is_floating_point_helper<remove_cv_t<T>>::type {};
+    struct is_floating_point: public is_floating_point_helper<remove_cv_t<T>> {};
     
     template<typename T>
     inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
@@ -193,6 +204,14 @@ namespace ShivLib{
 
     template<typename T>
     using is_void_t = typename is_void<T>::type;
+
+    // is_array
+    template<typename>
+    struct is_array: public false_type {};
+    template<typename T, size_t size>
+    struct is_array<T[size]>: public true_type {};
+    template<typename T>
+    struct is_array<T[]>: public true_type {};
 }
 
 
