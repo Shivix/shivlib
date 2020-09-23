@@ -42,13 +42,13 @@ namespace ShivLib{
         using type = typename remove_const<typename remove_volatile<T>::type>::type;
     };
     
-    // integral constants
-    template<typename T, T v>
+    // integral constants -- A C++17 only variant of integral constant using auto template parameter
+    template<auto v>
     struct integral_constant{
-        using value_type = T;
-        using type = integral_constant<T, v>;
+        using value_type = decltype(v);
+        using type = integral_constant<v>;
         
-        static constexpr T value = v;
+        static constexpr value_type value = v;
         
         constexpr operator value_type() const noexcept{ // NOLINT implicit casts allowed
             return value;
@@ -57,8 +57,9 @@ namespace ShivLib{
             return value;
         }
     };
-    using true_type = integral_constant<bool, true>;
-    using false_type = integral_constant<bool, false>;
+
+    using true_type = integral_constant<true>;
+    using false_type = integral_constant<false>;
     
     // conditionals
     template<bool condition, typename ifTrue, typename ifFalse>
@@ -158,7 +159,6 @@ namespace ShivLib{
     struct is_floating_point: public is_floating_point_helper<typename remove_cv<T>::type>::type {};
     
     // variable templates C++17 needed
-#if __cplusplus >= 201703L
     template<typename T>
     inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
     template<typename T>
@@ -169,7 +169,6 @@ namespace ShivLib{
     inline constexpr bool is_integral_v = is_integral<T>::value;
     template<typename T>
     inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
-#endif
 }
 
 
