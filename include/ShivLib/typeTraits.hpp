@@ -1,6 +1,6 @@
 #ifndef SHIVLIB_TYPETRAITS_HPP
 #define SHIVLIB_TYPETRAITS_HPP
-#include <boost/type_traits.hpp>
+
 namespace ShivLib{
     // remove refness of a type
     template<typename T>
@@ -83,28 +83,6 @@ namespace ShivLib{
     template<bool condition, typename isTrue, typename isFalse>
     using conditional_t = typename conditional<condition, isTrue, isFalse>::type;
     
-    template<typename...>
-    struct or_conditional;
-    template<>
-    struct or_conditional<>: public false_type{};
-    template<typename T1>
-    struct or_conditional<T1>: public T1{};
-    template<typename T1, typename T2>
-    struct or_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
-    template<typename... args>
-    inline constexpr bool or_conditional_v = or_conditional<args...>::value;
-    
-    template<typename...>
-    struct and_conditional;
-    template<>
-    struct and_conditional<>: public true_type{};
-    template<typename T1>
-    struct and_conditional<T1>: public T1{};
-    template<typename T1, typename T2>
-    struct and_conditional<T1, T2>: public conditional<T1::value, T1, T2>::type {};
-    template<typename... args>
-    inline constexpr bool and_conditional_v = and_conditional<args...>::value;
-    
     // enable_if
     template<bool, typename T = void>
     struct enable_if{};
@@ -137,7 +115,7 @@ namespace ShivLib{
     inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
     
     template<typename T>
-    struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
+    struct is_reference: public integral_constant<is_lvalue_reference_v<T> || is_rvalue_reference_v<T>> {};
     template<typename T>
     inline constexpr bool is_reference_v = is_reference<T>::value;
     
