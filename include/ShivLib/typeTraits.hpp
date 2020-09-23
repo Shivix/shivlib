@@ -62,13 +62,13 @@ namespace ShivLib{
     using false_type = integral_constant<false>;
     
     // conditionals
-    template<bool condition, typename ifTrue, typename ifFalse>
+    template<bool condition, typename isTrue, typename isFalse>
     struct conditional{
-        using type = ifTrue;
+        using type = isTrue;
     };
-    template<typename ifTrue, typename ifFalse>
-    struct conditional<false, ifTrue, ifFalse>{
-        using type = ifFalse;
+    template<typename isTrue, typename isFalse>
+    struct conditional<false, isTrue, isFalse>{
+        using type = isFalse;
     };
     
     template<bool, typename T = void>
@@ -100,11 +100,11 @@ namespace ShivLib{
     template<typename>
     struct is_lvalue_reference: public false_type{};
     template<typename T>
-    struct is_lvalue_reference<T&>: public true_type{}; // this specialised template will be used when the argument it is an lvalue
+    struct is_lvalue_reference<T&>: public true_type{}; // this partially specialised template will be used when the argument it is an lvalue
     template<typename>
     struct is_rvalue_reference: public false_type{};
     template<typename T>
-    struct is_rvalue_reference<T&&>: public true_type{}; // this specialised template will be used when the argument it is an rvalue
+    struct is_rvalue_reference<T&&>: public true_type{}; // this partially specialised template will be used when the argument it is an rvalue
     template<typename T>
     struct is_reference: public or_conditional<is_lvalue_reference<T>, is_rvalue_reference<T>>::type {};
     
@@ -167,6 +167,10 @@ namespace ShivLib{
     struct is_void: public is_void_helper<typename remove_cv<T>::type>::type {};
     
     // variable templates C++17 needed
+    template<typename... args>
+    inline constexpr bool or_conditional_v = or_conditional<args...>::value;
+    template<typename... args>
+    inline constexpr bool and_conditional_v = and_conditional<args...>::value;
     template<typename T>
     inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
     template<typename T>
