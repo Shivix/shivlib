@@ -22,7 +22,8 @@ set(INCLUDES
 set(TESTSRC
         matrixTest.cpp
         arrayTest.cpp
-        vectorTest.cpp)
+        vectorTest.cpp
+        typeTraitsTest.cpp)
 
 find_package(Boost REQUIRED COMPONENTS system)
 
