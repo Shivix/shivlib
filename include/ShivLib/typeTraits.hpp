@@ -20,6 +20,26 @@ namespace ShivLib{
     template<typename T>
     using remove_reference_t = typename remove_reference<T>::type; // add partially specialised aliases pls
     
+    // remove pointer from a type
+    template<typename T>
+    struct remove_pointer{
+        using type = T;
+    };
+    template<typename T>
+    struct remove_pointer<T*>{
+        using type = T;
+    };
+    template<typename T>
+    using remove_pointer_t = typename remove_pointer<T>::type;
+
+    // remove both pointer and reference
+    template<typename T>
+    struct remove_pr{
+        using type = remove_pointer_t<remove_reference_t<T>>;
+    };
+    template<typename T> // could be alias from start but kept like this for consistency
+    using remove_pr_t = typename remove_pr<T>::type;
+    
     // remove qualifier of a type
     template<typename T>
     struct remove_const{
