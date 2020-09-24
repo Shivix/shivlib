@@ -5,7 +5,7 @@
 
 namespace ShivLib{
     template<typename T>
-    constexpr auto 
+    constexpr T&& 
     move(T&& input) noexcept { // casts a value to an rvalue to allow move semantics and other features.
         return static_cast<typename ShivLib::remove_reference<T>::type&&>(input);
     }
