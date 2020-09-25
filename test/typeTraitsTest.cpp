@@ -27,5 +27,8 @@ BOOST_AUTO_TEST_SUITE(type_trait_test) //NOLINT
 
         BOOST_TEST(array1 == true);
         BOOST_TEST(notArray1 == false);
+        
+        BOOST_TEST(ShivLib::is_arithmetic_v<float>  == true);
+        BOOST_TEST(ShivLib::is_arithmetic_v<void>  == false);
     }
 BOOST_AUTO_TEST_SUITE_END() //NOLINT
