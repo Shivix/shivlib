@@ -19,21 +19,23 @@ namespace ShivLib{
         using const_reference = const T&;
         using rvalue_reference = T&&;
 
-        explicit vector(size_t size):
-        m_size(size){
-            reallocate(size);
+        explicit vector(size_t capacity){
+            reallocate(capacity);
         }
 
-        vector(std::initializer_list<value_type> input):
-                m_size(input.size()){
+        vector(std::initializer_list<value_type> input){
             reallocate(input.size());
             int i = 0;
             for(auto&& elem: input){
                 m_data[i++] = elem;
             }
+            m_size = input.size();
         }
 
         ~vector(){
+            for(size_t i = 0; i < m_size; ++i){
+                m_data[i].~value_type();
+            }
             ::operator delete(m_data, m_capacity * sizeof(value_type));
         }
 
@@ -51,9 +53,12 @@ namespace ShivLib{
             if(newCapacity < m_size){
                 m_size = newCapacity;
             }
-            for(size_t i = 0; i < m_size; ++i){
-                new(&newData[i]) value_type(std::move(m_data[i]));
+            if(m_size != 0){
+                for(size_t i = 0; i < m_size; ++i){
+                    new(&newData[i]) value_type(std::move(m_data[i]));
+                } 
             }
+            
             for(size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
             }
