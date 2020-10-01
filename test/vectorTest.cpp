@@ -1,7 +1,7 @@
 #include "../include/ShivLib/dataStructures/vector.hpp"
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(vector_test, *boost::unit_test::disabled()) // NOLINT(cert-err58-cpp)
+BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(range_based_test){ // NOLINT(cert-err58-cpp)
 
         //vector<int> vector1{2};
