@@ -232,6 +232,20 @@ namespace ShivLib{
     struct is_array<T[size]>: public true_type {};
     template<typename T>
     struct is_array<T[]>: public true_type {};
+    
+    // const check
+    template<typename>
+    struct is_const: public false_type{};
+
+    template<typename T>
+    struct is_const<const T>: public true_type{};
+
+    // volatile check
+    template<typename>
+    struct is_volatile: public false_type{};
+
+    template<typename T>
+    struct is_volatile<volatile T>: public true_type{};
 }
 
 
