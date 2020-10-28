@@ -1,5 +1,10 @@
 #include "../include/ShivLib/dataStructures/matrix.hpp"
 #define BOOST_TEST_MODULE ShivLib Unit_Test
+#ifndef WIN32
+    #define BOOST_TEST_DYN_LINK
+#else
+#endif
+
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
