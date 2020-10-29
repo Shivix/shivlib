@@ -3,6 +3,8 @@ project(ShivLib)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(INCLUDES
         ../include/ShivLib/dataStructures/array.hpp
         ../include/ShivLib/dataStructures/matrix.hpp
