@@ -10,6 +10,7 @@ set(INCLUDES
         ../include/ShivLib/dataStructures/matrix.hpp
         ../include/ShivLib/dataStructures/map.hpp
         ../include/ShivLib/dataStructures/string.hpp
+        ../include/ShivLib/dataStructures/string_view.hpp 
         ../include/ShivLib/dataStructures/vector.hpp
         ../include/ShivLib/multithreading/mutex.hpp
         ../include/ShivLib/multithreading/thread.hpp
@@ -19,7 +20,7 @@ set(INCLUDES
         ../include/ShivLib/typeTraits.hpp
         ../include/ShivLib/memory.hpp
         ../include/ShivLib/cstddef.hpp
-        ../include/ShivLib/iterators.hpp)
+        ../include/ShivLib/iterators.hpp) 
 
 set(TESTSRC
         matrixTest.cpp
