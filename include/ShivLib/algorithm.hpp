@@ -56,7 +56,12 @@ namespace ShivLib{
         }
         return true;
     }
-    
+
+    template<typename T> // random access iterator
+    constexpr inline void 
+    sort(T first, T last){
+        
+    }
 }
 
 
