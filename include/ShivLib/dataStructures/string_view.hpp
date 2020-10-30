@@ -16,6 +16,7 @@ namespace ShivLib{
         using const_reference = const T&;
         using rvalue_reference = T&&;
 
+        static constexpr size_t npos = size_t(-1); 
 
 
 
