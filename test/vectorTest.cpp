@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
         BOOST_TEST(vector1 == vector1Expected);
         
         vector1.resize(20);
-        BOOST_TEST(vector1.size() == 20U);
+        BOOST_TEST(vector1.size() == 2U);
         BOOST_TEST(vector1.max_size() == 20U);
         BOOST_TEST(vector1.capacity() == 20U);
     }
