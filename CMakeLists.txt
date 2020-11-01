@@ -20,6 +20,9 @@ set(INCLUDES
         ../include/ShivLib/cstddef.hpp
         ../include/ShivLib/iterators.hpp)
 
+set(EXPERIMENTAL
+        ../include/ShivLib/experimental)
+
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 
 add_library(ShivLib INTERFACE)

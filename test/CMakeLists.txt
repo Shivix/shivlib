@@ -28,10 +28,13 @@ set(TESTSRC
         vectorTest.cpp
         typeTraitsTest.cpp)
 
+set(EXPERIMENTAL
+        ../include/ShivLib/experimental experimentalTest.cpp)
+
 find_package(Boost REQUIRED COMPONENTS system)
 
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(ShivLib ${INCLUDES} ${TESTSRC})
+add_executable(ShivLib ${INCLUDES} ${TESTSRC} ${EXPERIMENTAL})
 target_link_libraries(ShivLib -lboost_unit_test_framework)
