@@ -27,7 +27,7 @@ namespace ShivLib{
         constexpr void fill(const T& value){
             std::fill(begin(), end(), value);
         }
-        constexpr matrix<T, rows, cols * 2> getAugment(const matrix& other) const { // returns a matrix where the other matrix is "attached" to the original
+        [[nodiscard]] constexpr matrix<T, rows, cols * 2> getAugment(const matrix& other) const { // returns a matrix where the other matrix is "attached" to the original
             matrix<T, rows, cols * 2> resultMatrix = {};
             
             for(size_t i = 0; i < rows; ++i){
@@ -42,7 +42,7 @@ namespace ShivLib{
             }
             return resultMatrix;
         }
-        constexpr T getDeterminant() const {
+        [[nodiscard]] constexpr T getDeterminant() const {
             static_assert(rows == cols, "Must be a square matrix");
             T determinant = 1;
             if(rows == 1){
@@ -62,7 +62,7 @@ namespace ShivLib{
             }
             return determinant;
         }
-        constexpr matrix getIdentity() const {
+        [[nodiscard]] constexpr matrix getIdentity() const {
             matrix identityMatrix = {};
 
             for(size_t i = 0; i < rows; ++i){
@@ -77,7 +77,7 @@ namespace ShivLib{
             }
             return identityMatrix;
         }
-        constexpr matrix getInverse() const {
+        [[nodiscard]] constexpr matrix getInverse() const {
             
             matrix<T, rows, cols * 2> augIdentMatrix = getAugment(getIdentity()); // gets the identity matrix and then augments it onto the original matrix
             
@@ -110,7 +110,7 @@ namespace ShivLib{
             }
             return invertedMatrix;
         }
-        std::tuple<matrix, bool> getRowEchelon() const { // returns the row echelon form matrix so that the original is kept
+        [[nodiscard]] std::tuple<matrix, bool> getRowEchelon() const { // returns the row echelon form matrix so that the original is kept
             matrix resultMatrix = *this;
             
             bool isInverted = false; // keeps track of the sign of the determinant (before multiplication)
@@ -147,7 +147,7 @@ namespace ShivLib{
             }
             return std::make_tuple(resultMatrix, isInverted); // returns a tuple including the bool that keeps track of the sign 
         }                                                     // the tuple currently prevents the function from happening at compile time. Struct also prevents it.
-        constexpr matrix getTranspose() const {
+        [[nodiscard]] constexpr matrix getTranspose() const {
             matrix<T, rows, cols> transposedMatrix = {}; // rows and cols are in opposite order for transposed matrix
             
             for(size_t i = 0; i < rows; ++i){
