@@ -168,7 +168,7 @@ namespace ShivLib{
                 m_data[i].swap(other[i]);
             }
         }
-        // Arithmetic operators
+        // Arithmetic operators 
         constexpr matrix operator + (const matrix& other) const noexcept { 
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
