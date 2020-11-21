@@ -247,31 +247,39 @@ namespace ShivLib{
             return matrix;
         }
         // Arithmetic assignment operators
-        constexpr void operator += (const matrix& other) noexcept {
-            *this = *this + other;
-        }
-        constexpr void operator += (const T& scalar) noexcept {
-            *this = *this + scalar;
-        }
-        constexpr void operator -= (const matrix& other) noexcept {
-            *this = *this - other;
-        }
-        constexpr void operator -= (const T& scalar) noexcept {
-            *this = *this - scalar;
-        }
-        template<std::size_t otherRows, std::size_t otherCols>
-        constexpr void operator *= (const matrix<T, otherCols, otherRows>& other) noexcept {
+        constexpr matrix& operator += (const matrix& other) noexcept {
             *this = *this * other;
+            return *this;
         }
-        constexpr void operator *= (const T& scalar) noexcept {
-            *this = *this * scalar;
+        constexpr matrix& operator += (const T& scalar) noexcept {
+            *this = *this + scalar;
+            return *this;
+        }
+        constexpr matrix& operator -= (const matrix& other) noexcept {
+            *this = *this - other;
+            return *this;
+        }
+        constexpr matrix& operator -= (const T& scalar) noexcept {
+            *this = *this - scalar;
+            return *this;
         }
         template<std::size_t otherRows, std::size_t otherCols>
-        constexpr void operator /= (const matrix<T, otherCols, otherRows>& other) noexcept {
-            *this = *this / other;
+        constexpr matrix& operator *= (const matrix<T, otherCols, otherRows>& other) noexcept {
+            *this = *this * other;
+            return *this;
         }
-        constexpr void operator /= (const T& scalar) noexcept {
+        constexpr matrix& operator *= (const T& scalar) noexcept {
+            *this = *this * scalar;
+            return *this;
+        }
+        template<std::size_t otherRows, std::size_t otherCols>
+        constexpr matrix& operator /= (const matrix<T, otherCols, otherRows>& other) noexcept {
+            *this = *this / other;
+            return *this;
+        }
+        constexpr matrix& operator /= (const T& scalar) noexcept {
             *this = *this / scalar;
+            return *this;
         }
         // element access
         constexpr ShivLib::array<T, cols>& operator [] (const size_t& index) noexcept {
@@ -311,7 +319,7 @@ namespace ShivLib{
             return *begin();
         }
         // comparison operators
-        constexpr friend bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
+        friend constexpr bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
             for(size_t i = 0; i < rows; ++i){
                 if(matrix1[i] != matrix2[i]){ // uses the ShivLib::array operator != overload and runs it for each column
                     return false;
