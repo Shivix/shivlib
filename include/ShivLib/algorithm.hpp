@@ -1,13 +1,12 @@
 #ifndef SHIVLIB_ALGORITHM_HPP
 #define SHIVLIB_ALGORITHM_HPP
 
-
+#include <concepts>
 namespace ShivLib{
-
     template<typename T>
-    constexpr inline const T& // TODO: add concept in C++20
+    constexpr inline const T&
     max(const T& a, const T& b){
-        if(a > b){
+        if(b < a){
             return a;
         }
         else{
@@ -17,7 +16,7 @@ namespace ShivLib{
     template<typename T, typename callable>
     constexpr inline const T&
     max(const T& a, const T& b, callable comparisonFunc){
-        if(comparisonFunc(a > b)){
+        if(comparisonFunc(b < a)){
             return a;
         }
         else{
@@ -47,6 +46,7 @@ namespace ShivLib{
     }
     
     template<typename T1, typename T2>
+    requires std::equality_comparable_with<T1, T2>
     constexpr inline bool
     equal(T1 begin1, T1 end1, T2 begin2){
         for(; begin1 != end1; ++begin1, (void) ++begin2){
@@ -57,11 +57,11 @@ namespace ShivLib{
         return true;
     }
 
-    template<typename T> // random access iterator
+    /*template<typename T> // random access iterator
     constexpr inline void 
     sort(T first, T last){
         
-    }
+    }*/
 }
 
 
