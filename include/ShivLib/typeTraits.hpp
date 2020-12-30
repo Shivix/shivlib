@@ -93,7 +93,7 @@ namespace ShivLib{
     using false_type = integral_constant<false>;
     
     // conditionals
-    template<bool condition, typename isTrue, typename isFalse>
+    template<bool, typename isTrue, typename isFalse>
     struct conditional{
         using type = isTrue;
     };
@@ -112,6 +112,8 @@ namespace ShivLib{
     struct enable_if<true, T>{
         using type = T;
     };
+    template<bool condition, typename T>
+    using enable_if_t = typename enable_if<condition, T>::type;
 
     // is_same
     template<typename T1, typename T2>
