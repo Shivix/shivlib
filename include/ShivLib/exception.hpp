@@ -2,7 +2,7 @@
 #define SHIVLIB_EXCEPTION_HPP
 
 
-namespace ShivLib{
+namespace shiv {
     class exception{
 
 

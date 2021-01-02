@@ -5,7 +5,7 @@
 #include <cassert>
 #include <memory>
 
-namespace ShivLib{
+namespace shiv {
     template<typename T>
     class vector{
     public:

@@ -2,7 +2,7 @@
 #define SHIVLIB_MAP_HPP
 
 
-namespace ShivLib{
+namespace shiv {
     class map{
 
         

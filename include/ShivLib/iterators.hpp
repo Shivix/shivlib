@@ -4,7 +4,7 @@
 #include "cstddef.hpp"
 #include "type_traits.hpp"
 
-namespace ShivLib{
+namespace shiv {
     template<typename category, typename T>
     struct iterator_traits{
         using iterator_category = category;

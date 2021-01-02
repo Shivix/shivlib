@@ -5,7 +5,7 @@
 #include <cassert>
 #include "../cstddef.hpp"
 
-namespace ShivLib{
+namespace shiv {
     template<typename T, size_t numOfElems>
     class array{ // no constuctor for aggregate initialization
     public:

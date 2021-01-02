@@ -5,7 +5,7 @@
 #include <tuple>
 #include <cmath>
 
-namespace ShivLib{
+namespace shiv {
     template<typename T, size_t rows, size_t cols>
     class matrix{
     public:
@@ -18,8 +18,8 @@ namespace ShivLib{
         using const_reference = const T&;
         
         // No explicit constructor/ destructor etc. for aggregate all members must also be public
-        
-        ShivLib::array<ShivLib::array<T, cols>, rows> m_data{}; // stores the matrix data
+
+        shiv::array<shiv::array<T, cols>, rows> m_data{}; // stores the matrix data
         
         [[nodiscard]] constexpr bool empty() const noexcept {
             return size() == 0;
@@ -282,10 +282,10 @@ namespace ShivLib{
             return *this;
         }
         // element access
-        constexpr ShivLib::array<T, cols>& operator [] (const size_t& index) noexcept {
+        constexpr shiv::array<T, cols>& operator [] (const size_t& index) noexcept {
             return m_data[index];
         }
-        constexpr const ShivLib::array<T, cols>& operator [] (const size_t& index) const noexcept {
+        constexpr const shiv::array<T, cols>& operator [] (const size_t& index) const noexcept {
             return m_data[index];
         }
         [[nodiscard]] constexpr reference at(size_t rowIndex, size_t colIndex){
@@ -321,7 +321,7 @@ namespace ShivLib{
         // comparison operators
         friend constexpr bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
             for(size_t i = 0; i < rows; ++i){
-                if(matrix1[i] != matrix2[i]){ // uses the ShivLib::array operator != overload and runs it for each column
+                if(matrix1[i] != matrix2[i]){ // uses the shiv::array operator != overload and runs it for each column
                     return false;
                 }
                 else{

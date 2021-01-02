@@ -3,7 +3,7 @@
 
 #include <iterator>
 
-namespace ShivLib{
+namespace shiv {
     template<typename T>
     class string_view{
         using value_type = T;

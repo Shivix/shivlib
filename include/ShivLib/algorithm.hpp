@@ -2,7 +2,7 @@
 #define SHIVLIB_ALGORITHM_HPP
 
 #include <concepts>
-namespace ShivLib{
+namespace shiv {
     template<typename T>
     constexpr inline const T&
     max(const T& a, const T& b){

@@ -13,9 +13,9 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     
     BOOST_AUTO_TEST_CASE(adding_elements_test){ // NOLINT(cert-err58-cpp)
 
-        ShivLib::vector<int> vector1(2);
+        shiv::vector<int> vector1(2);
         int a = 1;
-        ShivLib::vector<int> vector1Expected{1, 2};
+        shiv::vector<int> vector1Expected{1, 2};
         vector1.push_back(a);
         vector1.emplace_back(2);
         BOOST_TEST(vector1 == vector1Expected);
@@ -28,8 +28,8 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
 
     BOOST_AUTO_TEST_CASE(removing_elements_test){ // NOLINT(cert-err58-cpp)
 
-        ShivLib::vector<int> vector1{2};
-        ShivLib::vector<int> vector1Expected{1, 2};
+        shiv::vector<int> vector1{2};
+        shiv::vector<int> vector1Expected{1, 2};
         vector1.pop_back();
         BOOST_TEST(vector1 == vector1Expected);
         
@@ -39,9 +39,9 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
 
     BOOST_AUTO_TEST_CASE(iterator_test){ // NOLINT(cert-err58-cpp)
 
-        ShivLib::vector<int> vector1{1, 0, 2, 3, 4};
-        ShivLib::vector<int> vectorOrdered{0, 1, 2, 3, 4};
-        ShivLib::vector<int> vectorReversed{4, 3, 2, 1, 0};
+        shiv::vector<int> vector1{1, 0, 2, 3, 4};
+        shiv::vector<int> vectorOrdered{0, 1, 2, 3, 4};
+        shiv::vector<int> vectorReversed{4, 3, 2, 1, 0};
         
         BOOST_TEST((*std::find(vector1.cbegin(), vector1.cend(), 1)) == 1);
         BOOST_TEST((*std::find(vector1.crbegin(), vector1.crend(), 0)) == 0);
@@ -57,8 +57,8 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     
     BOOST_AUTO_TEST_CASE(access_test){ // NOLINT(cert-err58-cpp)
 
-        ShivLib::vector<double> vector1{0, 1, 2, 3, 4};
-        const ShivLib::vector<double> vector1Const{0, 1, 2, 3, 4};
+        shiv::vector<double> vector1{0, 1, 2, 3, 4};
+        const shiv::vector<double> vector1Const{0, 1, 2, 3, 4};
 
         BOOST_TEST(vector1.at(2) == 2);
         BOOST_TEST(vector1Const.at(2) == 2);
@@ -72,10 +72,10 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
 
     BOOST_AUTO_TEST_CASE(fillswap_test){ // NOLINT(cert-err58-cpp)
 
-        ShivLib::vector<int> vector1{0, 1, 2, 3, 4};
-        ShivLib::vector<int> vector2{4, 3, 2, 1, 0};
-        ShivLib::vector<int> expectedVector1{4, 3, 2, 1, 0};
-        ShivLib::vector<int> expectedVector2{4, 4, 4, 4, 4};
+        shiv::vector<int> vector1{0, 1, 2, 3, 4};
+        shiv::vector<int> vector2{4, 3, 2, 1, 0};
+        shiv::vector<int> expectedVector1{4, 3, 2, 1, 0};
+        shiv::vector<int> expectedVector2{4, 4, 4, 4, 4};
         vector1.swap(vector2);
 
         BOOST_TEST(vector1 == expectedVector1);

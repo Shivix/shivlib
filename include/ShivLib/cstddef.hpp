@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-namespace ShivLib{
+namespace shiv {
     using size_t = __SIZE_TYPE__;
     using ptrdiff_t = __PTRDIFF_TYPE__;
     using nullptr_t = decltype(nullptr);

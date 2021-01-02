@@ -2,7 +2,7 @@
 #define SHIVLIB_MEMORY_HPP
 
 
-namespace ShivLib{
+namespace shiv {
     class memory{
 
         

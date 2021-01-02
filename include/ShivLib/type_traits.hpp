@@ -3,7 +3,7 @@
 
 #include "cstddef.hpp"
 
-namespace ShivLib{
+namespace shiv {
     // remove refness of a type
     template<typename T>
     struct remove_reference{

@@ -2,7 +2,7 @@
 #define SHIVLIB_THREAD_HPP
 
 
-namespace ShivLib{
+namespace shiv {
     class thread{
 
         

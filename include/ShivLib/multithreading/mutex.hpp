@@ -2,7 +2,7 @@
 #define SHIVLIB_MUTEX_HPP
 
 
-namespace ShivLib{
+namespace shiv {
     class mutex{
 
 
