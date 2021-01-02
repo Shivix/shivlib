@@ -2,7 +2,7 @@
 #define SHIVLIB_ITERATORS_HPP
 
 #include "cstddef.hpp"
-#include "typeTraits.hpp"
+#include "type_traits.hpp"
 
 namespace ShivLib{
     template<typename category, typename T>

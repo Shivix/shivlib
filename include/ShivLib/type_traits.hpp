@@ -1,5 +1,5 @@
-#ifndef SHIVLIB_TYPETRAITS_HPP
-#define SHIVLIB_TYPETRAITS_HPP
+#ifndef SHIVLIB_TYPE_TRAITS_HPP
+#define SHIVLIB_TYPE_TRAITS_HPP
 
 #include "cstddef.hpp"
 
@@ -251,4 +251,4 @@ namespace ShivLib{
 }
 
 
-#endif //SHIVLIB_TYPETRAITS_HPP
+#endif//SHIVLIB_TYPE_TRAITS_HPP

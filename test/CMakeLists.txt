@@ -17,20 +17,20 @@ set(INCLUDES
         ../include/ShivLib/algorithm.hpp
         ../include/ShivLib/exception.hpp
         ../include/ShivLib/utility.hpp
-        ../include/ShivLib/typeTraits.hpp
+        ../include/ShivLib/type_traits.hpp
         ../include/ShivLib/memory.hpp
         ../include/ShivLib/cstddef.hpp
         ../include/ShivLib/iterators.hpp) 
 
 set(TESTSRC
-        matrixTest.cpp
-        arrayTest.cpp
-        vectorTest.cpp
-        typeTraitsTest.cpp
-        algorithmTest.cpp)
+        matrix_test.cpp
+        array_test.cpp
+        vector_test.cpp
+        type_traits_test.cpp
+        algorithm_test.cpp)
 
 set(EXPERIMENTAL
-        ../include/ShivLib/experimental experimentalTest.cpp)
+        ../include/ShivLib/experimental experimental_test.cpp)
 
 find_package(Boost REQUIRED COMPONENTS system)
 

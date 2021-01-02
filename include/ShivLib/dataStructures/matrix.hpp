@@ -27,7 +27,7 @@ namespace ShivLib{
         constexpr void fill(const T& value){
             std::fill(begin(), end(), value);
         }
-        [[nodiscard]] constexpr matrix<T, rows, cols * 2> getAugment(const matrix& other) const { // returns a matrix where the other matrix is "attached" to the original
+        [[nodiscard]] constexpr matrix<T, rows, cols * 2> get_augment(const matrix& other) const { // returns a matrix where the other matrix is "attached" to the original
             matrix<T, rows, cols * 2> resultMatrix = {};
             
             for(size_t i = 0; i < rows; ++i){
@@ -42,7 +42,7 @@ namespace ShivLib{
             }
             return resultMatrix;
         }
-        [[nodiscard]] constexpr T getDeterminant() const {
+        [[nodiscard]] constexpr T get_determinant() const {
             static_assert(rows == cols, "Must be a square matrix");
             T determinant = 1;
             if(rows == 1){
@@ -52,7 +52,7 @@ namespace ShivLib{
                 return (m_data[0][0] * m_data[1][1]) - (m_data[1][0] * m_data[0][1]);
             }
             else{
-                const auto [rowEchelonFormMatrix, isNegative] = getRowEchelon(); // row echelon is calculated first to reduce the complexity down closer to O(N^2)
+                const auto [rowEchelonFormMatrix, isNegative] = get_row_echelon(); // row echelon is calculated first to reduce the complexity down closer to O(N^2)
                 for(size_t i = 0; i < rows; ++i){ // determinate is the product of the main diagonal elements in a row echelon matrix
                     determinant *= rowEchelonFormMatrix[i][i];
                 }
@@ -62,7 +62,7 @@ namespace ShivLib{
             }
             return determinant;
         }
-        [[nodiscard]] constexpr matrix getIdentity() const {
+        [[nodiscard]] constexpr matrix get_identity() const {
             matrix identityMatrix = {};
 
             for(size_t i = 0; i < rows; ++i){
@@ -77,9 +77,9 @@ namespace ShivLib{
             }
             return identityMatrix;
         }
-        [[nodiscard]] constexpr matrix getInverse() const {
+        [[nodiscard]] constexpr matrix get_inverse() const {
             
-            matrix<T, rows, cols * 2> augIdentMatrix = getAugment(getIdentity()); // gets the identity matrix and then augments it onto the original matrix
+            matrix<T, rows, cols * 2> augIdentMatrix = get_augment(get_identity()); // gets the identity matrix and then augments it onto the original matrix
             
             const size_t AUG_ID_COLS = augIdentMatrix[0].size(); // all arrays within the first have the same size
             
@@ -110,7 +110,7 @@ namespace ShivLib{
             }
             return invertedMatrix;
         }
-        [[nodiscard]] std::tuple<matrix, bool> getRowEchelon() const { // returns the row echelon form matrix so that the original is kept
+        [[nodiscard]] std::tuple<matrix, bool> get_row_echelon() const { // returns the row echelon form matrix so that the original is kept
             matrix resultMatrix = *this;
             
             bool isInverted = false; // keeps track of the sign of the determinant (before multiplication)
@@ -147,7 +147,7 @@ namespace ShivLib{
             }
             return std::make_tuple(resultMatrix, isInverted); // returns a tuple including the bool that keeps track of the sign 
         }                                                     // the tuple currently prevents the function from happening at compile time. Struct also prevents it.
-        [[nodiscard]] constexpr matrix getTranspose() const {
+        [[nodiscard]] constexpr matrix get_transpose() const {
             matrix<T, rows, cols> transposedMatrix = {}; // rows and cols are in opposite order for transposed matrix
             
             for(size_t i = 0; i < rows; ++i){
@@ -157,8 +157,8 @@ namespace ShivLib{
             }
             return transposedMatrix;
         }
-        [[nodiscard]] constexpr bool isOrthogonal() const {
-            return getTranspose() == getInverse();
+        [[nodiscard]] constexpr bool is_orthogonal() const {
+            return get_transpose() == get_inverse();
         }
         [[nodiscard]] constexpr size_t size() const noexcept{
             return rows * cols;
@@ -228,7 +228,7 @@ namespace ShivLib{
         }
         template<size_t otherRows, size_t otherCols>
         constexpr matrix operator / (matrix<T, otherCols, otherRows>& other) const noexcept {
-            matrix invertedMatrix = other.getInverse();
+            matrix invertedMatrix = other.get_inverse();
             return (*this * invertedMatrix);
         }
         constexpr matrix operator / (const T& scalar) const noexcept {

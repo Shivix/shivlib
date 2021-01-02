@@ -1,7 +1,7 @@
 #ifndef SHIVLIB_UTILITY_HPP
 #define SHIVLIB_UTILITY_HPP
 
-#include "typeTraits.hpp"
+#include "type_traits.hpp"
 
 namespace ShivLib{
     template<typename T>

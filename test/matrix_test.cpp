@@ -176,11 +176,11 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {12, 47.234, 5, 14, 14},
                          {3.32, 6, 1, 26, 5}
                  }}};
-        BOOST_TEST(matrix2x2.getDeterminant() == -3);
-        BOOST_TEST(matrix3x3.getDeterminant() == 0);
-        BOOST_TEST(matrix4x4.getDeterminant() == -5904);
-        BOOST_TEST(matrix4x4i.getDeterminant() == -5904);
-        BOOST_TEST(matrix5x5.getDeterminant() == 5182129.02628431);
+        BOOST_TEST(matrix2x2.get_determinant() == -3);
+        BOOST_TEST(matrix3x3.get_determinant() == 0);
+        BOOST_TEST(matrix4x4.get_determinant() == -5904);
+        BOOST_TEST(matrix4x4i.get_determinant() == -5904);
+        BOOST_TEST(matrix5x5.get_determinant() == 5182129.02628431);
     }
     
     BOOST_AUTO_TEST_CASE(row_echelon_test, *boost::unit_test::tolerance(0.01)){ // NOLINT
@@ -195,7 +195,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {0, 1, 2},
                          {0, 0, 0}
                  }}};
-        auto [result3x3, isAddition] = matrix3x3.getRowEchelon();
+        auto [result3x3, isAddition] = matrix3x3.get_row_echelon();
         BOOST_TEST(result3x3 == expectedMatrix3x3);
         ShivLib::matrix<float, 4, 4> matrix4x4 = {
                 {{{5, 8, 2, 3},
@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {0, 0, 27.7140007, 17.1429996},
                          {0, 0, 0, -74.5670013}
                  }}};
-        auto [result4x4, isAddition4x4] = matrix4x4.getRowEchelon();
+        auto [result4x4, isAddition4x4] = matrix4x4.get_row_echelon();
         BOOST_TEST(result4x4 == expectedMatrix4x4);
     }
     
@@ -225,7 +225,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {1, 4, 7},
                          {2, 5, 8}
                  }}};
-        BOOST_TEST(matrix3x3.getTranspose() == expectedMatrix3x3);
+        BOOST_TEST(matrix3x3.get_transpose() == expectedMatrix3x3);
         ShivLib::matrix<int, 4, 4> matrix4x4 = {
                 {{{5, 8, 2, 3},
                          {4, 5, 12, 7},
@@ -238,7 +238,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {2, 12, 10, 14},
                          {3, 7, 11, 14}
                  }}};
-        BOOST_TEST(matrix4x4.getTranspose() == expectedMatrix4x4);
+        BOOST_TEST(matrix4x4.get_transpose() == expectedMatrix4x4);
     }
     
     BOOST_AUTO_TEST_CASE(augment_test){ // NOLINT
@@ -258,7 +258,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {3, 4, 5, 3, 4, 5},
                          {6, 7, 8, 6, 7, 8}
                  }}};
-        BOOST_TEST(matrix3x3.getAugment(matrix3x32) == expectedMatrix3x3);
+        BOOST_TEST(matrix3x3.get_augment(matrix3x32) == expectedMatrix3x3);
     }
     
     BOOST_AUTO_TEST_CASE(identity_test){ // NOLINT
@@ -273,7 +273,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {0, 1, 0},
                          {0, 0, 1}
                  }}};
-        BOOST_TEST(matrix3x3.getIdentity() == expectedMatrix3x3);
+        BOOST_TEST(matrix3x3.get_identity() == expectedMatrix3x3);
     }
     
     BOOST_AUTO_TEST_CASE(inverse_test, *boost::unit_test::tolerance(0.01)){ // NOLINT
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                          {0.12658228, -0.518987358	, 0.316455722},
                          {0.0379746817, 0.544303775, -0.405063301}
                  }}};
-        BOOST_TEST(matrix3x3.getInverse() == expectedMatrix3x3);
+        BOOST_TEST(matrix3x3.get_inverse() == expectedMatrix3x3);
     }
     
     BOOST_AUTO_TEST_CASE(orthogonal_test){  // NOLINT
@@ -297,7 +297,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
                        {{{1, 0},
                          {0, 1}
                  }}};
-        BOOST_TEST(matrix4x4.isOrthogonal() == true);
+        BOOST_TEST(matrix4x4.is_orthogonal() == true);
     }
     
     BOOST_AUTO_TEST_CASE(sort_test){ // NOLINT // helps check begin and rebegin iterators.
