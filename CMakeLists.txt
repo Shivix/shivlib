@@ -10,6 +10,7 @@ set(INCLUDES
         ../include/ShivLib/dataStructures/string.hpp
         ../include/ShivLib/dataStructures/string_view.hpp
         ../include/ShivLib/dataStructures/vector.hpp
+        ../include/ShivLib/dataStructures/list.hpp
         ../include/ShivLib/multithreading/mutex.hpp
         ../include/ShivLib/multithreading/thread.hpp
         ../include/ShivLib/algorithm.hpp

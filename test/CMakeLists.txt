@@ -12,6 +12,7 @@ set(INCLUDES
         ../include/ShivLib/dataStructures/string.hpp
         ../include/ShivLib/dataStructures/string_view.hpp 
         ../include/ShivLib/dataStructures/vector.hpp
+        ../include/ShivLib/dataStructures/list.hpp
         ../include/ShivLib/multithreading/mutex.hpp
         ../include/ShivLib/multithreading/thread.hpp
         ../include/ShivLib/algorithm.hpp
@@ -20,14 +21,14 @@ set(INCLUDES
         ../include/ShivLib/type_traits.hpp
         ../include/ShivLib/memory.hpp
         ../include/ShivLib/cstddef.hpp
-        ../include/ShivLib/iterators.hpp) 
+        ../include/ShivLib/iterators.hpp ../include/ShivLib/concepts.hpp) 
 
 set(TESTSRC
         matrix_test.cpp
         array_test.cpp
         vector_test.cpp
         type_traits_test.cpp
-        algorithm_test.cpp)
+        algorithm_test.cpp list_test.cpp)
 
 set(EXPERIMENTAL
         ../include/ShivLib/experimental experimental_test.cpp)

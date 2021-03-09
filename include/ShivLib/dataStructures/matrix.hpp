@@ -4,9 +4,10 @@
 #include "array.hpp"
 #include <tuple>
 #include <cmath>
+#include "../concepts.hpp"
 
 namespace shiv {
-    template<typename T, size_t rows, size_t cols>
+    template<shiv::arithmetic T, size_t rows, size_t cols>
     class matrix{
     public:
         using value_type = T;
