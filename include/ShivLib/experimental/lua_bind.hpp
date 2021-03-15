@@ -28,7 +28,7 @@ namespace shiv{
         static constexpr bool is_debug = false;
 #endif
         template <typename... Args>
-        void get_global(Args... args) {
+        void get_globals(Args... args) {
             (lua_getglobal(L, args), ...);
         }
 
