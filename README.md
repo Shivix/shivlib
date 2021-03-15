@@ -1,9 +1,12 @@
 # Shivix-Standard-Library
-My own version of the STL and other headers within the C++ standard.
+A large library of my own creation. It serves well as a lightweight base if you wish to recreate a header
+within the standard as well as showing some new ideas that the standard library does not have.
+Also contains some highly experimental headers for me to try out unique ideas.
 
-Note: C++20 is required. Based on personal preference as well as a desire to differ more from other implementations
-I have decided to ignore backwards compatibility. This improves the readability and usability in many cases and also
-removes the need for preprocessor checks on the C++ version.
+Note: C++20 is required. This is not meant to replace the standard library, this is focused on aiding my own
+future projects as well as helping me practice my skills.
+
+Note2: All headers in the experimental folder are mostly tests, use at your own peril.
 
 ## Want to use the library?
 
