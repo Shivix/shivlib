@@ -12,12 +12,8 @@
 namespace shiv{
     class LuaState{
     public:
-        LuaState(){ // currently loads all main libs
-            luaopen_base(L);
-            luaopen_table(L);
-            luaopen_io(L);
-            luaopen_string(L);
-            luaopen_math(L);
+        LuaState(){
+            luaL_openlibs(L);
         }
     private:
         lua_State* L{luaL_newstate()};
