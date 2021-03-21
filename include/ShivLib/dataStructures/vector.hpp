@@ -4,6 +4,9 @@
 #include <iterator>
 #include <cassert>
 #include <memory>
+#include <concepts>
+#include "../cstddef.hpp"
+#include "../type_traits.hpp"
 
 namespace shiv {
     template<typename T>
@@ -18,7 +21,9 @@ namespace shiv {
         using reference = T&;
         using const_reference = const T&;
         using rvalue_reference = T&&;
-
+        
+        vector() = default;
+        
         explicit vector(size_t capacity){
             reallocate(capacity);
         }
@@ -66,7 +71,7 @@ namespace shiv {
                 } 
             }
             
-            for(size_t i = 0; i < m_size; ++i){
+            for(size_t i{0}; i < m_size; ++i){
                 m_data[i].~value_type();
             }
 
@@ -78,14 +83,19 @@ namespace shiv {
     public:
         // adding elements
         void
-        push_back(reference value){
+        push_back(const_reference value){
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
             }
             m_data[m_size] = value;
             ++m_size;
         }
-
+        
+        void
+        push_back(rvalue_reference value){
+            emplace_back(std::move(value));
+        }
+        
         template<typename... args>
         reference
         emplace_back(args&& ... values){ // can avoid a copy/ move by creating the object in place
@@ -95,6 +105,27 @@ namespace shiv {
             new(&m_data[m_size]) value_type(std::forward<args>(values)...);
 
             return m_data[m_size++];
+        }
+
+        template<typename... Args>
+        iterator
+        emplace(const_iterator position, Args&&... args){
+            shiv::ptrdiff_t distance{position - begin()};
+            assert(distance > 0);
+            assert(static_cast<unsigned long int>(distance) < m_capacity);
+            if(m_size >= m_capacity){
+                reallocate(m_capacity * 2);
+            }
+            // loop through from position shifting each element up
+            std::move_backward(position, cend(), end() + 1);
+            m_data[distance] = std::move(T(std::forward<Args>(args)...));
+            ++m_size;
+            return iterator(position - 1); 
+        }
+        
+        iterator
+        insert(const_iterator position, const T& value){
+            return emplace(position, value);
         }
 
         void
@@ -118,7 +149,7 @@ namespace shiv {
 
         void
         clear(){
-            for(size_t i = 0; i < m_size; ++i){
+            for(size_t i{0}; i < m_size; ++i){
                 m_data[i].~value_type();
             }
             m_size = 0;
@@ -279,7 +310,7 @@ namespace shiv {
 
     };
 
-    // Iterator class
+    /*// Iterator class
     template<class myVector>
     class vector_iterator{
         using pointer = typename myVector::pointer;
@@ -341,7 +372,7 @@ namespace shiv {
         operator!=(const vector_iterator& other) const{
             return !(*this == other);
         }
-    };
+    };*/
 }
 
 #endif //SHIVLIB_VECTOR_HPP
