@@ -1,12 +1,10 @@
 #ifndef SHIVLIB_VECTOR_HPP
 #define SHIVLIB_VECTOR_HPP
 
-#include <iterator>
-#include <cassert>
-#include <memory>
-#include <concepts>
 #include "../cstddef.hpp"
 #include "../type_traits.hpp"
+#include <cassert>
+#include <iterator>
 
 namespace shiv {
     template<typename T>
@@ -111,17 +109,31 @@ namespace shiv {
         iterator
         emplace(const_iterator position, Args&&... args){
             shiv::ptrdiff_t distance{position - begin()};
-            assert(distance > 0);
-            assert(static_cast<unsigned long int>(distance) < m_capacity);
+            assert(position >= begin() && position <= end());
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
             }
-            // loop through from position shifting each element up
-            std::move_backward(position, cend(), end() + 1);
+            std::move_backward(cbegin() + distance, cend(), end() + 1);
             m_data[distance] = std::move(T(std::forward<Args>(args)...));
             ++m_size;
             return iterator(position - 1); 
         }
+
+        iterator
+        emplace(const_iterator position, std::initializer_list<value_type> value_list){
+            shiv::ptrdiff_t distance{position - begin()}; // if we reallocate memory, position will become invalid so we use distance instead
+            assert(position >= begin() && position <= end());
+            if(m_size + value_list.size() > m_capacity){
+                reallocate(m_capacity * 2);
+            }
+            std::move_backward(cbegin() + distance, cend(), end() + value_list.size());
+            m_size += value_list.size();
+            for(iterator j{begin() + distance}; auto i: value_list){
+                *j = std::move(i);
+                ++j;
+            }
+            return iterator(position - value_list.size());
+        } 
         
         iterator
         insert(const_iterator position, const T& value){

@@ -21,9 +21,11 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
         vector1.emplace_back(2);
         vector1.insert(vector1.end() - 2, 8);
         BOOST_TEST(vector1 == vector1Expected);
-        
+        vector1.emplace(vector1.end() - 1, {0, 0, 0});
+        shiv::vector<int> vector2Expected{1, 8, 5, 0, 0, 0, 2};
+        BOOST_TEST(vector1 == vector2Expected);
         vector1.resize(20);
-        BOOST_TEST(vector1.size() == 4U);
+        BOOST_TEST(vector1.size() == 7U);
         BOOST_TEST(vector1.max_size() == 20U);
         BOOST_TEST(vector1.capacity() == 20U);
     }
