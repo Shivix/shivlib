@@ -14,18 +14,20 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(adding_elements_test){ // NOLINT(cert-err58-cpp)
 
         shiv::vector<int> vector1(2);
-        int a = 1;
-        shiv::vector<int> vector1Expected{1, 8, 5, 2};
+        int a{1};
+        shiv::vector<int> vector1Expected{1, 8, 5, 5, 2};
         vector1.push_back(a);
         vector1.push_back(5);
         vector1.emplace_back(2);
-        vector1.insert(vector1.end() - 2, 8);
+        int b{5};
+        vector1.emplace(vector1.end() - 2, 8);
+        vector1.insert(vector1.end() - 2, b);
         BOOST_TEST(vector1 == vector1Expected);
-        vector1.emplace(vector1.end() - 1, {0, 0, 0});
-        shiv::vector<int> vector2Expected{1, 8, 5, 0, 0, 0, 2};
+        vector1.insert(vector1.end() - 1, {0, 0, 0});
+        shiv::vector<int> vector2Expected{1, 8, 5, 5, 0, 0, 0, 2};
         BOOST_TEST(vector1 == vector2Expected);
         vector1.resize(20);
-        BOOST_TEST(vector1.size() == 7U);
+        BOOST_TEST(vector1.size() == 8U);
         BOOST_TEST(vector1.max_size() == 20U);
         BOOST_TEST(vector1.capacity() == 20U);
     }

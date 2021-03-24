@@ -108,21 +108,26 @@ namespace shiv {
         template<typename... Args>
         iterator
         emplace(const_iterator position, Args&&... args){
-            shiv::ptrdiff_t distance{position - begin()};
-            assert(position >= begin() && position <= end());
+            shiv::ptrdiff_t distance{position - cbegin()};
+            assert(position >= cbegin() && position <= cend());
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
             }
             std::move_backward(cbegin() + distance, cend(), end() + 1);
             m_data[distance] = std::move(T(std::forward<Args>(args)...));
             ++m_size;
-            return iterator(position - 1); 
+            return iterator(cbegin() + distance); 
         }
 
         iterator
-        emplace(const_iterator position, std::initializer_list<value_type> value_list){
-            shiv::ptrdiff_t distance{position - begin()}; // if we reallocate memory, position will become invalid so we use distance instead
-            assert(position >= begin() && position <= end());
+        insert(const_iterator position, const T& value){
+            return emplace(position, value);
+        }
+        
+        iterator
+        insert(const_iterator position, std::initializer_list<value_type> value_list){
+            shiv::ptrdiff_t distance{position - cbegin()}; // if we reallocate memory, position will become invalid so we use distance instead
+            assert(position >= cbegin() && position <= cend());
             if(m_size + value_list.size() > m_capacity){
                 reallocate(m_capacity * 2);
             }
@@ -132,14 +137,9 @@ namespace shiv {
                 *j = std::move(i);
                 ++j;
             }
-            return iterator(position - value_list.size());
-        } 
-        
-        iterator
-        insert(const_iterator position, const T& value){
-            return emplace(position, value);
+            return iterator(cbegin() + distance);
         }
-
+        
         void
         reserve(const size_t& elemsToReserve){
             reallocate(elemsToReserve);
