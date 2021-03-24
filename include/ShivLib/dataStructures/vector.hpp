@@ -80,7 +80,7 @@ namespace shiv {
 
     public:
         // adding elements
-        void
+        constexpr void
         push_back(const_reference value){
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
@@ -89,13 +89,13 @@ namespace shiv {
             ++m_size;
         }
         
-        void
+        constexpr void
         push_back(rvalue_reference value){
             emplace_back(std::move(value));
         }
         
         template<typename... args>
-        reference
+        constexpr reference
         emplace_back(args&& ... values){ // can avoid a copy/ move by creating the object in place
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
@@ -106,7 +106,7 @@ namespace shiv {
         }
 
         template<typename... Args>
-        iterator
+        constexpr iterator
         emplace(const_iterator position, Args&&... args){
             shiv::ptrdiff_t distance{position - cbegin()};
             assert(position >= cbegin() && position <= cend());
@@ -119,12 +119,12 @@ namespace shiv {
             return iterator(cbegin() + distance); 
         }
 
-        iterator
+        constexpr iterator
         insert(const_iterator position, const T& value){
             return emplace(position, value);
         }
         
-        iterator
+        constexpr iterator
         insert(const_iterator position, std::initializer_list<value_type> value_list){
             shiv::ptrdiff_t distance{position - cbegin()}; // if we reallocate memory, position will become invalid so we use distance instead
             assert(position >= cbegin() && position <= cend());
