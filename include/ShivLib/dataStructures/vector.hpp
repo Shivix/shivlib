@@ -5,6 +5,9 @@
 #include "../type_traits.hpp"
 #include <cassert>
 #include <iterator>
+#include <utility>
+#include <bitset>
+#include <bit>
 
 namespace shiv {
     template<typename T>
@@ -23,23 +26,57 @@ namespace shiv {
         vector() = default;
         
         explicit vector(size_t capacity){
+            unsigned int result=1;
+            while(capacity > result){
+                result<<=1;
+            }
+            capacity = result;
             reallocate(capacity);
         }
 
-        vector(std::initializer_list<value_type> input){
-            reallocate(input.size());
-            int i = 0;
-            for(auto&& elem: input){
+        explicit vector(std::initializer_list<value_type> input){
+            unsigned int result=1;
+            while(input.size() > result){
+                result<<=1;
+            }
+            reallocate(result); //todo: try calling other constructor instead
+            for(int i{0}; auto&& elem: input){
                 m_data[i++] = elem;
             }
             m_size = input.size();
         }
         // TODO: Add copy ctor etc.
-        vector(const vector& other):
-            m_data(std::move(other.m_data)),
-            m_size(other.m_size),
-            m_capacity(m_capacity){
-            
+        vector(const vector& other){
+            reallocate(other.m_capacity);
+            for(int i{0}; auto&& elem: other){
+                m_data[i++] = elem;
+            }
+            m_size = other.size();
+        }
+        
+        vector& operator=(const vector& other){
+            if (this != &other){
+                reallocate(other.m_capacity);
+                for(int i{0}; auto&& elem: other){
+                    m_data[i++] = elem;
+                }
+                m_size = other.m_size;
+            }
+            return *this;
+        }
+        
+        vector(vector&& other):
+            m_data{std::exchange(other.m_data, nullptr)},
+            m_size{other.m_size},
+            m_capacity{other.m_capacity} {}
+        
+        vector& operator=(vector&& other){
+            if (this != &other){
+                m_data = std::exchange(other.m_data, nullptr);
+                m_size = other.m_size;
+                m_capacity = other.m_capacity;
+            }
+            return *this;
         }
         
         ~vector(){
@@ -124,6 +161,18 @@ namespace shiv {
             return emplace(position, value);
         }
         
+        constexpr iterator 
+        insert(iterator position, size_t amount, const T& value){
+            shiv::ptrdiff_t distance{position - cbegin()};
+            if(m_size + amount > m_capacity){
+                reallocate(m_capacity * 2);
+            }
+            std::move_backward(cbegin() + distance, cend(), end() + amount);
+            m_size += amount;
+            std::fill(begin() + distance, begin() + distance + amount, value);
+            return iterator(cbegin() + distance);
+        }
+        
         constexpr iterator
         insert(const_iterator position, std::initializer_list<value_type> value_list){
             shiv::ptrdiff_t distance{position - cbegin()}; // if we reallocate memory, position will become invalid so we use distance instead
@@ -176,6 +225,7 @@ namespace shiv {
         constexpr void
         swap(vector& other) noexcept{
             std::swap_ranges(begin(), end(), other.begin());
+            std::swap(m_size, other.m_size);
         }
 
         // Element Access

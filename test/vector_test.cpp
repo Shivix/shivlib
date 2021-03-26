@@ -11,8 +11,22 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
         //}
     }
     
-    BOOST_AUTO_TEST_CASE(adding_elements_test){ // NOLINT(cert-err58-cpp)
+    BOOST_AUTO_TEST_CASE(constructor_test){ // NOLINT(cert-err58-cpp)
+        shiv::vector<int> vector1{1, 2, 3};
+        auto copied_vector{vector1};
+        BOOST_TEST(copied_vector == vector1);
+        shiv::vector<int> vector2{1, 2, 3, 4};
+        shiv::vector<int> assigned_vector{};
+        assigned_vector = vector2;
+        BOOST_TEST(assigned_vector == vector2);
 
+        shiv::vector<int> vector3{1, 2, 3};
+        shiv::vector<int> expected{1, 2, 3};
+        auto moved_vector{std::move(vector3)};
+        BOOST_TEST(moved_vector == expected);
+    } 
+    
+    BOOST_AUTO_TEST_CASE(adding_elements_test){ // NOLINT(cert-err58-cpp)
         shiv::vector<int> vector1(2);
         int a{1};
         shiv::vector<int> vector1Expected{1, 8, 5, 5, 2};
@@ -26,10 +40,13 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
         vector1.insert(vector1.end() - 1, {0, 0, 0});
         shiv::vector<int> vector2Expected{1, 8, 5, 5, 0, 0, 0, 2};
         BOOST_TEST(vector1 == vector2Expected);
-        vector1.resize(20);
-        BOOST_TEST(vector1.size() == 8U);
-        BOOST_TEST(vector1.max_size() == 20U);
-        BOOST_TEST(vector1.capacity() == 20U);
+        vector1.insert(vector1.end() - 4, 3, 1);
+        shiv::vector<int> vector3Expected{1, 8, 5, 5, 1, 1, 1, 0, 0, 0, 2};
+        BOOST_TEST(vector1 == vector3Expected);
+        vector1.resize(100);
+        BOOST_TEST(vector1.size() == 11U);
+        BOOST_TEST(vector1.max_size() == 100U);
+        BOOST_TEST(vector1.capacity() == 100U);
     }
 
     BOOST_AUTO_TEST_CASE(removing_elements_test){ // NOLINT(cert-err58-cpp)
@@ -79,11 +96,10 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(fillswap_test){ // NOLINT(cert-err58-cpp)
 
         shiv::vector<int> vector1{0, 1, 2, 3, 4};
-        shiv::vector<int> vector2{4, 3, 2, 1, 0};
-        shiv::vector<int> expectedVector1{4, 3, 2, 1, 0};
+        shiv::vector<int> vector2{4, 3, 2, 1};
+        shiv::vector<int> expectedVector1{4, 3, 2, 1};
         shiv::vector<int> expectedVector2{4, 4, 4, 4, 4};
         vector1.swap(vector2);
-
         BOOST_TEST(vector1 == expectedVector1);
         BOOST_TEST(vector2 != expectedVector1);
         vector2.fill(4);
