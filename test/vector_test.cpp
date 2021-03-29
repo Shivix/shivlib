@@ -3,12 +3,12 @@
 
 BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(range_based_test){ // NOLINT(cert-err58-cpp)
+        constexpr shiv::vector<int> test{};
+        shiv::vector<int> vector1{0, 1, 2, 3, 4, 5};
 
-        //vector<int> vector1{2};
-
-        //for(auto&& i: vector1){
-        //    
-        //}
+        for(auto&& i: vector1){
+            std::cout << i;
+        }
     }
     
     BOOST_AUTO_TEST_CASE(constructor_test){ // NOLINT(cert-err58-cpp)
@@ -51,13 +51,19 @@ BOOST_AUTO_TEST_SUITE(vector_test) // NOLINT(cert-err58-cpp)
 
     BOOST_AUTO_TEST_CASE(removing_elements_test){ // NOLINT(cert-err58-cpp)
 
-        shiv::vector<int> vector1{2};
+        shiv::vector<int> vector1{1, 2, 3};
         shiv::vector<int> vector1Expected{1, 2};
         vector1.pop_back();
         BOOST_TEST(vector1 == vector1Expected);
+        BOOST_TEST(vector1.size() == 2);
         
         vector1.clear();
         BOOST_TEST(vector1.empty() == true);
+        
+        shiv::vector<int> vector2{1, 2, 3};
+        vector2.reserve(32);
+        vector2.shrink_to_fit();
+        BOOST_TEST(vector2.capacity() == 3);
     }
 
     BOOST_AUTO_TEST_CASE(iterator_test){ // NOLINT(cert-err58-cpp)

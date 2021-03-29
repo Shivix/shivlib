@@ -8,9 +8,10 @@
 #include <utility>
 #include <bitset>
 #include <bit>
+#include <memory>
 
 namespace shiv {
-    template<typename T>
+    template<typename T, typename A = std::allocator<T>>
     class vector{
     public:
         using value_type = T;
@@ -23,29 +24,29 @@ namespace shiv {
         using const_reference = const T&;
         using rvalue_reference = T&&;
         
-        vector() = default;
+        using alloc = std::allocator_traits<A>;
         
-        explicit vector(size_t capacity){
-            unsigned int result=1;
-            while(capacity > result){
-                result<<=1;
+        constexpr vector() = default;
+        
+        constexpr explicit
+        vector(size_t capacity){
+            unsigned int rounded =1;
+            while(capacity > rounded){
+                rounded <<=1;
             }
-            capacity = result;
-            reallocate(capacity);
+            reallocate(rounded);
         }
 
-        explicit vector(std::initializer_list<value_type> input){
-            unsigned int result=1;
-            while(input.size() > result){
-                result<<=1;
-            }
-            reallocate(result); //todo: try calling other constructor instead
+        constexpr explicit
+        vector(std::initializer_list<value_type> input):
+        vector(input.size()){
             for(int i{0}; auto&& elem: input){
                 m_data[i++] = elem;
             }
             m_size = input.size();
         }
-        // TODO: Add copy ctor etc.
+        
+        constexpr
         vector(const vector& other){
             reallocate(other.m_capacity);
             for(int i{0}; auto&& elem: other){
@@ -54,7 +55,8 @@ namespace shiv {
             m_size = other.size();
         }
         
-        vector& operator=(const vector& other){
+        constexpr vector&
+        operator=(const vector& other){
             if (this != &other){
                 reallocate(other.m_capacity);
                 for(int i{0}; auto&& elem: other){
@@ -64,13 +66,15 @@ namespace shiv {
             }
             return *this;
         }
-        
+
+        constexpr
         vector(vector&& other):
             m_data{std::exchange(other.m_data, nullptr)},
             m_size{other.m_size},
             m_capacity{other.m_capacity} {}
         
-        vector& operator=(vector&& other){
+        constexpr vector&
+        operator=(vector&& other){
             if (this != &other){
                 m_data = std::exchange(other.m_data, nullptr);
                 m_size = other.m_size;
@@ -78,25 +82,27 @@ namespace shiv {
             }
             return *this;
         }
-        
+
+        constexpr
         ~vector(){
             for(size_t i = 0; i < m_size; ++i){
                 m_data[i].~value_type();
             }
-            ::operator delete(m_data, m_capacity * sizeof(value_type));
+            if (m_data != nullptr){
+                alloc::deallocate(allocator, m_data, m_capacity);
+            }
         }
 
     private:
 
         pointer m_data{nullptr};
-
+        A allocator{};
         size_t m_size{0};
         size_t m_capacity{0};
 
-        void
+        constexpr void
         reallocate(const size_t& newCapacity){
-            auto newData = (pointer)::operator new(newCapacity * sizeof(value_type));
-
+            pointer newData = alloc::allocate(allocator, newCapacity);
             if(newCapacity < m_size){
                 m_size = newCapacity;
             }
@@ -109,8 +115,9 @@ namespace shiv {
             for(size_t i{0}; i < m_size; ++i){
                 m_data[i].~value_type();
             }
-
-            ::operator delete(m_data, m_capacity * sizeof(value_type));
+            if(m_data != nullptr){
+                alloc::deallocate(allocator, m_data, m_capacity);
+            }
             m_data = newData;
             m_capacity = newCapacity;
         }
@@ -188,34 +195,39 @@ namespace shiv {
             }
             return iterator(cbegin() + distance);
         }
-        
-        void
+
+        constexpr void
         reserve(const size_t& elemsToReserve){
             reallocate(elemsToReserve);
         }
 
-        void
+        constexpr void
         resize(const size_t& elemsToResize){
             reallocate(elemsToResize);
         }
 
         // removing elements
-        void
-        pop_back(){ // TODO: doesnt resize
+        constexpr void
+        pop_back(){
             if(m_size > 0){
                 --m_size;
                 m_data[m_size].~value_type();
             }
         }
 
-        void
+        constexpr void
         clear(){
             for(size_t i{0}; i < m_size; ++i){
                 m_data[i].~value_type();
             }
             m_size = 0;
         }
-
+        
+        constexpr void
+        shrink_to_fit(){
+            reallocate(m_size);
+        }
+        
         // swap & fill
         constexpr void
         fill(const value_type& input){
