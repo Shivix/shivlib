@@ -106,14 +106,11 @@ namespace shiv {
             if(newCapacity < m_size){
                 m_size = newCapacity;
             }
-            if(m_size != 0){
-                for(size_t i = 0; i < m_size; ++i){
-                    new(&newData[i]) value_type(std::move(m_data[i]));
-                } 
-            }
-            
+            for(size_t i = 0; i < m_size; ++i){
+                alloc::construct(allocator, &newData[i], std::move(m_data[i]));
+            } 
             for(size_t i{0}; i < m_size; ++i){
-                m_data[i].~value_type();
+                alloc::destroy(allocator, &m_data[i]);
             }
             if(m_data != nullptr){
                 alloc::deallocate(allocator, m_data, m_capacity);
@@ -144,8 +141,7 @@ namespace shiv {
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
             }
-            new(&m_data[m_size]) value_type(std::forward<args>(values)...);
-
+            alloc::construct(allocator, &m_data[m_size], std::forward<args>(values)...);
             return m_data[m_size++];
         }
 
