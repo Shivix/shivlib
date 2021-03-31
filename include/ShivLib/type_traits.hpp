@@ -248,6 +248,26 @@ namespace shiv {
 
     template<typename T>
     struct is_volatile<volatile T>: public true_type{};
+    
+    // is chararacter
+    template<typename>
+    struct is_character_helper: public false_type {};
+    template<>
+    struct is_character_helper<char>: public true_type {};
+    template<>
+    struct is_character_helper<wchar_t>: public true_type {};
+    template<>
+    struct is_character_helper<char8_t>: public true_type {};
+    template<>
+    struct is_character_helper<char16_t>: public true_type {};
+    template<>
+    struct is_character_helper<char32_t>: public true_type {};
+    
+    template<typename T>
+    struct is_character: public is_character_helper<remove_cv<T>> {};
+    
+    template<typename T>
+    constexpr inline bool is_character_v = is_character<T>::value;
 }
 
 
