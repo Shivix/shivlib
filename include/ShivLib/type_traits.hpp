@@ -264,7 +264,7 @@ namespace shiv {
     struct is_character_helper<char32_t>: public true_type {};
     
     template<typename T>
-    struct is_character: public is_character_helper<remove_cv<T>> {};
+    struct is_character: public is_character_helper<remove_cv_t<T>> {};
     
     template<typename T>
     constexpr inline bool is_character_v = is_character<T>::value;
