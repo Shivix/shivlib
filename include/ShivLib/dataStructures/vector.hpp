@@ -68,13 +68,13 @@ namespace shiv {
         }
 
         constexpr
-        vector(vector&& other):
+        vector(vector&& other) noexcept :
             m_data{std::exchange(other.m_data, nullptr)},
             m_size{other.m_size},
             m_capacity{other.m_capacity} {}
         
         constexpr vector&
-        operator=(vector&& other){
+        operator=(vector&& other) noexcept {
             if (this != &other){
                 m_data = std::exchange(other.m_data, nullptr);
                 m_size = other.m_size;
@@ -107,7 +107,7 @@ namespace shiv {
                 m_size = newCapacity;
             }
             for(size_t i = 0; i < m_size; ++i){
-                alloc::construct(allocator, &newData[i], std::move(m_data[i]));
+                alloc::construct(allocator, &newData[i], std::move_if_noexcept(m_data[i]));
             } 
             for(size_t i{0}; i < m_size; ++i){
                 alloc::destroy(allocator, &m_data[i]);
