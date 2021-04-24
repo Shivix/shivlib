@@ -7,8 +7,8 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
-    BOOST_AUTO_TEST_CASE(multiply_test){ // NOLINT
+BOOST_AUTO_TEST_SUITE(matrix_test)
+    BOOST_AUTO_TEST_CASE(multiply_test){
 
         shiv::matrix<float, 3, 3> matrix1 = {
                 {{{0, 1, 2},
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST((matrix1 * 5) == expectedMatrix2);
     }
     
-    BOOST_AUTO_TEST_CASE(divide_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(divide_test){
 
         shiv::matrix<double, 3, 3> matrix1 = {
                 {{{10.0, 12.0, 21.0},
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST((matrix3 / 5.0) == expectedMatrix2);
     }
     
-    BOOST_AUTO_TEST_CASE(addition_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(addition_test){
 
         shiv::matrix<float, 3, 3> matrix1 = {
                 {{{0, 1, 2},
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(expectedMatrix1S == expectedTest);
     }
     
-    BOOST_AUTO_TEST_CASE(subtraction_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(subtraction_test){
 
         shiv::matrix<float, 3, 3> matrix1 = {
                 {{{0, 1, 2},
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(-matrix1 == negMatrix);
     }
     
-    BOOST_AUTO_TEST_CASE(determinant_test, *boost::unit_test::tolerance(0.01)){ // NOLINT
+    BOOST_AUTO_TEST_CASE(determinant_test, *boost::unit_test::tolerance(0.01)){
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix5x5.get_determinant() == 5182129.02628431);
     }
     
-    BOOST_AUTO_TEST_CASE(row_echelon_test, *boost::unit_test::tolerance(0.01)){ // NOLINT
+    BOOST_AUTO_TEST_CASE(row_echelon_test, *boost::unit_test::tolerance(0.01)){
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(result4x4 == expectedMatrix4x4);
     }
     
-    BOOST_AUTO_TEST_CASE(transpose_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(transpose_test){
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix4x4.get_transpose() == expectedMatrix4x4);
     }
     
-    BOOST_AUTO_TEST_CASE(augment_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(augment_test){
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
@@ -255,7 +255,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix3x3.get_augment(matrix3x32) == expectedMatrix3x3);
     }
     
-    BOOST_AUTO_TEST_CASE(identity_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(identity_test){
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
@@ -270,7 +270,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix3x3.get_identity() == expectedMatrix3x3);
     }
     
-    BOOST_AUTO_TEST_CASE(inverse_test, *boost::unit_test::tolerance(0.01)){ // NOLINT
+    BOOST_AUTO_TEST_CASE(inverse_test, *boost::unit_test::tolerance(0.01)){
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{3, 7, 8},
@@ -285,7 +285,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix3x3.get_inverse() == expectedMatrix3x3);
     }
     
-    BOOST_AUTO_TEST_CASE(orthogonal_test){  // NOLINT
+    BOOST_AUTO_TEST_CASE(orthogonal_test){
 
         shiv::matrix<int, 2, 2> matrix4x4 = {
                        {{{1, 0},
@@ -294,7 +294,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix4x4.is_orthogonal() == true);
     }
     
-    BOOST_AUTO_TEST_CASE(sort_test){ // NOLINT // helps check begin and rebegin iterators.
+    BOOST_AUTO_TEST_CASE(sort_test){// helps check begin and rebegin iterators.
 
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{3, 7, 8},
@@ -317,7 +317,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix3x3 == expectedReversed);
     }
     
-    BOOST_AUTO_TEST_CASE(find_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(find_test){
 
         shiv::matrix<int, 3, 3> matrix3x3 = {
                 {{{3, 7, 0},
@@ -328,7 +328,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST((*std::find(matrix3x3.crbegin(), matrix3x3.crend(), 0)) == 0);
     }
     
-    BOOST_AUTO_TEST_CASE(empty_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(empty_test){
 
         shiv::matrix<int, 3, 3> matrix3x3 = {
                 {{{3, 7, 0},
@@ -341,7 +341,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(emptyMatrix.empty() == true);
     }
     
-    BOOST_AUTO_TEST_CASE(fill_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(fill_test){
 
         shiv::matrix<int, 3, 3> fillMatrix;
         fillMatrix.fill(4);
@@ -351,7 +351,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(fillMatrix == resultMatrix);
     }
     
-    BOOST_AUTO_TEST_CASE(swap_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(swap_test){
 
         shiv::matrix<int, 3, 3> matrix3x3 = {
                                              {{{0, 1, 2},
@@ -378,7 +378,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix3x32 == matrix3x32R);
     }
     
-    BOOST_AUTO_TEST_CASE(at_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(at_test){
 
         shiv::matrix<int, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
@@ -401,7 +401,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         }
     }
     
-    BOOST_AUTO_TEST_CASE(iterator_test){ // NOLINT
+    BOOST_AUTO_TEST_CASE(iterator_test){
 
         shiv::matrix<int, 4, 4> matrix4x4 = {
                 {{{0, 1, 2, 3},
@@ -422,4 +422,4 @@ BOOST_AUTO_TEST_SUITE(matrix_test) // NOLINT
         BOOST_TEST(matrix4x4.back() == 15);
         BOOST_TEST(constMatrix.back() == 15);
     }
-BOOST_AUTO_TEST_SUITE_END() // NOLINT
+BOOST_AUTO_TEST_SUITE_END()

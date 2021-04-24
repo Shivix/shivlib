@@ -2,8 +2,8 @@
 #include "../include/ShivLib/dataStructures/array.hpp"
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(algorithm_test) //NOLINT
-BOOST_AUTO_TEST_CASE(comparitor_test){ //NOLINT
+BOOST_AUTO_TEST_SUITE(algorithm_test)
+BOOST_AUTO_TEST_CASE(comparitor_test){
     auto test = shiv::min(3, 8);
     BOOST_TEST(shiv::max(5, 8) == 8);
     BOOST_TEST(test == 3);
@@ -14,4 +14,4 @@ BOOST_AUTO_TEST_CASE(comparitor_test){ //NOLINT
     shiv::array<int, 3> testArray4{0, 1, 2};
     BOOST_TEST(shiv::equal(testArray3.begin(), testArray3.end(), testArray4.begin()) == true);
 }
-BOOST_AUTO_TEST_SUITE_END() //NOLINT
+BOOST_AUTO_TEST_SUITE_END()

@@ -3,8 +3,8 @@
 
 // Using auto test suite for now since it builds alot faster as we get more tests,
 // suite will be create manually for better output
-BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
-    BOOST_AUTO_TEST_CASE(array_iterator_test){ // NOLINT(cert-err58-cpp)
+BOOST_AUTO_TEST_SUITE(array_test)
+    BOOST_AUTO_TEST_CASE(array_iterator_test){
 
         shiv::array<int, 5> array1{1, 0, 2, 3, 4};
         shiv::array<int, 5> arrayOrdered{0, 1, 2, 3, 4};
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         BOOST_TEST(array1[4] == 7);
     }
 
-    BOOST_AUTO_TEST_CASE(fillswap_test){ // NOLINT(cert-err58-cpp)
+    BOOST_AUTO_TEST_CASE(fillswap_test){
 
         shiv::array<int, 5> array1{0, 1, 2, 3, 4};
         shiv::array<int, 5> array2{4, 3, 2, 1, 0};
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         BOOST_TEST(array2 == expectedArray2);
     }
 
-    BOOST_AUTO_TEST_CASE(capacity_test){ // NOLINT(cert-err58-cpp)
+    BOOST_AUTO_TEST_CASE(capacity_test){
 
         shiv::array<int, 5> array1{0, 1, 2, 3, 4};
         BOOST_TEST(array1.size() == std::size_t(5));
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         BOOST_TEST(array1.empty() == false);
     }
 
-    BOOST_AUTO_TEST_CASE(access_test){ // NOLINT(cert-err58-cpp)
+    BOOST_AUTO_TEST_CASE(access_test){
 
         shiv::array<int, 5> array1{0, 1, 2, 3, 4};
         const shiv::array<int, 5> array1Const{0, 1, 2, 3, 4};
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         BOOST_TEST(array1Const.back() == 4);
     }
 
-    BOOST_AUTO_TEST_CASE(zero_sized_test){ // NOLINT(cert-err58-cpp)
+    BOOST_AUTO_TEST_CASE(zero_sized_test){
 
         [[maybe_unused]] shiv::array<int, 0> array1{};
         
@@ -70,4 +70,4 @@ BOOST_AUTO_TEST_SUITE(array_test) // NOLINT(cert-err58-cpp)
         //BOOST_TEST(array1[3] == 3);
         
     }
-BOOST_AUTO_TEST_SUITE_END() // NOLINT(cert-err58-cpp)
+BOOST_AUTO_TEST_SUITE_END()
