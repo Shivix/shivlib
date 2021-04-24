@@ -3,12 +3,8 @@
 
 
 namespace shiv {
-    class memory{
-
         
         
-        
-    };
 }
 
 
