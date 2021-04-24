@@ -22,7 +22,8 @@ set(INCLUDES
         ../include/ShivLib/memory.hpp
         ../include/ShivLib/cstddef.hpp
         ../include/ShivLib/iterators.hpp
-        ../include/ShivLib/concepts.hpp) 
+        ../include/ShivLib/concepts.hpp
+        ../include/ShivLib/functional.hpp) 
 
 set(TESTSRC
         matrix_test.cpp
@@ -32,10 +33,11 @@ set(TESTSRC
         type_traits_test.cpp
         algorithm_test.cpp
         list_test.cpp
-        lua_test.cpp)
+        lua_test.cpp
+        functional_test.cpp)
 
 set(EXPERIMENTAL
-        ../include/ShivLib/experimental experimental_test.cpp)
+        ../include/ShivLib/experimental experimental_test.cpp ../include/ShivLib/experimental/format.hpp)
 
 find_package(Boost REQUIRED COMPONENTS system)
 
