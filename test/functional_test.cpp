@@ -7,5 +7,7 @@ int add(int a, int b){
 BOOST_AUTO_TEST_SUITE(functional_test) // NOLINT(cert-err58-cpp)
     BOOST_AUTO_TEST_CASE(invoke_test){ // NOLINT(cert-err58-cpp)
         BOOST_TEST(shiv::invoke(add, 1, 3) == 4);
+        std::tuple test{1, 3};
+        BOOST_TEST(shiv::apply(add, test) == 4);
     }
 BOOST_AUTO_TEST_SUITE_END()
