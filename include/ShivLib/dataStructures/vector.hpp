@@ -3,12 +3,13 @@
 
 #include "../cstddef.hpp"
 #include "../type_traits.hpp"
+#include "../utility.hpp"
+#include <bit>
+#include <bitset>
 #include <cassert>
 #include <iterator>
-#include <utility>
-#include <bitset>
-#include <bit>
 #include <memory>
+#include <utility>
 
 namespace shiv {
     template<typename T, typename A = std::allocator<T>>
@@ -132,7 +133,7 @@ namespace shiv {
         
         constexpr void
         push_back(rvalue_reference value){
-            emplace_back(std::move(value));
+            emplace_back(shiv::move(value));
         }
         
         template<typename... args>
@@ -154,7 +155,7 @@ namespace shiv {
                 reallocate(m_capacity * 2);
             }
             std::move_backward(cbegin() + distance, cend(), end() + 1);
-            m_data[distance] = std::move(T(std::forward<Args>(args)...));
+            m_data[distance] = shiv::move(T(shiv::forward<Args>(args)...));
             ++m_size;
             return iterator(cbegin() + distance); 
         }
@@ -186,7 +187,7 @@ namespace shiv {
             std::move_backward(cbegin() + distance, cend(), end() + value_list.size());
             m_size += value_list.size();
             for(iterator j{begin() + distance}; auto i: value_list){
-                *j = std::move(i);
+                *j = shiv::move(i);
                 ++j;
             }
             return iterator(cbegin() + distance);
