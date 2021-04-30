@@ -91,12 +91,10 @@ namespace shiv {
         // Element Access
         constexpr reference 
         operator [] (size_t index) noexcept{
-            assert((index < numOfElems)&&("Index out of range"));
             return elems[index];
         }
         constexpr const_reference
         operator [] (size_t index) const noexcept{
-            assert((index < numOfElems)&&("Index out of range"));
             return elems[index];
         }
         

@@ -26,7 +26,6 @@ namespace shiv {
         using rvalue_reference = T&&;
         
         using alloc = std::allocator_traits<A>;
-        
         constexpr vector() = default;
         
         constexpr explicit
@@ -240,12 +239,10 @@ namespace shiv {
         // Element Access
         [[nodiscard]] constexpr reference
         operator[](size_t index) noexcept{
-            assert((index < m_size) && ("Index out of range"));
             return m_data[index];
         }
         [[nodiscard]] constexpr const_reference
         operator[](size_t index) const noexcept{
-            assert((index < m_size) && ("Index out of range"));
             return m_data[index];
         }
 
