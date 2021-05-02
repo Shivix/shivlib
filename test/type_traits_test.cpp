@@ -30,5 +30,7 @@ BOOST_AUTO_TEST_SUITE(type_trait_test)
         
         BOOST_TEST(shiv::is_arithmetic_v<float>  == true);
         BOOST_TEST(shiv::is_arithmetic_v<void>  == false);
+        
+        BOOST_TEST(shiv::is_byte_v<std::byte> == true);
     }
 BOOST_AUTO_TEST_SUITE_END()

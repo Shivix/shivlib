@@ -129,19 +129,19 @@ namespace shiv {
     template<typename T>
     struct is_lvalue_reference<T&>: public true_type{}; // this partially specialised template will be used when the argument it is an lvalue
     template<typename T>
-    inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
+    inline constexpr bool is_lvalue_reference_v{is_lvalue_reference<T>::value};
     
     template<typename>
     struct is_rvalue_reference: public false_type{};
     template<typename T>
     struct is_rvalue_reference<T&&>: public true_type{}; // this partially specialised template will be used when the argument it is an rvalue
     template<typename T>
-    inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
+    inline constexpr bool is_rvalue_reference_v{is_rvalue_reference<T>::value};
     
     template<typename T>
     struct is_reference: public integral_constant<is_lvalue_reference_v<T> || is_rvalue_reference_v<T>> {};
     template<typename T>
-    inline constexpr bool is_reference_v = is_reference<T>::value;
+    inline constexpr bool is_reference_v{is_reference<T>::value};
     
     // pointer check
     template<typename T>
@@ -190,7 +190,7 @@ namespace shiv {
     struct is_integral: public is_integral_helper<remove_cv_t<T>>{};
     
     template<typename T>
-    inline constexpr bool is_integral_v = is_integral<T>::value;
+    inline constexpr bool is_integral_v{is_integral<T>::value};
     
     // floating point check
     template<typename>
@@ -206,14 +206,14 @@ namespace shiv {
     struct is_floating_point: public is_floating_point_helper<remove_cv_t<T>> {};
     
     template<typename T>
-    inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
+    inline constexpr bool is_floating_point_v{is_floating_point<T>::value};
     
     // arithmetic type check
     template<typename T>
     struct is_arithmetic : public integral_constant<is_integral_v<T> || is_floating_point_v<T>> {};
 
     template<typename T>
-    inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
+    inline constexpr bool is_arithmetic_v{is_arithmetic<T>::value};
     
     // void check -- const/ volatile qualifiers do not change outcome
     template<typename>
@@ -267,7 +267,24 @@ namespace shiv {
     struct is_character: public is_character_helper<remove_cv_t<T>> {};
     
     template<typename T>
-    constexpr inline bool is_character_v = is_character<T>::value;
+    constexpr inline bool is_character_v{is_character<T>::value};
+    
+    // is byte
+    template<typename>
+    struct is_byte : public false_type {};
+    template<>
+    struct is_byte<char> : public true_type {};
+    template<>
+    struct is_byte<unsigned char> : public true_type {};
+    template<>
+    struct is_byte<signed char> : public true_type {};
+    template<>
+    struct is_byte<char8_t> : public true_type {};
+    template<>
+    struct is_byte<std::byte> : public true_type {};
+    
+    template<typename T>
+    constexpr inline bool is_byte_v{is_byte<T>::value};
 }
 
 
