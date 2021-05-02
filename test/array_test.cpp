@@ -66,8 +66,16 @@ BOOST_AUTO_TEST_SUITE(array_test)
 
         [[maybe_unused]] shiv::array<int, 0> array1{};
         
-        //BOOST_TEST(array1.at(2) == 2);
-        //BOOST_TEST(array1[3] == 3);
-        
+        BOOST_TEST(array1.empty() == true);
+    }
+    BOOST_AUTO_TEST_CASE(comparison_test){
+        shiv::array<int, 5> array1{1, 2, 3, 4, 5};
+        shiv::array<int, 5> array2{1, 2, 3, 4, 5};
+        shiv::array<int, 5> array_lt{0, 1, 2, 3, 4};
+        shiv::array<int, 5> array_gt{2, 3, 4, 5, 6};
+        BOOST_TEST(array1 == array2);
+        BOOST_TEST(array1 != array_lt);
+        BOOST_TEST(array1 > array_lt);
+        BOOST_TEST(array1 < array_gt);
     }
 BOOST_AUTO_TEST_SUITE_END()

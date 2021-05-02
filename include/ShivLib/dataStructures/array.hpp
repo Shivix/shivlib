@@ -1,9 +1,12 @@
 #ifndef SHIVLIB_ARRAY_HPP
 #define SHIVLIB_ARRAY_HPP
 
-#include <iterator>
-#include <cassert>
 #include "../cstddef.hpp"
+#include "../type_traits.hpp"
+#include <cassert>
+#include <iterator>
+
+extern "C" {int memcmp(const void*, const void*, size_t) noexcept;}
 
 namespace shiv {
     template<typename T, size_t numOfElems>
@@ -154,9 +157,15 @@ namespace shiv {
         operator == (const array& other) const{
             return std::equal(begin(), end(), other.begin());
         }
-        constexpr bool
-        operator != (const array& other) const{
-            return !(*this == other);
+        constexpr std::partial_ordering
+        operator <=> (const array& other) const{
+            for(size_t i{0}; i < numOfElems; ++i){
+                auto comp_result{this->elems[i] <=> other[i]};
+                if (comp_result != std::strong_ordering::equal){
+                    return comp_result;
+                }
+            }
+            return std::strong_ordering::equal;
         }
         
         // Assignment
