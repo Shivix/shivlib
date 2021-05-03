@@ -157,7 +157,7 @@ namespace shiv {
         constexpr std::partial_ordering
         operator <=> (const array& other) const{
             for(size_t i{0}; i < numOfElems; ++i){
-                auto comp_result{this->elems[i] <=> other[i]};
+                auto comp_result{(*this)[i] <=> other[i]};
                 if (comp_result != std::strong_ordering::equal){
                     return comp_result;
                 }
