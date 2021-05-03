@@ -5,6 +5,7 @@
 #include "utility.hpp"
 #include "type_traits.hpp"
 #include <tuple>
+
 namespace shiv{
 template <typename FuncT, typename... Args>
         requires std::invocable<FuncT, Args...>
@@ -22,6 +23,10 @@ template <typename FuncT, typename TupleT>
 constexpr decltype(auto) apply(FuncT&& function, TupleT&& tuple){
     return apply_impl(shiv::forward<FuncT>(function), shiv::forward<TupleT>(tuple), std::make_index_sequence<std::tuple_size_v<shiv::remove_reference_t<TupleT>>>{});
 }
-}
 
+template<typename... Args>
+constexpr auto forward_as_tuple(Args&&... args){
+    return std::tuple<Args&&...>{std::forward<Args>(args)...};
+}
+}
 #endif//SHIVLIB_FUNCTIONAL_HPP
