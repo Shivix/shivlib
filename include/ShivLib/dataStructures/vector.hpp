@@ -9,7 +9,6 @@
 #include <cassert>
 #include <iterator>
 #include <memory>
-#include <utility>
 
 namespace shiv {
     template<typename T, typename A = std::allocator<T>>
@@ -370,12 +369,16 @@ namespace shiv {
         operator==(const vector& other) const{
             return std::equal(begin(), end(), other.begin());
         }
-
-        constexpr bool
-        operator!=(const vector& other) const{
-            return !(*this == other);
+        constexpr std::partial_ordering
+        operator <=> (const vector& other) const{
+            for(size_t i{0}; i < m_size; ++i){
+                auto comp_result{(*this)[i] <=> other[i]};
+                if (comp_result != std::strong_ordering::equal){
+                    return comp_result;
+                }
+            }
+            return std::strong_ordering::equal;
         }
-
     };
 
     /*// Iterator class

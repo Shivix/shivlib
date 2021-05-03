@@ -112,4 +112,18 @@ BOOST_AUTO_TEST_SUITE(vector_test)
         vector2.fill(4);
         BOOST_TEST(vector2 == expectedVector2);
     }
+    
+    BOOST_AUTO_TEST_CASE(comparison_test){
+
+        shiv::vector<int> vector1{0, 1, 2, 3, 4};
+        shiv::vector<int> vector_gt{5, 5, 5, 5, 5};
+        shiv::vector<int> vector_lt{0, 0, 0, 0, 0};
+        shiv::vector<int> vector2{0, 999, 0, 0, 0};
+        BOOST_TEST(vector1 != vector_gt);
+        BOOST_TEST(vector1 < vector_gt);
+        BOOST_TEST(vector1 <= vector_gt);
+        BOOST_TEST(vector1 <= shiv::vector({0, 1, 2, 3, 4}));
+        BOOST_TEST(vector1 > vector_lt);
+        BOOST_TEST(!(vector1 > vector2));
+    }
 BOOST_AUTO_TEST_SUITE_END()
