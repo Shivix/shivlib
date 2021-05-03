@@ -51,7 +51,6 @@ BOOST_AUTO_TEST_SUITE(vector_test)
     }
 
     BOOST_AUTO_TEST_CASE(removing_elements_test){
-
         shiv::vector<int> vector1{1, 2, 3};
         shiv::vector<int> vector1Expected{1, 2};
         vector1.pop_back();
@@ -68,7 +67,6 @@ BOOST_AUTO_TEST_SUITE(vector_test)
     }
 
     BOOST_AUTO_TEST_CASE(iterator_test){
-
         shiv::vector<int> vector1{1, 0, 2, 3, 4};
         shiv::vector<int> vectorOrdered{0, 1, 2, 3, 4};
         shiv::vector<int> vectorReversed{4, 3, 2, 1, 0};
@@ -86,7 +84,6 @@ BOOST_AUTO_TEST_SUITE(vector_test)
     }
     
     BOOST_AUTO_TEST_CASE(access_test){
-
         shiv::vector<double> vector1{0, 1, 2, 3, 4};
         const shiv::vector<double> vector1Const{0, 1, 2, 3, 4};
 
@@ -101,7 +98,6 @@ BOOST_AUTO_TEST_SUITE(vector_test)
     }
 
     BOOST_AUTO_TEST_CASE(fillswap_test){
-
         shiv::vector<int> vector1{0, 1, 2, 3, 4};
         shiv::vector<int> vector2{4, 3, 2, 1};
         shiv::vector<int> expectedVector1{4, 3, 2, 1};
@@ -114,7 +110,6 @@ BOOST_AUTO_TEST_SUITE(vector_test)
     }
     
     BOOST_AUTO_TEST_CASE(comparison_test){
-
         shiv::vector<int> vector1{0, 1, 2, 3, 4};
         shiv::vector<int> vector_gt{5, 5, 5, 5, 5};
         shiv::vector<int> vector_lt{0, 0, 0, 0, 0};
