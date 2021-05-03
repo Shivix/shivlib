@@ -9,7 +9,7 @@ namespace shiv {
     move(T&& input) noexcept { // casts a value to an rvalue to allow move semantics and other features.
         return static_cast<typename shiv::remove_reference_t<T>&&>(input);
     }
-    
+    // TODO: add move_if_noexcept
     template<typename T>
     constexpr inline T&&
     forward(typename shiv::remove_reference_t<T>& input) noexcept {

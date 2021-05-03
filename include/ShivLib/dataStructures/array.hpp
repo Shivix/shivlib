@@ -2,11 +2,8 @@
 #define SHIVLIB_ARRAY_HPP
 
 #include "../cstddef.hpp"
-#include "../type_traits.hpp"
 #include <cassert>
 #include <iterator>
-
-extern "C" {int memcmp(const void*, const void*, size_t) noexcept;}
 
 namespace shiv {
     template<typename T, size_t numOfElems>
