@@ -2,7 +2,8 @@
 #define SHIVLIB_UTILITY_HPP
 
 #include "type_traits.hpp"
-#include <utility>
+#include <type_traits>
+
 namespace shiv {
     template<typename T>
     constexpr inline decltype(auto)
@@ -10,10 +11,10 @@ namespace shiv {
         return static_cast<shiv::remove_reference_t<T>&&>(input);
     }
     template<typename T>
-    requires requires {noexcept(T(std::declval<T>()));}
-    constexpr inline decltype(auto)
-    move_if_noexcept(T&& input) noexcept{
-        return static_cast<shiv::remove_reference_t<T>&&>(input);
+    constexpr inline std::conditional_t<!std::is_nothrow_move_constructible_v<T>
+                                      && std::is_copy_constructible_v<T>, const T&, T&&>
+    move_if_noexcept(T& input) noexcept{
+        return shiv::move(input);
     }
     
     template<typename T>
