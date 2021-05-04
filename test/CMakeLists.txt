@@ -34,7 +34,8 @@ set(TESTSRC
         algorithm_test.cpp
         list_test.cpp
         lua_test.cpp
-        functional_test.cpp)
+        functional_test.cpp
+        utility_test.cpp)
 
 set(EXPERIMENTAL
         ../include/ShivLib/experimental/format.hpp
