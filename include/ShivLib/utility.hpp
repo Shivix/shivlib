@@ -2,14 +2,20 @@
 #define SHIVLIB_UTILITY_HPP
 
 #include "type_traits.hpp"
-
+#include <utility>
 namespace shiv {
     template<typename T>
-    constexpr inline shiv::remove_reference_t<T>&& 
+    constexpr inline decltype(auto)
     move(T&& input) noexcept { // casts a value to an rvalue to allow move semantics and other features.
-        return static_cast<typename shiv::remove_reference_t<T>&&>(input);
+        return static_cast<shiv::remove_reference_t<T>&&>(input);
     }
-    // TODO: add move_if_noexcept
+    template<typename T>
+    requires requires {noexcept(T(std::declval<T>()));}
+    constexpr inline decltype(auto)
+    move_if_noexcept(T&& input) noexcept{
+        return static_cast<shiv::remove_reference_t<T>&&>(input);
+    }
+    
     template<typename T>
     constexpr inline T&&
     forward(typename shiv::remove_reference_t<T>& input) noexcept {
