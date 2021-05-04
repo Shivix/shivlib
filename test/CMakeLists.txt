@@ -37,7 +37,10 @@ set(TESTSRC
         functional_test.cpp)
 
 set(EXPERIMENTAL
-        ../include/ShivLib/experimental experimental_test.cpp ../include/ShivLib/experimental/format.hpp)
+        ../include/ShivLib/experimental/format.hpp
+        ../include/ShivLib/experimental/lazy_evaluation.hpp
+        ../include/ShivLib/experimental/ranges.hpp
+        experimental_test.cpp)
 
 find_package(Boost REQUIRED COMPONENTS system)
 
