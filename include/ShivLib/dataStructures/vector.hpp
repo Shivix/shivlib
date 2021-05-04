@@ -4,8 +4,6 @@
 #include "../cstddef.hpp"
 #include "../type_traits.hpp"
 #include "../utility.hpp"
-#include <bit>
-#include <bitset>
 #include <cassert>
 #include <iterator>
 #include <memory>
@@ -106,7 +104,7 @@ namespace shiv {
                 m_size = newCapacity;
             }
             for(size_t i = 0; i < m_size; ++i){
-                alloc::construct(allocator, &newData[i], std::move_if_noexcept(m_data[i]));
+                alloc::construct(allocator, &newData[i], shiv::move_if_noexcept(m_data[i]));
             } 
             for(size_t i{0}; i < m_size; ++i){
                 alloc::destroy(allocator, &m_data[i]);
