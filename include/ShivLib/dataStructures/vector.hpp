@@ -363,14 +363,14 @@ namespace shiv {
         }
 
         // comparison
-        constexpr bool
-        operator==(const vector& other) const{
-            return std::equal(begin(), end(), other.begin());
+        friend constexpr bool
+        operator==(const vector& lhs, const vector& rhs){
+            return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
-        constexpr std::partial_ordering
-        operator <=> (const vector& other) const{
-            for(size_t i{0}; i < m_size; ++i){
-                auto comp_result{(*this)[i] <=> other[i]};
+        friend constexpr std::partial_ordering
+        operator <=> (const vector& lhs, const vector& rhs){
+            for(size_t i{0}; i < lhs.size(); ++i){
+                auto comp_result{lhs[i] <=> rhs[i]};
                 if (comp_result != std::strong_ordering::equal){
                     return comp_result;
                 }

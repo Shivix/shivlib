@@ -151,13 +151,13 @@ namespace shiv {
         
         // Comparison
         constexpr bool 
-        operator == (const array& other) const{
-            return std::equal(begin(), end(), other.begin());
+        friend operator == (const array& lhs, const array& rhs){
+            return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
         constexpr std::partial_ordering
-        operator <=> (const array& other) const{
+        friend operator <=> (const array& lhs, const array& rhs){
             for(size_t i{0}; i < numOfElems; ++i){
-                auto comp_result{(*this)[i] <=> other[i]};
+                auto comp_result{lhs[i] <=> rhs[i]};
                 if (comp_result != std::strong_ordering::equal){
                     return comp_result;
                 }

@@ -170,16 +170,16 @@ namespace shiv {
             }
         }
         // Arithmetic operators 
-        constexpr matrix operator + (const matrix& other) const noexcept { 
+        friend constexpr matrix operator + (const matrix& lhs, const matrix& rhs) noexcept { 
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
-                    resultMatrix[i][j] = m_data[i][j] + other[i][j];
+                    resultMatrix[i][j] = lhs[i][j] + rhs[i][j];
                 }
             }
             return resultMatrix;
         }
-        constexpr matrix operator + (const T& scalar) const noexcept {
+        constexpr matrix operator + (const T& scalar)const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ 
@@ -188,11 +188,11 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        constexpr matrix operator - (const matrix& other) const noexcept {
+        friend constexpr matrix operator - (const matrix& lhs, const matrix& rhs) noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
-                    resultMatrix[i][j] = m_data[i][j] - other[i][j];
+                    resultMatrix[i][j] = lhs[i][j] - rhs[i][j];
                 }
             }
             return resultMatrix;
@@ -241,24 +241,24 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        constexpr friend matrix operator - (matrix& matrix) noexcept {
+        friend constexpr matrix operator - (matrix& matrix) noexcept {
             for(auto&& i: matrix){
                 i = -i;
             }
             return matrix;
         }
         // Arithmetic assignment operators
-        constexpr matrix& operator += (const matrix& other) noexcept {
-            *this = *this * other;
-            return *this;
+        friend constexpr matrix& operator += (matrix& lhs, const matrix& rhs) noexcept {
+            lhs = lhs + rhs;
+            return lhs;
         }
         constexpr matrix& operator += (const T& scalar) noexcept {
             *this = *this + scalar;
             return *this;
         }
-        constexpr matrix& operator -= (const matrix& other) noexcept {
-            *this = *this - other;
-            return *this;
+        friend constexpr matrix& operator -= (matrix& lhs, const matrix& rhs) noexcept {
+            lhs = lhs - rhs;
+            return lhs;
         }
         constexpr matrix& operator -= (const T& scalar) noexcept {
             *this = *this - scalar;
@@ -331,8 +331,8 @@ namespace shiv {
             }
             return true;
         }
-        constexpr bool operator != (const matrix& other) noexcept {
-            return !(this == other);
+        friend constexpr bool operator != (const matrix& lhs, const matrix& rhs) noexcept {
+            return !(lhs == rhs);
         }
         // Iterators
         constexpr auto begin() noexcept {

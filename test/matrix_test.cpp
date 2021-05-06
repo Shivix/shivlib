@@ -106,7 +106,12 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
                  }}};
         BOOST_TEST((matrix1 + matrix2) == expectedMatrix12);
         BOOST_TEST((matrix1 + 7) == expectedMatrix1S);
-        expectedMatrix1S += 1;
+        shiv::matrix<float, 3, 3> addTest = {
+                {{{1, 1, 1},
+                         {1, 1, 1},
+                         {1, 1, 1}
+                 }}};
+        expectedMatrix1S += addTest;
         shiv::matrix<float, 3, 3> expectedTest = {
                 {{{8, 9, 10},
                          {11, 12, 13},

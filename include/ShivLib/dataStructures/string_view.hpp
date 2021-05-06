@@ -124,8 +124,8 @@ namespace shiv {
             return m_length == 0;
         }
         
-        constexpr bool operator ==(const string_view& other) const noexcept{
-            return std::equal(begin(), end(), other.begin());
+        friend constexpr bool operator ==(const string_view& lhs, const string_view& rhs) noexcept{
+            return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
     };
 }
