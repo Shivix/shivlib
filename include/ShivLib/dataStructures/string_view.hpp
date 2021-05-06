@@ -63,38 +63,38 @@ namespace shiv {
         }
 
         // Iterators
-        constexpr auto begin() const noexcept{
+        [[nodiscard]] constexpr auto begin() const noexcept{
             return const_iterator(m_view);
         }
-        constexpr auto cbegin() const noexcept{
+        [[nodiscard]] constexpr auto cbegin() const noexcept{
             return const_iterator(m_view);
         }
-        constexpr auto rbegin() const noexcept{
+        [[nodiscard]] constexpr auto rbegin() const noexcept{
             return const_reverse_iterator(end());
         }
-        constexpr auto crbegin() const noexcept{
+        [[nodiscard]] constexpr auto crbegin() const noexcept{
             return const_reverse_iterator(end());
         }
-        constexpr auto end() const noexcept{
+        [[nodiscard]] constexpr auto end() const noexcept{
             return const_iterator(m_view + m_length);
         }
-        constexpr auto cend() const noexcept{
+        [[nodiscard]] constexpr auto cend() const noexcept{
             return const_iterator(m_view + m_length);
         }
-        constexpr auto rend() const noexcept{
+        [[nodiscard]] constexpr auto rend() const noexcept{
             return const_reverse_iterator(begin());
         }
-        constexpr auto crend() const noexcept{
+        [[nodiscard]] constexpr auto crend() const noexcept{
             return const_reverse_iterator(begin());
         }
 
         // Element Access (read only)
-        constexpr const_reference operator[] (size_t index) const noexcept{
+        [[nodiscard]] constexpr const_reference operator[] (size_t index) const noexcept{
             assert((index < m_length)&&("Index out of range"));
             return m_view[index];
         }
 
-        constexpr const_reference at(size_t index) const{
+        [[nodiscard]] constexpr const_reference at(size_t index) const{
             if(index >= m_length){
                 throw std::out_of_range("Element out of range");
             }
@@ -103,11 +103,11 @@ namespace shiv {
             }
         }
 
-        constexpr const_reference front() const noexcept{
+        [[nodiscard]] constexpr const_reference front() const noexcept{
             return *begin();
         }
 
-        constexpr const_reference back() const noexcept{
+        [[nodiscard]] constexpr const_reference back() const noexcept{
             return *(end() - 1);
         }
 
@@ -123,8 +123,8 @@ namespace shiv {
         [[nodiscard]] constexpr bool empty() const noexcept{
             return m_length == 0;
         }
-        
-        friend constexpr bool operator ==(const string_view& lhs, const string_view& rhs) noexcept{
+
+        [[nodiscard]] friend constexpr bool operator ==(const string_view& lhs, const string_view& rhs) noexcept{
             return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
     };

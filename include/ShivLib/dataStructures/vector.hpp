@@ -243,7 +243,7 @@ namespace shiv {
             return m_data[index];
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         at(size_t index){
             if(index >= m_size){
                 throw std::out_of_range("Element out of range");
@@ -252,7 +252,7 @@ namespace shiv {
                 return m_data[index];
             }
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         at(size_t index) const{
             if(index >= m_size){
                 throw std::out_of_range("Element out of range");
@@ -262,81 +262,81 @@ namespace shiv {
             }
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         front() noexcept{
             return *begin();
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         front() const noexcept{
             return *begin();
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         back() noexcept{
             return *(end() - 1);
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         back() const noexcept{
             return *(end() - 1);
         }
 
         // Iterators
-        constexpr auto
+        [[nodiscard]] constexpr auto
         begin() noexcept{
             return iterator(m_data);
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         begin() const noexcept{
             return const_iterator(m_data);
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         cbegin() const noexcept{
             return const_iterator(m_data);
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rbegin() noexcept{
             return reverse_iterator(end());
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rbegin() const noexcept{
             return const_reverse_iterator(end());
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         crbegin() const noexcept{
             return const_reverse_iterator(end());
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         end() noexcept{
             return iterator(m_data + m_size);
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         end() const noexcept{
             return const_iterator(m_data + m_size);
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         cend() const noexcept{
             return const_iterator(m_data + m_size);
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rend() noexcept{
             return reverse_iterator(begin());
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rend() const noexcept{
             return const_reverse_iterator(begin());
         }
 
-        constexpr auto
+        [[nodiscard]] constexpr auto
         crend() const noexcept{
             return const_reverse_iterator(begin());
         }
@@ -363,11 +363,11 @@ namespace shiv {
         }
 
         // comparison
-        friend constexpr bool
+        [[nodiscard]] friend constexpr bool
         operator==(const vector& lhs, const vector& rhs){
             return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
-        friend constexpr std::partial_ordering
+        [[nodiscard]] friend constexpr std::partial_ordering
         operator <=> (const vector& lhs, const vector& rhs){
             for(size_t i{0}; i < lhs.size(); ++i){
                 auto comp_result{lhs[i] <=> rhs[i]};

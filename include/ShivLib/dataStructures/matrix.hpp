@@ -170,7 +170,7 @@ namespace shiv {
             }
         }
         // Arithmetic operators 
-        friend constexpr matrix operator + (const matrix& lhs, const matrix& rhs) noexcept { 
+        [[nodiscard]] friend constexpr matrix operator + (const matrix& lhs, const matrix& rhs) noexcept { 
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
@@ -179,7 +179,7 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        constexpr matrix operator + (const T& scalar)const noexcept {
+        [[nodiscard]] constexpr matrix operator + (const T& scalar)const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ 
@@ -188,7 +188,7 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        friend constexpr matrix operator - (const matrix& lhs, const matrix& rhs) noexcept {
+        [[nodiscard]] friend constexpr matrix operator - (const matrix& lhs, const matrix& rhs) noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
@@ -197,7 +197,7 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        constexpr matrix operator - (const T& scalar) const noexcept {
+        [[nodiscard]] constexpr matrix operator - (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){ 
@@ -207,7 +207,7 @@ namespace shiv {
             return resultMatrix;
         }
         template<std::size_t otherRows, std::size_t otherCols>
-        constexpr matrix operator * (const matrix<T, otherCols, otherRows>& other) const noexcept { 
+        [[nodiscard]] constexpr matrix operator * (const matrix<T, otherCols, otherRows>& other) const noexcept { 
             matrix<T, cols, otherRows> resultMatrix = {};
             for(size_t i = 0; i < otherRows; ++i){
                 for(size_t j = 0; j < cols; ++j){
@@ -218,7 +218,7 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        constexpr matrix operator * (const T& scalar) const noexcept {
+        [[nodiscard]] constexpr matrix operator * (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){
@@ -228,11 +228,11 @@ namespace shiv {
             return resultMatrix;
         }
         template<size_t otherRows, size_t otherCols>
-        constexpr matrix operator / (matrix<T, otherCols, otherRows>& other) const noexcept {
+        [[nodiscard]] constexpr matrix operator / (matrix<T, otherCols, otherRows>& other) const noexcept {
             matrix invertedMatrix = other.get_inverse();
             return (*this * invertedMatrix);
         }
-        constexpr matrix operator / (const T& scalar) const noexcept {
+        [[nodiscard]] constexpr matrix operator / (const T& scalar) const noexcept {
             matrix<T, cols, rows> resultMatrix = {};
             for(size_t i = 0; i < rows; ++i){
                 for(size_t j = 0; j < cols; ++j){
@@ -241,7 +241,7 @@ namespace shiv {
             }
             return resultMatrix;
         }
-        friend constexpr matrix operator - (matrix& matrix) noexcept {
+        [[nodiscard]] friend constexpr matrix operator - (matrix& matrix) noexcept {
             for(auto&& i: matrix){
                 i = -i;
             }
@@ -283,10 +283,10 @@ namespace shiv {
             return *this;
         }
         // element access
-        constexpr shiv::array<T, cols>& operator [] (const size_t& index) noexcept {
+        [[nodiscard]] constexpr shiv::array<T, cols>& operator [] (const size_t& index) noexcept {
             return m_data[index];
         }
-        constexpr const shiv::array<T, cols>& operator [] (const size_t& index) const noexcept {
+        [[nodiscard]] constexpr const shiv::array<T, cols>& operator [] (const size_t& index) const noexcept {
             return m_data[index];
         }
         [[nodiscard]] constexpr reference at(size_t rowIndex, size_t colIndex){
@@ -301,26 +301,26 @@ namespace shiv {
             }
             return m_data[rowIndex][colIndex];
         }
-        constexpr iterator data() noexcept {
+        [[nodiscard]] constexpr iterator data() noexcept {
             return &m_data[0][0];
         }
-        constexpr const_iterator data() const noexcept { // if the data is const this function will be called instead
+        [[nodiscard]] constexpr const_iterator data() const noexcept { // if the data is const this function will be called instead
             return const_iterator(&m_data[0][0]);
         }
-        constexpr reference back() noexcept {
+        [[nodiscard]] constexpr reference back() noexcept {
             return *(end() - 1);
         }
-        constexpr const_reference back() const noexcept {
+        [[nodiscard]] constexpr const_reference back() const noexcept {
             return *(end() - 1);
         }
-        constexpr reference front() noexcept {
+        [[nodiscard]] constexpr reference front() noexcept {
             return *begin();
         }
-        constexpr const_reference front() const noexcept {
+        [[nodiscard]] constexpr const_reference front() const noexcept {
             return *begin();
         }
         // comparison operators
-        friend constexpr bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
+        [[nodiscard]] friend constexpr bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
             for(size_t i = 0; i < rows; ++i){
                 if(matrix1[i] != matrix2[i]){ // uses the shiv::array operator != overload and runs it for each column
                     return false;
@@ -331,38 +331,38 @@ namespace shiv {
             }
             return true;
         }
-        friend constexpr bool operator != (const matrix& lhs, const matrix& rhs) noexcept {
+        [[nodiscard]] friend constexpr bool operator != (const matrix& lhs, const matrix& rhs) noexcept {
             return !(lhs == rhs);
         }
         // Iterators
-        constexpr auto begin() noexcept {
+        [[nodiscard]] constexpr auto begin() noexcept {
             return iterator(&m_data[0][0]);
         }
-        constexpr auto begin() const noexcept { // allows .begin to be used with a const matrix without ambiguity
+        [[nodiscard]] constexpr auto begin() const noexcept { // allows .begin to be used with a const matrix without ambiguity
             return const_iterator(&m_data[0][0]);
         }
-        constexpr auto cbegin() const noexcept {
+        [[nodiscard]] constexpr auto cbegin() const noexcept {
             return const_iterator(&m_data[0][0]);
         }
-        constexpr auto rbegin() noexcept {
+        [[nodiscard]] constexpr auto rbegin() noexcept {
             return reverse_iterator(end());
         }
-        constexpr auto crbegin() const noexcept {
+        [[nodiscard]] constexpr auto crbegin() const noexcept {
             return const_reverse_iterator(end());
         }
-        constexpr auto end() noexcept {
+        [[nodiscard]] constexpr auto end() noexcept {
             return iterator(&m_data[rows - 1][cols - 1] + 1);
         }
-        constexpr auto end() const noexcept {
+        [[nodiscard]] constexpr auto end() const noexcept {
             return const_iterator(&m_data[rows - 1][cols - 1] + 1);
         }
-        constexpr auto cend() const noexcept {
+        [[nodiscard]] constexpr auto cend() const noexcept {
             return const_iterator(&m_data[rows - 1][cols - 1] + 1);
         }
-        constexpr auto rend() noexcept {
+        [[nodiscard]] constexpr auto rend() noexcept {
             return reverse_iterator(begin());
         }
-        constexpr auto crend() const noexcept {
+        [[nodiscard]] constexpr auto crend() const noexcept {
             return const_reverse_iterator(begin());
         }
     };

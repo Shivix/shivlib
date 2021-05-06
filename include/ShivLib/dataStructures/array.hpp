@@ -18,12 +18,12 @@ namespace shiv {
         using const_reference = const T&;
         
         T elems[numOfElems];
-        
-        constexpr T* 
+
+        [[nodiscard]] constexpr T* 
         data() noexcept{
             return elems;
         }
-        constexpr const T*
+        [[nodiscard]] constexpr const T*
         data() const noexcept{
             return elems;
         }
@@ -39,66 +39,66 @@ namespace shiv {
         }
         
         // Iterators
-        constexpr auto
+        [[nodiscard]] constexpr auto
         begin() noexcept{
             return iterator(elems);
         }
-        constexpr auto 
+        [[nodiscard]] constexpr auto 
         begin() const noexcept{
             return const_iterator(elems);
         }
-        constexpr auto 
+        [[nodiscard]] constexpr auto 
         cbegin() const noexcept{
             return const_iterator(elems);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rbegin() noexcept{
             return reverse_iterator(end());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rbegin() const noexcept{
             return const_reverse_iterator(end());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         crbegin() const noexcept{
             return const_reverse_iterator(end());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         end() noexcept{
             return iterator(elems + numOfElems);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         end() const noexcept{
             return const_iterator(elems + numOfElems);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         cend() const noexcept{
             return const_iterator(elems + numOfElems);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rend() noexcept{
             return reverse_iterator(begin());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rend() const noexcept{
             return const_reverse_iterator(begin());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         crend() const noexcept{
             return const_reverse_iterator(begin());
         }
         
         // Element Access
-        constexpr reference 
+        [[nodiscard]] constexpr reference 
         operator [] (size_t index) noexcept{
             return elems[index];
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         operator [] (size_t index) const noexcept{
             return elems[index];
         }
-        
-        constexpr reference 
+
+        [[nodiscard]] constexpr reference 
         at(size_t index){
             if(index >= numOfElems){
                 throw std::out_of_range("Element out of range");
@@ -107,7 +107,7 @@ namespace shiv {
                 return elems[index];
             }
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         at(size_t index) const{
             if(index >= numOfElems){
                 throw std::out_of_range("Element out of range");
@@ -116,21 +116,21 @@ namespace shiv {
                 return elems[index];
             }
         }
-        
-        constexpr reference
+
+        [[nodiscard]] constexpr reference
         front() noexcept{
             return *begin();
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         front() const noexcept{
             return *begin();
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         back() noexcept{
             return *(end() - 1);
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         back() const noexcept{
             return *(end() - 1);
         }
@@ -150,11 +150,11 @@ namespace shiv {
         }
         
         // Comparison
-        constexpr bool 
+        [[nodiscard]] constexpr bool 
         friend operator == (const array& lhs, const array& rhs){
             return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
-        constexpr std::partial_ordering
+        [[nodiscard]] constexpr std::partial_ordering
         friend operator <=> (const array& lhs, const array& rhs){
             for(size_t i{0}; i < numOfElems; ++i){
                 auto comp_result{lhs[i] <=> rhs[i]};
@@ -185,11 +185,11 @@ namespace shiv {
         using reference = T&;
         using const_reference = const T&;
 
-        constexpr T*
+        [[nodiscard]] constexpr T*
         data() noexcept{
             return 0;
         }
-        constexpr const T*
+        [[nodiscard]] constexpr const T*
         data() const noexcept{
             return 0;
         }
@@ -203,89 +203,89 @@ namespace shiv {
         }
 
         // Iterators
-        constexpr auto
+        [[nodiscard]] constexpr auto
         begin() noexcept{
             return iterator(this);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         begin() const noexcept{
             return const_iterator(this);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         cbegin() const noexcept{
             return const_iterator(this);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rbegin() noexcept{
             return reverse_iterator(end());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rbegin() const noexcept{
             return const_reverse_iterator(end());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         crbegin() const noexcept{
             return const_reverse_iterator(end());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         end() noexcept{
             return iterator(this);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         end() const noexcept{
             return const_iterator(this);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         cend() const noexcept{
             return const_iterator(this);
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rend() noexcept{
             return reverse_iterator(begin());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         rend() const noexcept{
             return const_reverse_iterator(begin());
         }
-        constexpr auto
+        [[nodiscard]] constexpr auto
         crend() const noexcept{
             return const_reverse_iterator(begin());
         }
 
         // Element Access
-        constexpr reference
+        [[nodiscard]] constexpr reference
         operator [] (const size_t& i) noexcept{
             assert(!"Zero sized array");
             return reference(i);
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         operator [] (size_t) const noexcept{
             assert(!"Zero sized array");
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         at(size_t){
             throw std::out_of_range("Accessed a zero sized array");
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         at(size_t) const{
             throw std::out_of_range("Accessed a zero sized array");
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         front() noexcept{
             throw std::out_of_range("Accessed a zero sized array");
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         front() const noexcept{
             throw std::out_of_range("Accessed a zero sized array");
         }
 
-        constexpr reference
+        [[nodiscard]] constexpr reference
         back() noexcept{
             throw std::out_of_range("Accessed a zero sized array");
         }
-        constexpr const_reference
+        [[nodiscard]] constexpr const_reference
         back() const noexcept{
             throw std::out_of_range("Accessed a zero sized array");
         }
@@ -305,11 +305,11 @@ namespace shiv {
         }
 
         // Comparison
-        constexpr bool
+        [[nodiscard]] constexpr bool
         operator == (const array& other) const{
             return std::equal(begin(), end(), other.begin());
         }
-        constexpr bool
+        [[nodiscard]] constexpr bool
         operator != (const array& other) const{
             return !(*this == other);
         }
