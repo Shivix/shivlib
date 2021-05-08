@@ -305,13 +305,13 @@ namespace shiv {
         }
 
         // Comparison
-        [[nodiscard]] constexpr bool
-        operator == (const array& other) const{
-            return std::equal(begin(), end(), other.begin());
+        [[nodiscard]] friend constexpr bool
+        operator == (const array& lhs, const array& rhs){
+            return std::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
-        [[nodiscard]] constexpr bool
-        operator != (const array& other) const{
-            return !(*this == other);
+        [[nodiscard]] friend constexpr bool
+        operator != (const array& lhs, const array& rhs){
+            return !(lhs == rhs);
         }
 
         // Assignment
