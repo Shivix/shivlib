@@ -320,9 +320,9 @@ namespace shiv {
             return *begin();
         }
         // comparison operators
-        [[nodiscard]] friend constexpr bool operator == (const matrix& matrix1, const matrix& matrix2) noexcept {
+        [[nodiscard]] friend constexpr bool operator == (const matrix& lhs, const matrix& rhs) noexcept {
             for(size_t i = 0; i < rows; ++i){
-                if(matrix1[i] != matrix2[i]){ // uses the shiv::array operator != overload and runs it for each column
+                if(lhs[i] != rhs[i]){ // uses the shiv::array operator != overload and runs it for each column
                     return false;
                 }
                 else{
