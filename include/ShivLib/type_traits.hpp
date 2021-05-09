@@ -81,10 +81,10 @@ namespace shiv {
         
         static constexpr value_type value = v;
         
-        constexpr operator value_type() const noexcept{ // NOLINT implicit casts allowed
+        constexpr operator value_type() const noexcept{
             return value;
         }
-        constexpr value_type operator() () const noexcept{ // allows struct to be used as functor
+        constexpr value_type operator() () const noexcept{
             return value;
         }
     };
