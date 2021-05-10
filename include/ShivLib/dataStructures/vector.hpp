@@ -11,6 +11,7 @@
 namespace shiv {
     template<typename T, typename A = std::allocator<T>>
     class vector{
+        using alloc = std::allocator_traits<A>;
     public:
         using value_type = T;
         using pointer = T*;
@@ -22,7 +23,6 @@ namespace shiv {
         using const_reference = const T&;
         using rvalue_reference = T&&;
         
-        using alloc = std::allocator_traits<A>;
         constexpr vector() = default;
         
         constexpr explicit
@@ -82,10 +82,10 @@ namespace shiv {
 
         constexpr
         ~vector(){
-            for(size_t i = 0; i < m_size; ++i){
-                m_data[i].~value_type();
-            }
             if (m_data != nullptr){
+                for(size_t i{0}; i < m_size; ++i){
+                    alloc::destroy(allocator, &m_data[i]);
+                }
                 alloc::deallocate(allocator, m_data, m_capacity);
             }
         }
@@ -98,22 +98,24 @@ namespace shiv {
         size_t m_capacity{0};
 
         constexpr void
-        reallocate(const size_t& newCapacity){
-            pointer newData = alloc::allocate(allocator, newCapacity);
-            if(newCapacity < m_size){
-                m_size = newCapacity;
+        reallocate(const size_t& new_capacity){
+            pointer new_data = alloc::allocate(allocator, new_capacity);
+            size_t new_size{m_size};
+            if(new_capacity < m_size){
+                new_size = new_capacity;
             }
-            for(size_t i = 0; i < m_size; ++i){
-                alloc::construct(allocator, &newData[i], shiv::move_if_noexcept(m_data[i]));
-            } 
-            for(size_t i{0}; i < m_size; ++i){
-                alloc::destroy(allocator, &m_data[i]);
+            for(size_t i{0}; i < new_size; ++i){
+                alloc::construct(allocator, &new_data[i], shiv::move_if_noexcept(m_data[i]));
             }
             if(m_data != nullptr){
+                for(size_t i{0}; i < m_size; ++i){
+                    alloc::destroy(allocator, &m_data[i]);
+                }
                 alloc::deallocate(allocator, m_data, m_capacity);
             }
-            m_data = newData;
-            m_capacity = newCapacity;
+            m_data = new_data;
+            m_size = new_size;
+            m_capacity = new_capacity;
         }
 
     public:
@@ -190,13 +192,13 @@ namespace shiv {
         }
 
         constexpr void
-        reserve(const size_t& elemsToReserve){
-            reallocate(elemsToReserve);
+        reserve(const size_t& num_of_elems){
+            reallocate(num_of_elems);
         }
 
         constexpr void
-        resize(const size_t& elemsToResize){
-            reallocate(elemsToResize);
+        resize(const size_t& num_of_elems){
+            reallocate(num_of_elems);
         }
 
         // removing elements

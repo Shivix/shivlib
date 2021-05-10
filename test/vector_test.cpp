@@ -5,7 +5,7 @@
 BOOST_AUTO_TEST_SUITE(vector_test)
     BOOST_AUTO_TEST_CASE(range_based_test){
         constexpr shiv::vector<int> test{};
-        shiv::vector<int> vector1{0, 1, 2, 3, 4, 5};
+        const shiv::vector<int> vector1{0, 1, 2, 3, 4, 5};
 
         for(auto&& i: vector1){
             std::cout << i;
