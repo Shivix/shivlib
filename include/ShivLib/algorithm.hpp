@@ -15,8 +15,8 @@ namespace shiv {
     }
     template<typename T, typename callable>
     constexpr inline const T&
-    max(const T& a, const T& b, callable comparisonFunc){
-        if(comparisonFunc(b < a)){
+    max(const T& a, const T& b, callable comparison_func){
+        if(comparison_func(b < a)){
             return a;
         }
         else{
@@ -36,8 +36,8 @@ namespace shiv {
     }
     template<typename T, typename callable>
     constexpr inline const T&
-    min(const T& a, const T& b, callable comparisonFunc){
-        if(comparisonFunc(a < b)){
+    min(const T& a, const T& b, callable comparison_func){
+        if(comparison_func(a < b)){
             return a;
         }
         else{
@@ -57,6 +57,12 @@ namespace shiv {
         return true;
     }
 
+    /*template<typename T>
+    constexpr inline T
+    pow(T value, T exponent){// switch between diff functions depending? put into array and use vectorization?
+        
+    }
+    */
     /*template<typename T> // random access iterator
     constexpr inline void 
     sort(T first, T last){

@@ -6,9 +6,8 @@
 #include <iterator>
 
 namespace shiv {
-    template<typename T, size_t numOfElems>
-    class array{ // no constuctor for aggregate initialization
-    public:
+    template<typename T, size_t num_of_elems>
+    struct array{ // all public with no constuctor for aggregate initialization
         using value_type = T;
         using iterator = T*;
         using const_iterator = const T*;
@@ -17,7 +16,7 @@ namespace shiv {
         using reference = T&;
         using const_reference = const T&;
         
-        T elems[numOfElems];
+        T elems[num_of_elems];
 
         [[nodiscard]] constexpr T* 
         data() noexcept{
@@ -65,15 +64,15 @@ namespace shiv {
         }
         [[nodiscard]] constexpr auto
         end() noexcept{
-            return iterator(elems + numOfElems);
+            return iterator(elems + num_of_elems);
         }
         [[nodiscard]] constexpr auto
         end() const noexcept{
-            return const_iterator(elems + numOfElems);
+            return const_iterator(elems + num_of_elems);
         }
         [[nodiscard]] constexpr auto
         cend() const noexcept{
-            return const_iterator(elems + numOfElems);
+            return const_iterator(elems + num_of_elems);
         }
         [[nodiscard]] constexpr auto
         rend() noexcept{
@@ -100,7 +99,7 @@ namespace shiv {
 
         [[nodiscard]] constexpr reference 
         at(size_t index){
-            if(index >= numOfElems){
+            if(index >= num_of_elems){
                 throw std::out_of_range("Element out of range");
             }
             else{
@@ -109,7 +108,7 @@ namespace shiv {
         }
         [[nodiscard]] constexpr const_reference
         at(size_t index) const{
-            if(index >= numOfElems){
+            if(index >= num_of_elems){
                 throw std::out_of_range("Element out of range");
             }
             else{
@@ -138,11 +137,11 @@ namespace shiv {
         // Capacity
         [[nodiscard]] constexpr size_t
         size() const noexcept{
-            return numOfElems;
+            return num_of_elems;
         }
         [[nodiscard]] constexpr size_t
         max_size() const noexcept{
-            return numOfElems;
+            return num_of_elems;
         }
         [[nodiscard]] constexpr bool 
         empty() const noexcept{
@@ -156,7 +155,7 @@ namespace shiv {
         }
         [[nodiscard]] constexpr std::partial_ordering
         friend operator <=> (const array& lhs, const array& rhs){
-            for(size_t i{0}; i < numOfElems; ++i){
+            for(size_t i{0}; i < num_of_elems; ++i){
                 auto comp_result{lhs[i] <=> rhs[i]};
                 if (comp_result != std::strong_ordering::equal){
                     return comp_result;
@@ -166,9 +165,9 @@ namespace shiv {
         }
         
         // Assignment
-        template<typename T2, std::size_t numOfElems2>
+        template<typename T2, std::size_t num_of_elems_2>
         constexpr array& 
-        operator = (const array<T2, numOfElems2>& other){
+        operator = (const array<T2, num_of_elems_2>& other){
             std::copy(other.begin(), other.end(), begin());
             return *this;
         }
@@ -315,9 +314,9 @@ namespace shiv {
         }
 
         // Assignment
-        template<typename T2, size_t numOfElems2>
+        template<typename T2, size_t num_of_elems_2>
         constexpr array<T, 0>&
-        operator = (const array<T2, numOfElems2>&){
+        operator = (const array<T2, num_of_elems_2>&){
             return *this;
         }
     };

@@ -23,10 +23,10 @@ BOOST_AUTO_TEST_SUITE(type_trait_test)
     BOOST_AUTO_TEST_CASE(type_trait_type_check_test){
 
         shiv::is_array<int[5]> array1;
-        shiv::is_array<int> notArray1;
+        shiv::is_array<int> not_array1;
 
         BOOST_TEST(array1 == true);
-        BOOST_TEST(notArray1 == false);
+        BOOST_TEST(not_array1 == false);
         
         BOOST_TEST(shiv::is_arithmetic_v<float>  == true);
         BOOST_TEST(shiv::is_arithmetic_v<void>  == false);

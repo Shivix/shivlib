@@ -32,7 +32,7 @@ namespace shiv {
     template<typename T>
 class reverse_iterator: public iterator_traits<random_access_iterator_tag, remove_pr_t<T>>{
 
-        T baseIterator;
+        T base_iterator;
     public:
         
         using traits_type = iterator_traits<random_access_iterator_tag, T>;
@@ -40,83 +40,79 @@ class reverse_iterator: public iterator_traits<random_access_iterator_tag, remov
         using reference = typename traits_type::reference;
         using difference_type = typename traits_type::difference_type;
         
-        reverse_iterator():
-        baseIterator(){}
+        reverse_iterator(): base_iterator(){}
         
         explicit constexpr
-        reverse_iterator(T input):
-        baseIterator(input){}
+        reverse_iterator(T input): base_iterator(input){}
         
         constexpr 
-        reverse_iterator(const reverse_iterator& input):
-        baseIterator(input.baseIterator){}
+        reverse_iterator(const reverse_iterator& input): base_iterator(input.base_iterator){}
         reverse_iterator& operator= (const reverse_iterator&) = default;
 
-        template<typename inputT>
         constexpr
-        reverse_iterator(const reverse_iterator<inputT>& input): // can copy to an iterator of different type if the pointed to type can be converted
-        baseIterator(input.getBase()){}
+        reverse_iterator(const reverse_iterator& input): // can copy to an iterator of different type if the pointed to type can be converted
+                                                                           base_iterator(input.getBase()){}
         
         constexpr T
         getBase() const{
-            return baseIterator;
+            return base_iterator;
         }
         
         // dereference operators
         constexpr reference
         operator* () const{
-            T temporary = baseIterator;
+            T temporary = base_iterator;
             return *--temporary;
         }
         
         constexpr pointer 
         operator-> () const{
-            T temporary = baseIterator;
+            T temporary = base_iterator;
             return --temporary;
         }
         
         // increment/ decrement
         constexpr reverse_iterator&
         operator++ (){ // pre-increment operator
-            --baseIterator;
+            --base_iterator;
             return *this;
         }
         constexpr reverse_iterator
         operator++ (int){ // post-increment operator
             reverse_iterator temporary = *this;
-            --baseIterator;
+            --base_iterator;
             return temporary;
         }
 
         constexpr reverse_iterator&
         operator-- (){ // pre-increment operator
-            ++baseIterator;
+            ++base_iterator;
             return *this;
         }
         constexpr reverse_iterator
         operator-- (int){ // post-increment operator
             reverse_iterator temporary = *this;
-            ++baseIterator;
+            ++base_iterator;
             return temporary;
         }
         
         constexpr auto
         operator+ (difference_type scalar) const{
-            return reverse_iterator(baseIterator - scalar);
+            return reverse_iterator(base_iterator - scalar);
         }
         constexpr reverse_iterator&
         operator+= (difference_type scalar){
-            baseIterator -= scalar;
+            base_iterator -= scalar;
             return *this;
         }
 
         constexpr auto
         operator- (difference_type scalar) const{
-            return reverse_iterator(baseIterator + scalar);
+            return reverse_iterator(base_iterator + scalar);
         }
         constexpr reverse_iterator&
         operator-= (difference_type scalar){
-            baseIterator += scalar;
+            base_iterator += scalar;
             return *this;
         }
         
@@ -128,28 +124,28 @@ class reverse_iterator: public iterator_traits<random_access_iterator_tag, remov
         // comparison operators
         constexpr bool
         operator== (const reverse_iterator& other) const{
-            return baseIterator == other.baseIterator;
+            return base_iterator == other.base_iterator;
         }
         constexpr bool
         operator!= (const reverse_iterator& other) const{
-            return baseIterator != other.baseIterator;
+            return base_iterator != other.base_iterator;
         }
 
         constexpr bool
         operator> (const reverse_iterator& other) const{
-            return baseIterator > other.baseIterator;
+            return base_iterator > other.base_iterator;
         }
         constexpr bool
         operator< (const reverse_iterator& other) const{
-            return baseIterator < other.baseIterator;
+            return base_iterator < other.base_iterator;
         }
         constexpr bool
         operator>= (const reverse_iterator& other) const{
-            return baseIterator >= other.baseIterator;
+            return base_iterator >= other.base_iterator;
         }
         constexpr bool
         operator<= (const reverse_iterator& other) const{
-            return baseIterator <= other.baseIterator;
+            return base_iterator <= other.base_iterator;
         }
     };
     template<typename iter>

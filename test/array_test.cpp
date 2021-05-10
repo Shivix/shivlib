@@ -7,16 +7,16 @@ BOOST_AUTO_TEST_SUITE(array_test)
     BOOST_AUTO_TEST_CASE(array_iterator_test){
 
         shiv::array<int, 5> array1{1, 0, 2, 3, 4};
-        shiv::array<int, 5> arrayOrdered{0, 1, 2, 3, 4};
-        shiv::array<int, 5> arrayReversed{4, 3, 2, 1, 0};
+        shiv::array<int, 5> array_ordered{0, 1, 2, 3, 4};
+        shiv::array<int, 5> array_reversed{4, 3, 2, 1, 0};
 
 
         BOOST_TEST((*std::find(array1.cbegin(), array1.cend(), 1)) == 1);
         BOOST_TEST((*std::find(array1.crbegin(), array1.crend(), 0)) == 0);
         std::sort(array1.begin(), array1.end());
-        BOOST_TEST(array1 == arrayOrdered);
+        BOOST_TEST(array1 == array_ordered);
         std::sort(array1.rbegin(), array1.rend());
-        BOOST_TEST(array1 == arrayReversed);
+        BOOST_TEST(array1 == array_reversed);
         for(auto&& i: array1){
             i = 7;
         }
@@ -27,14 +27,14 @@ BOOST_AUTO_TEST_SUITE(array_test)
 
         shiv::array<int, 5> array1{0, 1, 2, 3, 4};
         shiv::array<int, 5> array2{4, 3, 2, 1, 0};
-        shiv::array<int, 5> expectedArray1{4, 3, 2, 1, 0};
-        shiv::array<int, 5> expectedArray2{4, 4, 4, 4, 4};
+        shiv::array<int, 5> expected_array1{4, 3, 2, 1, 0};
+        shiv::array<int, 5> expected_array2{4, 4, 4, 4, 4};
         array1.swap(array2);
 
-        BOOST_TEST(array1 == expectedArray1);
-        BOOST_TEST(array2 != expectedArray1);
+        BOOST_TEST(array1 == expected_array1);
+        BOOST_TEST(array2 != expected_array1);
         array2.fill(4);
-        BOOST_TEST(array2 == expectedArray2);
+        BOOST_TEST(array2 == expected_array2);
     }
 
     BOOST_AUTO_TEST_CASE(capacity_test){
@@ -50,16 +50,16 @@ BOOST_AUTO_TEST_SUITE(array_test)
     BOOST_AUTO_TEST_CASE(access_test){
 
         shiv::array<int, 5> array1{0, 1, 2, 3, 4};
-        const shiv::array<int, 5> array1Const{0, 1, 2, 3, 4};
+        const shiv::array<int, 5> array1_const{0, 1, 2, 3, 4};
         
         BOOST_TEST(array1.at(2) == 2);
-        BOOST_TEST(array1Const.at(2) == 2);
+        BOOST_TEST(array1_const.at(2) == 2);
         BOOST_TEST(array1[3] == 3);
-        BOOST_TEST(array1Const[3] == 3);
+        BOOST_TEST(array1_const[3] == 3);
         BOOST_TEST(array1.front() == 0);
-        BOOST_TEST(array1Const.front() == 0);
+        BOOST_TEST(array1_const.front() == 0);
         BOOST_TEST(array1.back() == 4);
-        BOOST_TEST(array1Const.back() == 4);
+        BOOST_TEST(array1_const.back() == 4);
     }
 
     BOOST_AUTO_TEST_CASE(zero_sized_test){
