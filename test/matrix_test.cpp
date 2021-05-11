@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
                          {2.8, 1.4, 17.6}
                  }}};
         [[maybe_unused]] auto result1{matrix1 / matrix2};
-        // BOOST_TEST(result1 == expectedMatrix); i think fails due to floating point rounding errors
+        // BOOST_TEST(result1 == expectedMatrix); fails due to floating point rounding errors
         BOOST_TEST((matrix3 / 5.0) == expectedMatrix2);
     }
     
