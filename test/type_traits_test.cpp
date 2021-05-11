@@ -1,4 +1,4 @@
-#include "../include/ShivLib/type_traits.hpp"
+#include <ShivLib/type_traits.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(type_trait_test)

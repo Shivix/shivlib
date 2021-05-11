@@ -1,4 +1,4 @@
-#include "../include/ShivLib/utility.hpp"
+#include <ShivLib/utility.hpp>
 #include <boost/test/unit_test.hpp>
 
 

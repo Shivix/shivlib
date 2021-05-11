@@ -1,4 +1,4 @@
-#include "../include/ShivLib/dataStructures/array.hpp"
+#include <ShivLib/dataStructures/array.hpp>
 #include <boost/test/unit_test.hpp>
 
 // Using auto test suite for now since it builds alot faster as we get more tests,

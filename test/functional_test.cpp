@@ -1,4 +1,4 @@
-#include "../include/ShivLib/functional.hpp"
+#include <ShivLib/functional.hpp>
 #include <functional>
 #include <boost/test/unit_test.hpp>
 int add(int a, int b){

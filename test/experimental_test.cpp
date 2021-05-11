@@ -1,6 +1,6 @@
-#include "../include/ShivLib/experimental/lazy_evaluation.hpp"
-#include "../include/ShivLib/experimental/ranges.hpp"
-#include "../include/ShivLib/experimental/format.hpp"
+#include <ShivLib/experimental/lazy_evaluation.hpp>
+#include <ShivLib/experimental/ranges.hpp>
+#include <ShivLib/experimental/format.hpp>
 #include <boost/test/unit_test.hpp>
 #include <cmath>
 

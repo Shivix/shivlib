@@ -1,4 +1,4 @@
-#include "../include/ShivLib/dataStructures/string_view.hpp"
+#include <ShivLib/dataStructures/string_view.hpp>
 #include <boost/test/unit_test.hpp>
 #include <string>
 

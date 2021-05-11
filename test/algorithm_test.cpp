@@ -1,5 +1,5 @@
-#include "../include/ShivLib/algorithm.hpp"
-#include "../include/ShivLib/dataStructures/array.hpp"
+#include <ShivLib/algorithm.hpp>
+#include <ShivLib/dataStructures/array.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(algorithm_test)

@@ -1,5 +1,5 @@
-#include "../include/ShivLib/dataStructures/vector.hpp"
-#include "../include/ShivLib/utility.hpp"
+#include <ShivLib/dataStructures/vector.hpp>
+#include <ShivLib/utility.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(vector_test)

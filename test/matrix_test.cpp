@@ -1,4 +1,4 @@
-#include "../include/ShivLib/dataStructures/matrix.hpp"
+#include <ShivLib/dataStructures/matrix.hpp>
 #define BOOST_TEST_MODULE ShivLib Unit_Test
 #ifndef WIN32
     #define BOOST_TEST_DYN_LINK
