@@ -18,7 +18,7 @@ namespace shiv {
         using type = T;
     };
     template<typename T>
-    using remove_reference_t = typename remove_reference<T>::type; // add partially specialised aliases pls
+    using remove_reference_t = typename remove_reference<T>::type;
     
     // remove pointer from a type
     template<typename T>
