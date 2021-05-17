@@ -24,9 +24,12 @@ set(INCLUDES
         include/ShivLib/iterators.hpp)
 
 set(EXPERIMENTAL
-        ../include/ShivLib/experimental)
+	include/ShivLib/experimental/poly_duck.hpp
+	include/ShivLib/experimental/lazy_evaluation.hpp
+	include/ShivLib/experimental/format.hpp
+	include/ShivLib/experimental/ranges.hpp)
 
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 
 add_library(ShivLib INTERFACE)
-target_include_directories(ShivLib INTERFACE ${INCLUDES})
+target_include_directories(ShivLib INTERFACE ${INCLUDES} ${EXPERIMENTAL})
