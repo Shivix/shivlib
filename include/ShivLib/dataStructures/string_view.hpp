@@ -52,6 +52,14 @@ namespace shiv {
             other.m_view = temp_view;
             other.m_length = temp_length;
         }
+
+		constexpr string_view substr(shiv::size_t index, shiv::size_t n){
+			if (index + n > m_length){
+				throw std::out_of_range{"Substring goes out of bounds from the original"};
+			}
+			return string_view(m_view + index, n);
+			
+		}
         
         // trim m_view
         constexpr void remove_prefix(size_t n){
