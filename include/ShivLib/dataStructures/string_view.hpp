@@ -53,7 +53,7 @@ namespace shiv {
             other.m_length = temp_length;
         }
 
-		constexpr string_view substr(shiv::size_t index, shiv::size_t n){
+		constexpr string_view substr(shiv::size_t index, shiv::size_t n) const{
 			if (index + n > m_length){
 				throw std::out_of_range{"Substring goes out of bounds from the original"};
 			}
@@ -69,6 +69,27 @@ namespace shiv {
         constexpr void remove_suffix(size_t n){
             m_length -= n;
         }
+
+		// *_with
+		constexpr bool starts_with(const string_view view) const noexcept{
+			return substr(0, view.length()) == view;
+		}
+		constexpr bool starts_with(const T* str) const{
+			return starts_with(string_view(str));
+		}
+		constexpr bool starts_with(T c) const noexcept{
+			return !empty() && (front() == c);
+		}
+
+		constexpr bool ends_with(const string_view view) const noexcept{
+			return size() >= view.size() && substr(length() - view.length(), view.length()) == view;
+		}
+		constexpr bool ends_with(const T* str) const{
+			return ends_with(string_view(str));
+		}
+		constexpr bool ends_with(T c) const noexcept{
+			return !empty() && (back() == c);
+		}
 
         // Iterators
         [[nodiscard]] constexpr auto begin() const noexcept{
