@@ -4,6 +4,8 @@
 #include "../concepts.hpp"
 #include <cassert>
 #include <iterator>
+#include <limits>
+#include "../algorithm.hpp"
 
 namespace shiv {
     template<shiv::character T = char> // character concept
@@ -53,10 +55,11 @@ namespace shiv {
             other.m_length = temp_length;
         }
 
-		constexpr string_view substr(shiv::size_t index, shiv::size_t n) const{
-			if (index + n > m_length){
-				throw std::out_of_range{"Substring goes out of bounds from the original"};
+		constexpr string_view substr(shiv::size_t index, shiv::size_t n = npos) const{
+			if (index > m_length){
+				throw std::out_of_range{"Substring index goes out of bounds from the original"};
 			}
+			n = shiv::min(n, length() - index);
 			return string_view(m_view + index, n);
 			
 		}
@@ -69,6 +72,26 @@ namespace shiv {
         constexpr void remove_suffix(size_t n){
             m_length -= n;
         }
+
+		// comparison
+		constexpr int compare(string_view view) const noexcept{
+			shiv::size_t min_len{shiv::min(length(), view.length())};
+			// loop through
+			// -1 if lt
+			for(shiv::size_t i{0}; i < min_len; ++i){
+				if ((*this)[i] < view[i]){
+					return (*this)[i] - view[i];
+				}
+				if ((*this)[i] > view[i]){
+					return (*this)[i] - view[i];
+				}
+			}
+			return length() - view.length();
+		}
+		constexpr int compare(shiv::size_t pos1, shiv::size_t count1, string_view view,
+							  shiv::size_t pos2 = 0, shiv::size_t count2 = npos) const noexcept{
+			return substr(pos1, count1).compare(view.substr(pos2, count2));
+		}
 
 		// *_with
 		constexpr bool starts_with(const string_view view) const noexcept{
