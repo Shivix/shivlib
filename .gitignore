@@ -23,6 +23,10 @@ _deps
 cmake-build-*/
 /test/build/
 build/
+Debug/
+test/Debug/
+Release/
+test/Release/
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
