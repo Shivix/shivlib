@@ -301,11 +301,11 @@ namespace shiv {
             }
             return m_data[row_index][col_index];
         }
-        [[nodiscard]] constexpr iterator data() noexcept {
-            return &m_data[0][0];
+        [[nodiscard]] constexpr auto data() noexcept {
+            return iterator(m_data.data());
         }
-        [[nodiscard]] constexpr const_iterator data() const noexcept { // if the data is const this function will be called instead
-            return const_iterator(&m_data[0][0]);
+        [[nodiscard]] constexpr auto data() const noexcept { // if the data is const this function will be called instead
+            return const_iterator(m_data.data());
         }
         [[nodiscard]] constexpr reference back() noexcept {
             return *(end() - 1);
@@ -336,13 +336,13 @@ namespace shiv {
         }
         // Iterators
         [[nodiscard]] constexpr auto begin() noexcept {
-            return iterator(&m_data[0][0]);
+            return iterator(std::begin(m_data));
         }
         [[nodiscard]] constexpr auto begin() const noexcept { // allows .begin to be used with a const matrix without ambiguity
-            return const_iterator(&m_data[0][0]);
+            return const_iterator(std::begin(m_data));
         }
         [[nodiscard]] constexpr auto cbegin() const noexcept {
-            return const_iterator(&m_data[0][0]);
+            return const_iterator(std::cbegin(m_data));
         }
         [[nodiscard]] constexpr auto rbegin() noexcept {
             return reverse_iterator(end());
@@ -351,13 +351,13 @@ namespace shiv {
             return const_reverse_iterator(end());
         }
         [[nodiscard]] constexpr auto end() noexcept {
-            return iterator(&m_data[rows - 1][cols - 1] + 1);
+            return iterator(std::end(m_data));
         }
         [[nodiscard]] constexpr auto end() const noexcept {
-            return const_iterator(&m_data[rows - 1][cols - 1] + 1);
+            return const_iterator(std::end(m_data));
         }
         [[nodiscard]] constexpr auto cend() const noexcept {
-            return const_iterator(&m_data[rows - 1][cols - 1] + 1);
+            return const_iterator(std::cend(m_data));
         }
         [[nodiscard]] constexpr auto rend() noexcept {
             return reverse_iterator(begin());
