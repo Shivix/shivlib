@@ -2,9 +2,13 @@
 #include <ShivLib/utility.hpp>
 #include <boost/test/unit_test.hpp>
 
+consteval size_t foo(){
+    shiv::vector<int> test{6, 5};
+    return test.size();
+}
 BOOST_AUTO_TEST_SUITE(vector_test)
     BOOST_AUTO_TEST_CASE(range_based_test){
-        constexpr shiv::vector<int> test{};
+        BOOST_TEST(foo() == 2);
         const shiv::vector<int> vector1{0, 1, 2, 3, 4, 5};
 
         for(auto&& i: vector1){
