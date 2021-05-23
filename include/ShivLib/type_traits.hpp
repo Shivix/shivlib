@@ -2,6 +2,7 @@
 #define SHIVLIB_TYPE_TRAITS_HPP
 
 #include "cstddef.hpp"
+#include <cstddef> // std::byte
 
 namespace shiv {
     // remove refness of a type

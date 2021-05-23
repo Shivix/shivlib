@@ -1,7 +1,6 @@
 #ifndef SHIVLIB_CSTDDEF_HPP
 #define SHIVLIB_CSTDDEF_HPP
 
-#include <cstddef>
 
 namespace shiv {
     using size_t = __SIZE_TYPE__;
