@@ -34,7 +34,7 @@ namespace shiv {
             reallocate(rounded);
         }
 
-        constexpr explicit
+        constexpr
         vector(std::initializer_list<value_type> input):
         vector(input.size()){
             for(int i{0}; auto&& elem: input){
@@ -147,7 +147,7 @@ namespace shiv {
         template<typename... Args>
         constexpr iterator
         emplace(const_iterator position, Args&&... args){
-            shiv::ptrdiff_t distance{position - cbegin()};
+            ptrdiff_t distance{position - cbegin()};
             assert(position >= cbegin() && position <= cend());
             if(m_size >= m_capacity){
                 reallocate(m_capacity * 2);
@@ -165,7 +165,7 @@ namespace shiv {
         
         constexpr iterator 
         insert(iterator position, size_t amount, const T& value){
-            shiv::ptrdiff_t distance{position - cbegin()};
+            ptrdiff_t distance{position - cbegin()};
             if(m_size + amount > m_capacity){
                 reallocate(m_capacity * 2);
             }
@@ -177,7 +177,7 @@ namespace shiv {
         
         constexpr iterator
         insert(const_iterator position, std::initializer_list<value_type> value_list){
-            shiv::ptrdiff_t distance{position - cbegin()}; // if we reallocate memory, position will become invalid so we use distance instead
+            ptrdiff_t distance{position - cbegin()}; // if we reallocate memory, position will become invalid so we use distance instead
             assert(position >= cbegin() && position <= cend());
             if(m_size + value_list.size() > m_capacity){
                 reallocate(m_capacity * 2);

@@ -15,7 +15,7 @@ constexpr decltype(auto) invoke(FuncT&& function, Args&&... args){
 
 
 // TODO: to be moved to own tuple implmentation
-template <typename FuncT, typename TupleT, shiv::size_t... seq>
+template <typename FuncT, typename TupleT, size_t... seq>
 constexpr decltype(auto) apply_impl(FuncT&& function, TupleT&& tuple, std::index_sequence<seq...>){
     return shiv::invoke(shiv::forward<FuncT>(function), std::get<seq>(shiv::forward<TupleT>(tuple))...);
 }

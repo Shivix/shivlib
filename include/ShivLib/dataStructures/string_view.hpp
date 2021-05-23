@@ -55,7 +55,7 @@ namespace shiv {
             other.m_length = temp_length;
         }
 
-		constexpr string_view substr(shiv::size_t index, shiv::size_t n = npos) const{
+		constexpr string_view substr(size_t index, size_t n = npos) const{
 			if (index > m_length){
 				throw std::out_of_range{"Substring index goes out of bounds from the original"};
 			}
@@ -75,10 +75,10 @@ namespace shiv {
 
 		// comparison
 		constexpr int compare(string_view view) const noexcept{
-			shiv::size_t min_len{shiv::min(length(), view.length())};
+			size_t min_len{shiv::min(length(), view.length())};
 			// loop through
 			// -1 if lt
-			for(shiv::size_t i{0}; i < min_len; ++i){
+			for(size_t i{0}; i < min_len; ++i){
 				if ((*this)[i] < view[i]){
 					return (*this)[i] - view[i];
 				}
@@ -88,8 +88,8 @@ namespace shiv {
 			}
 			return length() - view.length();
 		}
-		constexpr int compare(shiv::size_t pos1, shiv::size_t count1, string_view view,
-							  shiv::size_t pos2 = 0, shiv::size_t count2 = npos) const noexcept{
+		constexpr int compare(size_t pos1, size_t count1, string_view view,
+							  size_t pos2 = 0, size_t count2 = npos) const noexcept{
 			return substr(pos1, count1).compare(view.substr(pos2, count2));
 		}
 
