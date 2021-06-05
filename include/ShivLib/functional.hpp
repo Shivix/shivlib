@@ -28,5 +28,5 @@ template<typename... Args>
 constexpr auto forward_as_tuple(Args&&... args){
     return std::tuple<Args&&...>{std::forward<Args>(args)...};
 }
-}
+} // namespace shiv
 #endif//SHIVLIB_FUNCTIONAL_HPP
