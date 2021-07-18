@@ -268,20 +268,20 @@ public:
     }
 
     [[nodiscard]] constexpr reference
-    front() noexcept{
+    front() {
         throw std::out_of_range("Accessed a zero sized array");
     }
     [[nodiscard]] constexpr const_reference
-    front() const noexcept{
+    front() const{
         throw std::out_of_range("Accessed a zero sized array");
     }
 
     [[nodiscard]] constexpr reference
-    back() noexcept{
+    back() {
         throw std::out_of_range("Accessed a zero sized array");
     }
     [[nodiscard]] constexpr const_reference
-    back() const noexcept{
+    back() const{
         throw std::out_of_range("Accessed a zero sized array");
     }
 

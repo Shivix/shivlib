@@ -9,7 +9,6 @@
 
 BOOST_AUTO_TEST_SUITE(matrix_test)
     BOOST_AUTO_TEST_CASE(multiply_test){
-
         shiv::matrix<float, 3, 3> matrix1 = {
                 {{{0, 1, 2},
                                   {3, 4, 5},
@@ -51,7 +50,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(divide_test){
-
         shiv::matrix<double, 3, 3> matrix1 = {
                 {{{10.0, 12.0, 21.0},
                          {12.0, 14.0, 15.0},
@@ -83,7 +81,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(addition_test){
-
         shiv::matrix<float, 3, 3> matrix1 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -121,7 +118,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(subtraction_test){
-
         shiv::matrix<float, 3, 3> matrix1 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -153,7 +149,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(determinant_test, *boost::unit_test::tolerance(0.01)){
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -183,7 +178,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(row_echelon_test, *boost::unit_test::tolerance(0.01)){
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -213,7 +207,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(transpose_test){
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -241,7 +234,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(augment_test){
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -261,7 +253,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(identity_test){
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -276,7 +267,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(inverse_test, *boost::unit_test::tolerance(0.01)){
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{3, 7, 8},
                          {5, 1, 5},
@@ -291,7 +281,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(orthogonal_test){
-
         shiv::matrix<int, 2, 2> matrix4x4 = {
                        {{{1, 0},
                          {0, 1}
@@ -300,7 +289,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(sort_test){// helps check begin and rebegin iterators.
-
         shiv::matrix<float, 3, 3> matrix3x3 = {
                 {{{3, 7, 8},
                          {5, 1, 5},
@@ -323,7 +311,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(find_test){
-
         shiv::matrix<int, 3, 3> matrix3x3 = {
                 {{{3, 7, 0},
                          {5, 1, 2},
@@ -334,7 +321,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(empty_test){
-
         shiv::matrix<int, 3, 3> matrix3x3 = {
                 {{{3, 7, 0},
                          {5, 1, 2},
@@ -347,7 +333,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(fill_test){
-
         shiv::matrix<int, 3, 3> fillMatrix;
         fillMatrix.fill(4);
         shiv::matrix<int, 3, 3> resultMatrix = {{{{4, 4, 4},
@@ -357,7 +342,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(swap_test){
-
         shiv::matrix<int, 3, 3> matrix3x3 = {
                                              {{{0, 1, 2},
                                                {3, 4, 5},
@@ -384,7 +368,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(at_test){
-
         shiv::matrix<int, 3, 3> matrix3x3 = {
                 {{{0, 1, 2},
                          {3, 4, 5},
@@ -407,7 +390,6 @@ BOOST_AUTO_TEST_SUITE(matrix_test)
     }
     
     BOOST_AUTO_TEST_CASE(iterator_test){
-
         shiv::matrix<int, 4, 4> matrix4x4 = {
                 {{{0, 1, 2, 3},
                          {4, 5, 6, 7},
