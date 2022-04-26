@@ -1,6 +1,5 @@
 #include <ShivLib/experimental/lazy_evaluation.hpp>
 #include <ShivLib/experimental/ranges.hpp>
-#include <ShivLib/experimental/format.hpp>
 #include <boost/test/unit_test.hpp>
 #include <cmath>
 
@@ -17,8 +16,5 @@ BOOST_AUTO_TEST_SUITE(experimental_test)
                 return a * std::sqrt(100) / a;
             }};
         BOOST_TEST(lazy_int.get() == 10);
-    }
-    BOOST_AUTO_TEST_CASE(format_test){
-        basic_print("\n\nformat test here\n\n", "and this");
     }
 BOOST_AUTO_TEST_SUITE_END()
