@@ -15,7 +15,7 @@ set(TESTSRC
         functional_test.cpp
         utility_test.cpp)
 
-set(EXPERIMENTAL
+set(EXPERIMENTALSRC
         experimental_test.cpp)
 
 find_package(Boost REQUIRED COMPONENTS system)
@@ -23,6 +23,10 @@ find_package(Boost REQUIRED COMPONENTS system)
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(ShivLib ${INCLUDES} ${TESTSRC} ${EXPERIMENTAL})
+enable_testing()
+
+add_executable(ShivLib ${TESTSRC} ${EXPERIMENTALSRC})
 target_link_libraries(ShivLib -lboost_unit_test_framework -llua -ldl)
 target_include_directories(ShivLib PRIVATE ../include)
+
+add_test(ShivTest ShivLib)

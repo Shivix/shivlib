@@ -8,7 +8,7 @@
 
 namespace shiv {
 template<shiv::arithmetic T, size_t rows, size_t cols>
-class matrix{
+class Matrix{
 public:
     using value_type = T;
     using iterator = T*;
@@ -20,7 +20,7 @@ public:
     
     // No explicit constructor/ destructor etc. for aggregate all members must also be public
 
-    shiv::array<shiv::array<T, cols>, rows> m_data{}; // stores the matrix data
+    shiv::array<shiv::array<T, cols>, rows> m_data{};
     
     [[nodiscard]] constexpr bool empty() const noexcept {
         return size() == 0;
@@ -28,11 +28,12 @@ public:
     constexpr void fill(const T& value){
         std::fill(begin(), end(), value);
     }
-    [[nodiscard]] constexpr matrix<T, rows, cols * 2> get_augment(const matrix& other) const { // returns a matrix where the other matrix is "attached" to the original
-        matrix<T, rows, cols * 2> result_matrix = {};
+    /// returns a matrix where the other matrix is "attached" to the original
+    [[nodiscard]] constexpr Matrix<T, rows, cols * 2> get_augment(const Matrix& other) const noexcept {
+        Matrix<T, rows, cols * 2> result_matrix = {};
         
-        for(size_t i = 0; i < rows; ++i){
-            for(size_t j = 0; j < result_matrix[0].size(); ++j){
+        for(size_t i{0}; i < rows; ++i){
+            for(size_t j{0}; j < result_matrix[0].size(); ++j){
                 if(j >= cols){
                     result_matrix[i][j] = other[i][j - cols];
                 }
@@ -45,7 +46,7 @@ public:
     }
     [[nodiscard]] constexpr T get_determinant() const {
         static_assert(rows == cols, "Must be a square matrix");
-        T determinant = 1;
+        T determinant{1};
         if(rows == 1){
             return m_data[0][0];
         }
@@ -53,7 +54,7 @@ public:
             return (m_data[0][0] * m_data[1][1]) - (m_data[1][0] * m_data[0][1]);
         }
         const auto [row_echelon_form, is_negative] = get_row_echelon(); // row echelon is calculated first to reduce the complexity down closer to O(N^2)
-        for(size_t i = 0; i < rows; ++i){ // determinate is the product of the main diagonal elements in a row echelon matrix
+        for(size_t i{0}; i < rows; ++i){ // determinate is the product of the main diagonal elements in a row echelon matrix
             determinant *= row_echelon_form[i][i];
         }
         if(is_negative){
@@ -61,8 +62,8 @@ public:
         }
         return determinant;
     }
-    [[nodiscard]] constexpr matrix get_identity() const noexcept{
-        matrix identity_matrix{};
+    [[nodiscard]] constexpr Matrix get_identity() const noexcept{
+        Matrix identity_matrix{};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 if(i == j){
@@ -75,9 +76,9 @@ public:
         }
         return identity_matrix;
     }
-    [[nodiscard]] constexpr matrix get_inverse() const {
+    [[nodiscard]] constexpr Matrix get_inverse() const {
         
-        matrix<T, rows, cols * 2> aug_ident_matrix = get_augment(get_identity()); // gets the identity matrix and then augments it onto the original matrix
+        Matrix<T, rows, cols * 2> aug_ident_matrix = get_augment(get_identity()); // gets the identity matrix and then augments it onto the original matrix
         
         const size_t AUG_ID_COLS = aug_ident_matrix[0].size(); // all arrays within the first have the same size
         
@@ -100,7 +101,7 @@ public:
             }
         }
         // add the inverted half of the augmented matrix to it's own matrix
-        matrix inverted_matrix = {};
+        Matrix inverted_matrix = {};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 inverted_matrix[i][j] = aug_ident_matrix[i][j + cols];
@@ -108,8 +109,8 @@ public:
         }
         return inverted_matrix;
     }
-    [[nodiscard]] std::tuple<matrix, bool> get_row_echelon() const { // returns the row echelon form matrix so that the original is kept
-        matrix result_matrix = *this;
+    [[nodiscard]] std::tuple<Matrix, bool> get_row_echelon() const { // returns the row echelon form matrix so that the original is kept
+        Matrix result_matrix = *this;
         
         bool is_inverted = false; // keeps track of the sign of the determinant (before multiplication)
 
@@ -142,8 +143,8 @@ public:
         }
         return std::make_tuple(result_matrix, is_inverted); // returns a tuple including the bool that keeps track of the sign 
     }                                                     // the tuple currently prevents the function from happening at compile time. Struct also prevents it.
-    [[nodiscard]] constexpr matrix get_transpose() const {
-        matrix<T, rows, cols> transposed_matrix{}; // rows and cols are in opposite order for transposed matrix
+    [[nodiscard]] constexpr Matrix get_transpose() const {
+        Matrix<T, rows, cols> transposed_matrix{}; // rows and cols are in opposite order for transposed matrix
         
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
@@ -158,14 +159,14 @@ public:
     [[nodiscard]] constexpr size_t size() const noexcept{
         return rows * cols;
     }
-    constexpr void swap(matrix& other) noexcept {
+    constexpr void swap(Matrix& other) noexcept {
         for(size_t i = 0; i < rows; ++i){
             m_data[i].swap(other[i]);
         }
     }
     // Arithmetic operators 
-    [[nodiscard]] friend constexpr matrix operator + (const matrix& lhs, const matrix& rhs) noexcept { 
-        matrix<T, cols, rows> result_matrix{};
+    [[nodiscard]] friend constexpr Matrix operator + (const Matrix& lhs, const Matrix& rhs) noexcept { 
+        Matrix<T, cols, rows> result_matrix{};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
                 result_matrix[i][j] = lhs[i][j] + rhs[i][j];
@@ -173,8 +174,8 @@ public:
         }
         return result_matrix;
     }
-    [[nodiscard]] constexpr matrix operator + (const T& scalar)const noexcept {
-        matrix<T, cols, rows> result_matrix = {};
+    [[nodiscard]] constexpr Matrix operator + (const T& scalar)const noexcept {
+        Matrix<T, cols, rows> result_matrix = {};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 result_matrix[i][j] = m_data[i][j] + scalar;
@@ -182,8 +183,8 @@ public:
         }
         return result_matrix;
     }
-    [[nodiscard]] friend constexpr matrix operator - (const matrix& lhs, const matrix& rhs) noexcept {
-        matrix<T, cols, rows> result_matrix = {};
+    [[nodiscard]] friend constexpr Matrix operator - (const Matrix& lhs, const Matrix& rhs) noexcept {
+        Matrix<T, cols, rows> result_matrix = {};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){ // m_data[x] will all have same .size()
                 result_matrix[i][j] = lhs[i][j] - rhs[i][j];
@@ -191,8 +192,8 @@ public:
         }
         return result_matrix;
     }
-    [[nodiscard]] constexpr matrix operator - (const T& scalar) const noexcept {
-        matrix<T, cols, rows> result_matrix = {};
+    [[nodiscard]] constexpr Matrix operator - (const T& scalar) const noexcept {
+        Matrix<T, cols, rows> result_matrix = {};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 result_matrix[i][j] = m_data[i][j] - scalar;
@@ -201,8 +202,8 @@ public:
         return result_matrix;
     }
     template<std::size_t otherRows, std::size_t otherCols>
-    [[nodiscard]] constexpr matrix operator * (const matrix<T, otherCols, otherRows>& other) const noexcept { 
-        matrix<T, cols, otherRows> result_matrix{};
+    [[nodiscard]] constexpr Matrix operator * (const Matrix<T, otherCols, otherRows>& other) const noexcept { 
+        Matrix<T, cols, otherRows> result_matrix{};
         for(size_t i = 0; i < otherRows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 for(size_t k = 0; k < rows; ++k){
@@ -212,8 +213,8 @@ public:
         }
         return result_matrix;
     }
-    [[nodiscard]] constexpr matrix operator * (const T& scalar) const noexcept {
-        matrix<T, cols, rows> result_matrix{};
+    [[nodiscard]] constexpr Matrix operator * (const T& scalar) const noexcept {
+        Matrix<T, cols, rows> result_matrix{};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 result_matrix[i][j] = m_data[i][j] * scalar;
@@ -222,12 +223,12 @@ public:
         return result_matrix;
     }
     template<size_t otherRows, size_t otherCols>
-    [[nodiscard]] constexpr matrix operator / (matrix<T, otherCols, otherRows>& other) const noexcept {
-        matrix inverted_matrix = other.get_inverse();
+    [[nodiscard]] constexpr Matrix operator / (Matrix<T, otherCols, otherRows>& other) const noexcept {
+        Matrix inverted_matrix = other.get_inverse();
         return (*this * inverted_matrix);
     }
-    [[nodiscard]] constexpr matrix operator / (const T& scalar) const noexcept {
-        matrix<T, cols, rows> result_matrix{};
+    [[nodiscard]] constexpr Matrix operator / (const T& scalar) const noexcept {
+        Matrix<T, cols, rows> result_matrix{};
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < cols; ++j){
                 result_matrix[i][j] = m_data[i][j] / scalar;
@@ -242,37 +243,37 @@ public:
         return matrix;
     }
     // Arithmetic assignment operators
-    friend constexpr matrix& operator += (matrix& lhs, const matrix& rhs) noexcept {
+    friend constexpr Matrix& operator += (Matrix& lhs, const Matrix& rhs) noexcept {
         lhs = lhs + rhs;
         return lhs;
     }
-    constexpr matrix& operator += (const T& scalar) noexcept {
+    constexpr Matrix& operator += (const T& scalar) noexcept {
         *this = *this + scalar;
         return *this;
     }
-    friend constexpr matrix& operator -= (matrix& lhs, const matrix& rhs) noexcept {
+    friend constexpr Matrix& operator -= (Matrix& lhs, const Matrix& rhs) noexcept {
         lhs = lhs - rhs;
         return lhs;
     }
-    constexpr matrix& operator -= (const T& scalar) noexcept {
+    constexpr Matrix& operator -= (const T& scalar) noexcept {
         *this = *this - scalar;
         return *this;
     }
     template<std::size_t other_rows, std::size_t other_cols>
-    constexpr matrix& operator *= (const matrix<T, other_cols, other_rows>& other) noexcept {
+    constexpr Matrix& operator *= (const Matrix<T, other_cols, other_rows>& other) noexcept {
         *this = *this * other;
         return *this;
     }
-    constexpr matrix& operator *= (const T& scalar) noexcept {
+    constexpr Matrix& operator *= (const T& scalar) noexcept {
         *this = *this * scalar;
         return *this;
     }
     template<std::size_t other_rows, std::size_t other_cols>
-    constexpr matrix& operator /= (const matrix<T, other_cols, other_rows>& other) noexcept {
+    constexpr Matrix& operator /= (const Matrix<T, other_cols, other_rows>& other) noexcept {
         *this = *this / other;
         return *this;
     }
-    constexpr matrix& operator /= (const T& scalar) noexcept {
+    constexpr Matrix& operator /= (const T& scalar) noexcept {
         *this = *this / scalar;
         return *this;
     }
@@ -314,7 +315,7 @@ public:
         return *begin();
     }
     // comparison operators
-    [[nodiscard]] friend constexpr bool operator == (const matrix& lhs, const matrix& rhs) noexcept {
+    [[nodiscard]] friend constexpr bool operator == (const Matrix& lhs, const Matrix& rhs) noexcept {
         for(size_t i = 0; i < rows; ++i){
             if(lhs[i] != rhs[i]){ // uses the shiv::array operator != overload and runs it for each column
                 return false;
@@ -322,7 +323,7 @@ public:
         }
         return true;
     }
-    [[nodiscard]] friend constexpr bool operator != (const matrix& lhs, const matrix& rhs) noexcept {
+    [[nodiscard]] friend constexpr bool operator != (const Matrix& lhs, const Matrix& rhs) noexcept {
         return !(lhs == rhs);
     }
     // Iterators

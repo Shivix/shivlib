@@ -2,7 +2,7 @@
 #include <ShivLib/utility.hpp>
 #include <boost/test/unit_test.hpp>
 
-consteval size_t foo(){
+constexpr size_t foo(){
     shiv::vector<int> test{6, 5};
     return test.size();
 }
@@ -12,7 +12,7 @@ BOOST_AUTO_TEST_SUITE(vector_test)
         const shiv::vector<int> vector1{0, 1, 2, 3, 4, 5};
 
         for(auto&& i: vector1){
-            std::cout << i;
+            std::ignore = i;
         }
     }
     

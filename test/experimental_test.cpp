@@ -5,8 +5,8 @@
 
 BOOST_AUTO_TEST_SUITE(experimental_test)
     BOOST_AUTO_TEST_CASE(range_test){ 
-        for(auto&& i: range(0, 10)){
-            std::cout << i;
+        for(auto i: range(0, 10)){
+            BOOST_TEST((i >= 0 && i <= 10));
         }
     }
     

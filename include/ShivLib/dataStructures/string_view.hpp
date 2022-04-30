@@ -56,7 +56,7 @@ public:
     }
 
 	constexpr string_view substr(size_t index, size_t n = npos) const noexcept{
-        assert(index > m_length);
+        assert(index < m_length);
         n = shiv::min(n, length() - index);
         return string_view(m_view + index, n);
     }
