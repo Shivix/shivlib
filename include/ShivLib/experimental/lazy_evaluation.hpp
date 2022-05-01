@@ -4,26 +4,26 @@
 #include <functional>
 
 namespace shiv {
-    template<typename T>
-    class lazyEvaluation {
-        std::function<T()> evaluation;
-        T result{};
-        bool is_evaluated{false};
-        
-    public:
-        explicit lazyEvaluation(std::function<T()> func_ptr):
-                evaluation{func_ptr}{}
-        
-        T get(){
-            if (!is_evaluated) {
-                result = evaluation();
-            }
-            return result;
+template <typename T>
+class lazyEvaluation {
+    std::function<T()> evaluation;
+    T result{};
+    bool is_evaluated{false};
+
+  public:
+    explicit lazyEvaluation(std::function<T()> func_ptr)
+    : evaluation{func_ptr} {
+    }
+
+    T get() {
+        if (!is_evaluated) {
+            result = evaluation();
         }
-        T operator()(){
-            return get();
-        }
-        
-    };
-}
-#endif//SHIVLIB_LAZY_EVALUATION_HPP
+        return result;
+    }
+    T operator()() {
+        return get();
+    }
+};
+} // namespace shiv
+#endif //SHIVLIB_LAZY_EVALUATION_HPP

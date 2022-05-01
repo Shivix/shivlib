@@ -4,8 +4,8 @@
 #include <cstddef>
 #include <vector>
 
-template<typename T> //gd
-struct range{
+template <typename T> //gd
+struct range {
     using value_type = T;
     using iterator = T*;
     using const_iterator = const T*;
@@ -13,28 +13,21 @@ struct range{
     //using const_reverse_iterator = const std::reverse_iterator<const T*>;
     using reference = T&;
     using const_reference = const T&;
-    
-    
-    range(T begin, T end){
+
+    range(T begin, T end) {
         data.resize(end - begin);
-        for(auto&& i: data){
+        for (auto&& i : data) {
             i = begin++;
         }
     }
     std::vector<T> data;
-    
-    constexpr T*
-    begin() noexcept{
+
+    constexpr T* begin() noexcept {
         return data.data();
     }
-    constexpr T*
-    end() noexcept{
+    constexpr T* end() noexcept {
         return data.data() + data.size();
     }
-    
 };
 
-
-
-
-#endif//SHIVLIB_RANGES_HPP
+#endif //SHIVLIB_RANGES_HPP
