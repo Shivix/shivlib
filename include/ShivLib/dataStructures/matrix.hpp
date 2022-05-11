@@ -7,7 +7,7 @@
 #include <tuple>
 
 namespace shiv {
-template <shiv::arithmetic T, size_t rows, size_t cols>
+template <shiv::Arithmetic T, size_t rows, size_t cols>
 class Matrix {
   public:
     using value_type = T;

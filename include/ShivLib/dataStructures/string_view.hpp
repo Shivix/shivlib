@@ -9,7 +9,7 @@
 
 namespace shiv {
 
-template <shiv::character T = char>
+template <shiv::Character T = char>
 class StringView {
     const T* m_view{nullptr};
     size_t m_length{};
