@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 project(ShivLib)
 
-set(CMAKE_CXX_STANDARD 20)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(shivlib INTERFACE)
 target_compile_options(shivlib INTERFACE -Wall -Wextra -Wpedantic -Werror)
+target_compile_features(shivlib INTERFACE cxx_std_20)
 target_include_directories(shivlib INTERFACE include)
 
 add_subdirectory(test)
