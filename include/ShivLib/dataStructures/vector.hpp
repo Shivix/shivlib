@@ -7,6 +7,7 @@
 #include <cassert>
 #include <iterator>
 #include <memory>
+#include <utility>
 
 namespace shiv {
 template <typename T, typename A = std::allocator<T>>
