@@ -17,6 +17,6 @@ enable_testing()
 target_compile_options(shiv-test PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_compile_features(shiv-test PRIVATE cxx_std_20)
 target_link_libraries(shiv-test PRIVATE -lboost_unit_test_framework)
-target_include_directories(shiv-test PRIVATE ../include ${Boost_INCLUDE_DIRS})
+target_include_directories(shiv-test PRIVATE ${PROJECT_SOURCE_DIR}/include ${Boost_INCLUDE_DIRS})
 
 add_test(ShivTest shiv-test)

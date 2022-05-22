@@ -7,6 +7,7 @@ add_library(shivlib INTERFACE)
 target_compile_features(shivlib INTERFACE cxx_std_20)
 
 add_subdirectory(test)
+add_subdirectory(example)
 
 find_program(CLANG_FORMAT clang-format)
 if(CLANG_FORMAT)
