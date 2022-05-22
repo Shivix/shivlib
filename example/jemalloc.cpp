@@ -1,6 +1,9 @@
+#include <chrono>
 #include <iostream>
 #include <vector>
+
 #include <jemalloc/jemalloc.h>
+
 #include <ShivLib/utility.hpp>
 
 extern "C" {
@@ -20,25 +23,18 @@ void operator delete(void* ptr, std::size_t) noexcept {
     return free(ptr);
 }
 
-template <typename T>
-struct JeAlloc {
-    using value_type = T;
-
-    [[nodiscard]] T* allocate(size_t n) {
-        return reinterpret_cast<T*>(operator new(n));
-    }
-    void deallocate(void* ptr) {
-        operator delete(ptr);
-    }
-    void deallocate(void* ptr, size_t) {
-        operator delete(ptr);
-    }
-};
-
 int main() {
-    std::vector<int, JeAlloc<int>> test(50000);
-    shiv::do_not_optimise(&test);
+    auto start{std::chrono::steady_clock::now()};
+    for (auto i{0}; i < 10000; ++i) {
+        std::vector<int> test(50000);
+        std::vector<std::string> test2(5000);
+        shiv::do_not_optimise(&test);
+        shiv::do_not_optimise(&test2);
+    }
+    auto end{std::chrono::steady_clock::now()};
     malloc_stats_print(nullptr, nullptr, nullptr);
-    std::cout << is_jemalloc_linked();
+    std::cout << "is jemalloc linked: " << is_jemalloc_linked() << std::endl;
+    auto duration{std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)};
+    std::cout << duration << std::endl;
     return 0;
 }

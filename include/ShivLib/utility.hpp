@@ -28,8 +28,7 @@ forward(typename shiv::remove_reference_t<T>&& input) noexcept {
     return static_cast<T&&>(input);
 }
 
-[[maybe_unused]] static void do_not_optimise(void* input)
-{
+[[maybe_unused]] static void do_not_optimise(void* input) {
     asm volatile("" : : "g"(input) : "memory");
 }
 

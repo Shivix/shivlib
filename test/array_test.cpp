@@ -36,8 +36,8 @@ BOOST_AUTO_TEST_CASE(fillswap_test) {
 
 BOOST_AUTO_TEST_CASE(capacity_test) {
     shiv::Array<int, 5> array1{0, 1, 2, 3, 4};
-    BOOST_TEST(array1.size() == std::size_t(5));
-    BOOST_TEST(array1.max_size() == std::size_t(5));
+    BOOST_TEST(array1.size() == std::size_t{5});
+    BOOST_TEST(array1.max_size() == std::size_t{5});
     shiv::Array<int, 0> array2{};
     BOOST_TEST(array2.empty() == true);
     BOOST_TEST(array1.empty() == false);

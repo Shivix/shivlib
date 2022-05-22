@@ -25,7 +25,7 @@ class StringView {
     using const_reference = const T&;
     using rvalue_reference = T&&;
 
-    static constexpr size_t npos = size_t(-1);
+    static constexpr size_t npos = size_t{static_cast<size_t>(-1)};
 
     constexpr StringView(const T* view)
     : m_view{view} /*, m_length{strlen(m_view)}*/ {
