@@ -27,6 +27,12 @@ forward(typename shiv::remove_reference_t<T>&& input) noexcept {
     static_assert(!shiv::is_lvalue_reference<T>(), "Must forward an rvalue");
     return static_cast<T&&>(input);
 }
+
+[[maybe_unused]] static void do_not_optimise(void* input)
+{
+    asm volatile("" : : "g"(input) : "memory");
+}
+
 } // namespace shiv
 
 #endif //SHIVLIB_UTILITY_HPP
